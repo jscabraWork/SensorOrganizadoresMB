@@ -1,0 +1,71 @@
+<div *ngIf="loading" class="spinner-overlay">
+    <div class="spinner"></div>
+  </div>
+  
+  <div class="container-fluid">
+      <div class="form-title-container">
+          <div class="form-title">
+            <div class="form-title-row"> 
+              <div class="icon-back" (click)="goBack()"></div>
+              <p >{{ modoEdicion ? 'Modificar Día al Evento' : 'Agregar Día al Evento' }} {{ evento?.nombre }}</p>
+            </div>
+              <hr class="linea">
+          </div>
+          
+      </div>
+      
+      <form class="form-container">
+          <div class="inputs">
+              <input type="text" id="nombre" name="nombre" [class.input-error]="formEnviado && !dia.nombre"  [(ngModel)]="dia.nombre" class="input-name" placeholder="Nombre del Día" required>
+              <div *ngIf="formEnviado && !dia.nombre" class="error-message">
+                  El nombre es obligatorio
+              </div>
+          </div>
+    
+          <div class="inputs">
+            <label *ngIf="modoEdicion" for="fecha-inicio" class="label">Fecha Inicio</label>
+            <input #fechaInicioInput type="text" id="fecha-inicio" name="fecha-inicio" [class.input-error]="formEnviado && !dia.fechaInicio" 
+              [(ngModel)]="dia.fechaInicio" class="input-field" placeholder="Fecha Inicio" readonly >
+            <div *ngIf="formEnviado && !dia.fechaInicio" class="error-message">
+              La fecha de inicio es obligatoria
+            </div>
+          </div>
+          
+          <div class="inputs">
+            <label *ngIf="modoEdicion" for="fecha-fin" class="label">Fecha Fin</label>
+            <input #fechaFinInput type="text" id="fecha-fin" name="fecha-fin" [class.input-error]="formEnviado && !dia.fechaFin" 
+              [(ngModel)]="dia.fechaFin" class="input-field" placeholder="Fecha Fin" readonly >
+            <div *ngIf="formEnviado && !dia.fechaFin" class="error-message">
+              La fecha de fin es obligatoria
+            </div>
+          </div>
+
+      <!-- Input para Hora Inicio -->
+      <div class="inputs">
+        <label *ngIf="modoEdicion" for="hora-inicio" class="label">Hora Inicio</label>
+        <input #horaInicioInput type="text" id="hora-inicio" name="hora-inicio" [class.input-error]="formEnviado && !dia.horaInicio" 
+          [(ngModel)]="dia.horaInicio" class="input-field-hora" placeholder="Hora Inicio" readonly >
+        <div *ngIf="formEnviado && !dia.horaInicio" class="error-message">
+          La hora de inicio es obligatoria
+        </div>
+      </div>
+
+      <!-- Input para Hora Fin -->
+      <div class="inputs">
+        <label *ngIf="modoEdicion" for="hora-fin" class="label">Hora Fin</label>
+        <input #horaFinInput type="text" id="hora-fin" name="hora-fin" [class.input-error]="formEnviado && !dia.horaFin" 
+          [(ngModel)]="dia.horaFin" class="input-field-hora" placeholder="Hora Fin" readonly >
+        <div *ngIf="formEnviado && !dia.horaFin" class="error-message">
+          La hora de fin es obligatoria
+        </div>
+      </div>
+
+    
+        <div class="btn-container">
+          <div class="btn-agregar">
+              <button type="submit" (click)="crearDia()">{{ modoEdicion ? 'Guardar' : 'Agregar' }}</button>
+          </div>
+        </div>
+        
+      </form>
+    </div>

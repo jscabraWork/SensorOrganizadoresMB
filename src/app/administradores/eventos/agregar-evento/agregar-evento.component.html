@@ -1,0 +1,178 @@
+<div *ngIf="loading" class="spinner-overlay">
+    <div class="spinner"></div>
+  </div>
+  
+  <div class="container-fluid">
+      <div class="form-title-container">
+          <div class="form-title">
+            <div class="form-title-row"> 
+              <div class="icon-back" (click)="goBack()"></div>
+              <p>{{ modoEdicion ? 'Modificar' : 'Agregar' }} Evento</p>
+            </div>
+              <hr class="linea">
+          </div>
+      </div>
+      
+      <form class="form-container">
+          <!-- Nombre del Evento -->
+          <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">
+            <span class="field-label" *ngIf="modoEdicion">Nombre del evento</span>
+              <input type="text" id="nombre" name="nombre" 
+                     [class.input-error]="formEnviado && !evento.nombre"  
+                     [(ngModel)]="evento.nombre" 
+                     class="input-name" 
+                     placeholder="Nombre del evento" 
+                     required>
+              <div *ngIf="formEnviado && !evento.nombre" class="error-message">
+                  El nombre del evento es obligatorio
+              </div>
+          </div>
+  
+          <!-- Pulep -->
+          <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">
+            <span class="field-label" *ngIf="modoEdicion">Pulep</span>
+              <input type="text" id="pulep" name="pulep" 
+                     [(ngModel)]="evento.pulep" 
+                     class="input-field"
+                     [class.input-error]="formEnviado && !evento.pulep" 
+                     placeholder="Pulep"
+                     required>
+                     <div *ngIf="formEnviado && !evento.pulep" class="error-message">
+                      El pulep del evento es obligatorio
+                  </div>
+          </div>
+
+          <!-- Fecha de Apertura -->
+          <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">
+            <span class="field-label" *ngIf="modoEdicion">Fecha de apertura</span>
+            <input type="datetime-local" id="fechaApertura" name="fechaApertura" 
+                  [(ngModel)]="evento.fechaApertura" 
+                  class="input-field"
+                  placeholder="Fecha de apertura"
+                  (click)="abrirSelectorFechaHora($event)"
+                  #fechaInput>
+          </div>
+
+  
+          <!-- Artistas -->
+          <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">
+            <span class="field-label" *ngIf="modoEdicion">Artistas</span>
+              <input type="text" id="artistas" name="artistas" 
+                     [(ngModel)]="evento.artistas" 
+                     class="input-field" 
+                     [class.input-error]="formEnviado && !evento.artistas"
+                     placeholder="Artistas"
+                     required>
+                     <div *ngIf="formEnviado && !evento.artistas" class="error-message">
+                      Los artistas del evento es obligatorio
+                  </div>
+          </div>
+  
+          <!-- Recomendaciones -->
+          <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">
+            <span class="field-label" *ngIf="modoEdicion">Recomendaciones</span>
+              <input id="recomendaciones" name="recomendaciones" 
+                        [(ngModel)]="evento.recomendaciones" 
+                        class="input-field" 
+                        placeholder="Recomendaciones">
+          </div>
+  
+          <!-- Video/Link YouTube -->
+          <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">
+            <span class="field-label" *ngIf="modoEdicion">Link Video</span>
+              <input type="text" id="video" name="video" 
+                     [(ngModel)]="evento.video" 
+                     class="input-field" 
+                     placeholder="Video/Link YouTube">
+          </div>
+  
+          <!-- Select de Tipo con botón "Otro" -->
+          <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">
+            <span class="field-label" *ngIf="modoEdicion">Tipo de Evento</span>
+            <div class="select-with-button">
+              <select id="tipo" name="tipo" [(ngModel)]="evento.tipo" class="input-select" required>
+                <option [value]="null" disabled selected>Tipo de Evento</option>
+                <option *ngFor="let tipo of tipos" [ngValue]="tipo">{{ tipo.nombre }}</option>
+              </select>
+              <button type="button" class="btn-otro" (click)="crearTipoEvento()">Otro</button>
+            </div>
+            <div *ngIf="formEnviado && !evento.tipo" class="error-message">
+              Debe seleccionar un tipo
+            </div>
+          </div>
+  
+          <!-- Select de Ciudad -->
+          <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">
+            <span class="field-label" *ngIf="modoEdicion">Ciudad</span>
+              <select id="ciudad" [(ngModel)] = "ciudadSeleccionadaId" (change)="onCiudadChange(ciudadSeleccionadaId)" name="ciudad"  class="input-select" required>
+                  <option [value]="null" disabled selected>Ciudad</option>
+                  <option *ngFor="let ciudad of ciudades" [value]="ciudad.id">
+                    {{ ciudad.nombre }}
+                  </option>
+              </select>
+              <div *ngIf="formEnviado && !ciudadSeleccionadaId" class="error-message">
+                Debe seleccionar una ciudad
+              </div>
+          </div>
+  
+          <!-- Select de Lugar del Evento -->
+          <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">
+            <span class="field-label" *ngIf="modoEdicion">Lugar</span>
+              <select id="lugar" [(ngModel)] = "venueSeleccionadoId" (change)="onVenueChange(venueSeleccionadoId)"  [disabled]="!ciudadSeleccionadaId" name="lugar"  class="input-select" required>
+                  <option [value]="null" disabled selected>Lugar del Evento</option>
+                  <option *ngFor="let venue of venuesDeCiudadSeleccionada" [value]="venue.id">
+                    {{ venue.nombre }}
+                  </option>
+                </select>
+                <div *ngIf="formEnviado && !evento.venue" class="error-message">
+                  Debe seleccionar un lugar
+                </div>
+          </div>
+  
+          <!-- Select de Organizadores -->
+          <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">
+            <span class="field-label" *ngIf="modoEdicion">Organizadores</span>
+            <div class="select-orga-with-button">
+              <select class="input-select" id="organizador" name="organizador" [(ngModel)]="organizadorAgregar">
+                <option [ngValue]="null" disabled>Organizadores con acceso</option>
+                <option *ngFor="let organizador of organizadores" [ngValue]="organizador">
+                  {{organizador.nombre}}
+                </option>
+              </select>
+              <button class="boton-agregar-pequeno" type="button" (click)="agregarALista()">Agregar Organizador</button>
+            </div>
+             
+          </div>
+
+          <!-- Contenedor general -->
+          <div class="contenedor-orgas-boton">
+            <!-- Lista Organizadores -->
+            <div *ngIf="!modoEdicion && organizadoresEvento?.length > 0" class="inputs lista-organizadores">
+              <label class="label-orga">Organizadores del Evento</label>
+              <div class="lista-orgas">
+                <p *ngFor="let organizador of organizadoresEvento; let i = index">
+                  {{organizador.nombre}}
+                  <span class="eliminar-lista" (click)="quitarLista(i)">X</span>
+                </p>
+              </div>
+            </div>
+
+            <!-- Modo edición (solo mostrar los organizadores ya asignados) -->
+          <div *ngIf="modoEdicion" class="inputs lista-organizadores">
+            <label class="label-orga">Organizadores del Evento</label>
+              <div class="lista-orgas">
+                <p *ngFor="let organizador of organizadores; let i = index">
+                  {{organizador.nombre}}
+                  <span class="eliminar-lista" (click)="quitarLista(i)">X</span>
+                </p>
+              </div>
+          </div>
+
+            <!-- Botón Agregar -->
+            <div class="btn-agregar">
+              <button type="submit" (click)="crearEvento()">{{ modoEdicion ? 'Guardar' : 'Agregar' }}</button>
+            </div>
+          </div>
+     
+      </form>
+  </div>

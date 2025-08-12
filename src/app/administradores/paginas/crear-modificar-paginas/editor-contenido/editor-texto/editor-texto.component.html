@@ -1,0 +1,105 @@
+<div class="propiedades-panel">
+  <h3 class="panel-title">Propiedades de Texto</h3>
+  
+  <!-- Contenido del Texto -->
+  <div class="panel-section">
+    <div class="form-group">
+      <label class="label">Contenido</label>
+      <textarea 
+        class="input-textarea"
+        [(ngModel)]="texto.descripcion" 
+        placeholder="Escribe tu texto aquí"
+        rows="4"
+      ></textarea>
+    </div>
+  </div>
+  
+  <!-- Propiedades del Texto -->
+  <div class="panel-section">
+    <h4 class="section-title">Formato de Texto</h4>
+    
+    <div class="form-group">
+      <label class="label">Tamaño de Fuente (px)</label>
+      <input 
+        type="number" 
+        class="input-name"
+        [(ngModel)]="texto.fontSize" 
+        min="2"
+      >
+    </div>
+    
+    <div class="form-group">
+      <label class="label">Color de Texto</label>
+      <div class="color-picker-group">
+        <input 
+          type="color" 
+          class="color-picker"
+          [(ngModel)]="texto.color"
+        >
+        <input 
+          type="text" 
+          class="color-hex"
+          [(ngModel)]="texto.color"
+          placeholder="#000000"
+        >
+      </div>
+    </div>
+    
+    <div class="grid-2-col">
+      <div class="form-group">
+        <label class="label">Peso de Fuente</label>
+        <select 
+          class="input-name"
+          [(ngModel)]="texto.fontWeight"
+        >
+          <option *ngFor="let opt of fontWeightOptions" [value]="opt.value">{{opt.label}}</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label class="label">Estilo de Fuente</label>
+        <select 
+          class="input-name"
+          [(ngModel)]="texto.fontStyle"
+        >
+          <option *ngFor="let opt of fontStyleOptions" [value]="opt.value">{{opt.label}}</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label class="label">Altura de Línea</label>
+      <input 
+        type="number" 
+        class="input-name"
+        [(ngModel)]="texto.lineHeight" 
+        min="0.5"
+        max="3"
+        step="0.1"
+      >
+    </div>
+    
+    <div class="form-group">
+      <label class="label">Alineación</label>
+      <select 
+        class="input-name"
+        [(ngModel)]="texto.estilos.textAlign"
+      >
+        <option *ngFor="let opt of textAlignOptions" [value]="opt.value">{{opt.label}}</option>
+      </select>
+    </div>
+  </div>
+  
+  <!-- Propiedades Comunes -->
+  <app-editor-propiedades-comunes [contenido]="texto"></app-editor-propiedades-comunes>
+  
+  <!-- Botones de Acción -->
+  <div class="panel-section action-buttons">
+    <button 
+      class="btn-guardar"
+      (click)="guardar()"
+    >
+      Aplicar cambios
+    </button>
+  </div>
+</div>

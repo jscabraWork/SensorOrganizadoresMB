@@ -1,0 +1,10 @@
+<app-table
+        [data]="temporadas"
+        [headers]="['ID', 'Nombre', 'Fecha Inicio', 'Fecha Finalización', 'Estado', 'Eventos']"
+        [columnas]="['id', 'nombre', 'fechaInicio', 'fechaFin']"
+        [botones]="botonesTabla"
+        [selects]="selectsTabla"
+        [expandableConfig]="expandableConfig"
+        [cargando]="cargando"
+        [mensajeVacio]="'No tiene temporadas ' + (esRutaActivos ? 'activas' : 'inactivas')">
+</app-table>

@@ -1,0 +1,322 @@
+
+@use '../../../../../styles/variables' as v;
+@use '../../../../../styles/components' as c;
+
+.contenido-editor-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 10px;
+      background-color: #f4f4f4;
+      border-radius: 8px;
+}
+
+
+
+// Importar los estilos base del panel de propiedades
+// Este archivo podría moverse a un archivo compartido para todos los editores
+.propiedades-panel {
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 6px;
+  padding: 0.75rem;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+  max-height: calc(100vh - 120px);
+  
+  // Evitar scroll horizontal
+  overflow-x: hidden;
+ 
+}
+
+// Título del panel
+.panel-title {
+  font-family: v.$font-primary;
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+// Secciones del panel
+.panel-section {
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e0e0e0;
+  
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
+// Títulos de secciones
+.section-title {
+  font-family: v.$font-primary;
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+  margin: 0 0 0.5rem 0;
+}
+
+// Etiquetas
+.label {
+  font-family: v.$font-primary;
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+// Grid para 2 columnas
+.grid-2-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  
+  @media (max-width: 320px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Grupo de formulario
+.form-group {
+  margin-bottom: 0.5rem;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Campos de texto
+.input-name {
+  width: 100%;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  font-family: v.$font-primary;
+  font-size: 13px;
+  background-color: #e9ecef;
+  color: #333;
+  
+  &:focus {
+    outline: none;
+    background-color: #dde1e6;
+  }
+  
+  &::placeholder {
+    color: #999;
+  }
+}
+
+// Campo textarea específico para contenido de texto
+.input-textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  font-family: v.$font-primary;
+  font-size: 13px;
+  background-color: #e9ecef;
+  color: #333;
+  resize: vertical;
+  min-height: 100px;
+  
+  &:focus {
+    outline: none;
+    background-color: #dde1e6;
+  }
+  
+  &::placeholder {
+    color: #999;
+  }
+}
+
+// Grupo de input con unidad
+.input-group {
+  display: flex;
+  align-items: center;
+  
+  .input-number {
+    width: 20px;
+    flex: 1;
+    min-width: 0; // Evita desbordamiento
+    padding: 0.4rem;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    font-family: v.$font-primary;
+    font-size: 12px;
+    background-color: #e9ecef;
+    color: #333;
+    
+    &:focus {
+      outline: none;
+      background-color: #dde1e6;
+    }
+  }
+  
+  .input-select {
+    width: 50px; // Reducido para mayor compacidad
+    padding: 0.4rem;
+    border: none;
+    border-left: 1px solid #ccc;
+    border-radius: 0 4px 4px 0;
+    font-family: v.$font-primary;
+    font-size: 12px;
+    background-color: #e9ecef;
+    color: #333;
+    
+    &:focus {
+      outline: none;
+      background-color: #dde1e6;
+    }
+  }
+
+  .input-select-full {
+    width: 100% !important;
+    padding: 0.4rem;
+    border: none;
+    border-radius: 4px;
+    font-family: v.$font-primary;
+    font-size: 12px;
+    background-color: #e9ecef;
+    color: #333;
+    
+    &:focus {
+      outline: none;
+      background-color: #dde1e6;
+    }
+
+  }
+
+}
+
+// Selector de color con campo hexadecimal
+.color-picker-group {
+  display: flex;
+  align-items: center;
+  
+  .color-picker {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 0.4rem;
+    padding: 0;
+    background-color: transparent;
+    
+    &::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+    
+    &::-webkit-color-swatch {
+      border-radius: 3px;
+      border: 1px solid #ddd;
+    }
+  }
+  
+  .color-hex {
+    flex: 1;
+    min-width: 0; // Evita desbordamiento
+    padding: 0.4rem;
+    border: none;
+    border-radius: 4px;
+    font-family: v.$font-primary;
+    font-size: 12px;
+    background-color: #e9ecef;
+    color: #333;
+    
+    &:focus {
+      outline: none;
+      background-color: #dde1e6;
+    }
+  }
+}
+
+// Botones de acción
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  
+  .btn-cancelar {
+    padding: 0.5rem 0.75rem;
+    background-color: #e9ecef;
+    color: #555;
+    border: none;
+    border-radius: 4px;
+    font-family: v.$font-primary;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background-color: #dde1e6;
+    }
+  }
+  
+  .btn-guardar {
+    padding: 0.5rem 0.75rem;
+    background-color: #495057;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-family: v.$font-primary;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background-color: #343a40;
+    }
+  }
+}
+
+.error-text {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  
+  .input-checkbox {
+    width: auto;
+    margin-right: 8px;
+  }
+  
+  .checkbox-label {
+    font-family: var(--font-primary);
+    font-size: 11px;
+    color: #333;
+    margin: 0;
+  }
+}
+
+
+
+.recurso-seleccionado {
+  background-color: #f8f9fa;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 4px;
+  border: 1px solid #e5e9ee;
+  
+  .recurso-info {
+    font-size: 13px;
+    margin-top: 5px;
+    
+    div {
+      margin-bottom: 3px;
+    }
+  }
+}

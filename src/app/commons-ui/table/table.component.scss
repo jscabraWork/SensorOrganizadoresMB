@@ -1,0 +1,88 @@
+@use "sass:color";
+@use "sass:map";
+@use '../../../styles/variables' as v;
+@use '../../../styles/components' as c;
+
+.container-fluid {
+    margin-top: 1rem !important;    
+}
+
+.row {
+    @extend .row
+}
+
+.flex-centrar{
+    @extend .flex-centrar
+}
+
+.esconder {
+    @extend .esconder
+}
+
+.table-container,
+.subtable-expandable-container {
+    width: 100% !important;
+}
+
+.tabla,
+.subtable {
+    @extend .tabla-default
+}
+
+.subtable-actions-container {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center
+}
+
+.subtable-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.subtable-selects {
+  display: flex;
+  gap: 1rem;
+}
+
+.subtable-select-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.p {
+    text-align: start;
+    @extend .p
+    
+}
+
+
+.btn-editar,
+.btn-eliminar,
+.btn-dias,
+.btn-localidades,
+.btn-tarifas,
+.btn-eventos,
+.btn-activo,
+.btn-perfil,
+.btn-cliente,
+.btn-promotor,
+.btn-tickets {
+    @extend .button-third;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-ver {     
+    
+        @extend .button-primary;
+        width: fit-content;
+        border-radius: 9px !important;
+        padding: 0.1rem 1.5rem;
+      
+}

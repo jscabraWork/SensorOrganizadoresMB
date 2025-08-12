@@ -1,0 +1,14 @@
+<div class="container-fluid">
+  <app-title 
+    [title]="'Tarifas de la Localidad ' + (localidad?.nombre || '')"
+    (onBack)="onBack()">
+  </app-title>
+
+  <app-navigation 
+    [menuItems]="menuItems"
+    [addButtonLabel]="'Agregar'"
+    (onAdd)="onAddTarifa()">
+  </app-navigation>
+
+  <router-outlet></router-outlet>
+</div>

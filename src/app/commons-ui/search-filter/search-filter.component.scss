@@ -1,0 +1,47 @@
+@use "sass:color";
+@use "sass:map";
+@use '../../../styles/variables' as v;
+@use '../../../styles/components' as c;
+@use '../../../styles/mixins' as m;
+
+.filtro-container {
+  margin-left: 3rem;
+  margin-right: 3rem;
+  width: auto;
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-end;
+
+  .filters {
+    display: flex;
+    flex: 1;
+    gap: 0.5rem;
+  }
+
+  .filter-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .filter-label {
+      margin-bottom: 4px;
+      font-weight: bold;
+    }
+
+    .input {
+      @extend %input-field;
+      flex: 1;
+      min-width: 0;
+      padding: 5px 8px;
+      border-radius: 5px
+    }
+  }
+
+  .button-lupa {
+    @extend .button-primary; 
+    height: 100%;
+    padding: 14px 14px;
+    align-self: flex-end;
+  }
+
+}

@@ -1,0 +1,72 @@
+@use "sass:color";
+@use "sass:map";
+@use '../../../../../../../styles/variables' as v;
+@use '../../../../../../../styles/components' as c;
+
+.inputs {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    margin-left: 0;
+    
+
+    & .label {
+        font-family: v.$font-primary !important;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .input-number,
+    .input-field,
+    .input-text {
+       @extend %input-field;   
+    }
+
+    .input-select {
+        background-image: url(../../../../../../../assets/images/vector/triangulo.png);
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        @extend .input-select-field
+    }
+}
+
+.btn-container {
+    display: flex;           
+    justify-content: flex-end;                    
+}
+
+.btn-agregar {
+
+    flex: 0 0 13%;
+    display: flex;
+    justify-content: center; 
+    align-items: flex-start; 
+    margin-left: auto;
+
+    & button {
+      @extend .button-primary;
+      width: fit-content;
+      border-radius: 9px !important;
+      padding: 0.6rem 2.5rem;
+    } 
+}
+
+.error-message {
+  font-family: v.$font-primary;
+  font-size: 12px;
+  color: red;
+  margin-left: 5px;
+}
+
+.input-error {
+  border: 2px solid red !important;
+  animation: shake 0.5s ease-in-out; 
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }

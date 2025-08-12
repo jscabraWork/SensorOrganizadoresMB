@@ -1,0 +1,110 @@
+@use "sass:color" as color;
+@use "../../styles/variables" as v;
+@use "../../styles/mixins" as m;
+
+/* Contenedor principal - equivalente a .flex-centrado */
+.login-container {
+  @include m.flex-center; // Contiene display: flex, justify-content: center, align-items: center
+  height: 100vh;
+  width: 100%;
+  
+}
+
+/* Tarjeta de login - equivalente a .contenedor-login */
+.login-card {
+  width: 60%;
+  background-color: v.$color-blanco;
+  border-radius: v.$border-radius;
+  overflow: hidden;
+  @include m.elevation(3);
+  @include m.for-tablet-down { // Equivalente a @media (max-width: 870px)
+    width: 80%;
+  }
+  
+  @include m.for-mobile-down { // Equivalente a @media (max-width: 520px)
+    width: 90%;
+  }
+}
+
+/* Encabezado */
+.login-header {
+  padding: 2rem;
+  text-align: center;
+
+  .login-title {
+    color: v.$color-base; // Manteniendo color específico del ejemplo
+    font-family: v.$font-secondary;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+
+  .login-subtitle {
+    font-size: 1.125rem; // 18px
+    color: v.$color-base;
+    text-align: center;
+  }
+}
+
+/* Formulario */
+.login-form {
+  padding: 0 1rem;
+
+  .form-group { 
+    margin-bottom: 1.5rem;
+
+    .form-input {
+      width: 100%;
+      padding: .475rem .85rem;
+      font-size: 1rem;
+      border: 1px solid color.adjust(v.$color-base, $lightness: 70%);
+      border-radius: 4px;
+      font-family: v.$font-primary;
+      box-sizing: border-box;
+    
+      &.ng-invalid:not(form),
+      &.ng-valid:not(form) {
+        background-color: #eaeaea;
+        border-left: 2px solid v.$color-base; // Equivalente a tu .ng-invalid/.ng-valid
+      }
+    }
+
+    .input-hint {
+      font-size: 20px;
+      text-align: center;
+      color: color.adjust(v.$color-base, $lightness: 40%);
+    }
+  }
+
+  .form-footer {
+    .error-message {
+      color: #dc3545; // Rojo para errores
+      font-size: 0.875rem;
+      display: block;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+  }
+}
+
+/* Botón de login - equivalente a .botonLogin */
+.login-button {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 1rem 0;
+  background: linear-gradient(v.$color-base, v.$color-secundario);
+  color: v.$color-blanco;
+  border: none;
+  border-radius: 4px;
+  font-family: v.$font-primary;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  
+  &:hover {
+    background: linear-gradient(
+      color.adjust(v.$color-base, $lightness: -5%),
+      color.adjust(v.$color-secundario, $lightness: -5%)
+    );
+  }
+}

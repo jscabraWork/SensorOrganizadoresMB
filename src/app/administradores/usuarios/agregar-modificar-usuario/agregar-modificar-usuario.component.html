@@ -1,0 +1,122 @@
+<div *ngIf="loading" class="spinner-overlay">
+    <div class="spinner"></div>
+</div>
+
+<div class="container-fluid">
+    <div class="form-title-container">
+        <div class="form-title">
+            <div class="form-title-row">
+                <div class="icon-back" (click)="goBack()"></div>
+                <p>{{ modoEdicion ? 'Modificar' : 'Agregar' }} Usuario</p>
+            </div>
+            <hr class="linea">
+        </div>
+    </div>
+
+    <form class="form-container">
+        <!-- Número de Documento -->
+        <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">
+            <span class="field-label" *ngIf="modoEdicion">Número de Documento</span>
+            <input type="text" id="numeroDocumento" name="numeroDocumento" [(ngModel)]="usuario.numeroDocumento"
+                class="input-field" [class.input-error]="formEnviado && !usuario.numeroDocumento"
+                placeholder="Número de Documento" required>
+            <div *ngIf="formEnviado && !usuario.numeroDocumento" class="error-message">
+                El número de documento es obligatorio
+            </div>
+        </div>
+
+        <!-- Tipo de Documento con botón "Otro" -->
+        <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">
+            <span class="field-label" *ngIf="modoEdicion">Tipo de Documento</span>
+            <div class="select-with-button">
+                <select id="tipoDocumento" name="tipoDocumento" [(ngModel)]="usuario.tipoDocumento" class="input-select"
+                    required>
+                    <option [value]="null" disabled selected>Tipo de Documento</option>
+                    <option *ngFor="let tipo of tiposDocumento" [ngValue]="tipo">{{ tipo.nombre }}</option>
+                </select>
+                <button type="button" class="btn-otro" (click)="crearTipoDocumento()">Otro</button>
+            </div>
+            <div *ngIf="formEnviado && !usuario.tipoDocumento" class="error-message">
+                Debe seleccionar un tipo de documento
+            </div>
+        </div>
+
+        <!-- Nombre de Usuario -->
+        <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">
+            <span class="field-label" *ngIf="modoEdicion">Nombre de Usuario</span>
+            <input type="text" id="nombreUsuario" name="nombreUsuario" [(ngModel)]="usuario.nombre" class="input-field"
+                [class.input-error]="formEnviado && !usuario.nombre" placeholder="Nombre de Usuario" required>
+            <div *ngIf="formEnviado && !usuario.nombre" class="error-message">
+                El nombre de usuario es obligatorio
+            </div>
+        </div>
+
+        <!-- Correo de Usuario -->
+        <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">
+            <span class="field-label" *ngIf="modoEdicion">Correo de Usuario</span>
+            <input type="email" id="correoUsuario" name="correoUsuario" [(ngModel)]="usuario.correo" class="input-field"
+                [class.input-error]="formEnviado && !usuario.correo" placeholder="Correo de Usuario" required>
+            <div *ngIf="formEnviado && !usuario.correo" class="error-message">
+                El correo de usuario es obligatorio
+            </div>
+        </div>
+
+        <!-- Contraseña -->
+        <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">
+            <span class="field-label" *ngIf="modoEdicion">Contraseña</span>
+            <input type="password" id="contrasena" name="contrasena" [(ngModel)]="usuario.contrasena"
+                class="input-field" [class.input-error]="formEnviado && !usuario.contrasena" placeholder="Contraseña"
+                required>
+            <div *ngIf="formEnviado && !usuario.contrasena" class="error-message">
+                La contraseña es obligatoria
+            </div>
+        </div>
+
+        <!-- Celular -->
+        <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">
+            <span class="field-label" *ngIf="modoEdicion">Celular</span>
+            <input type="text" id="celular" name="celular" [(ngModel)]="usuario.celular" class="input-field"
+                [class.input-error]="formEnviado && !usuario.celular" placeholder="Celular" required>
+            <div *ngIf="formEnviado && !usuario.celular" class="error-message">
+                El celular es obligatorio
+            </div>
+        </div>
+
+        <!-- Roles Activos (Select y botón Agregar) -->
+        <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">
+            <span class="field-label" *ngIf="modoEdicion">Roles Activos</span>
+            <div class="select-rol-with-button">
+                <select class="input-select" id="rol" name="rol" [(ngModel)]="rolAgregar">
+                    <option [ngValue]="null" disabled>Roles disponibles</option>
+                    <option *ngFor="let rol of roles" [ngValue]="rol">
+                        {{ rol.nombre }}
+                    </option>
+                </select>
+                <button class="boton-agregar-pequeno" type="button" (click)="agregarRol()">Agregar Rol</button>
+            </div>
+        </div>
+
+        <div class="contenedor-roles-boton">
+            <!-- Lista de Roles del Usuario -->
+            <div *ngIf="rolesUsuario?.length > 0" class="inputs lista-roles">
+                <label class="label-roles">Roles del Usuario</label>
+                <div class="lista-role">
+                    <p *ngFor="let rol of rolesUsuario; let i = index">
+                        {{ rol.nombre }}
+                        <span class="eliminar-lista" (click)="quitarRol(i)">X</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Botón Agregar/Guardar -->
+            <div class="btn-agregar">
+                <button type="submit" (click)="crearUsuario()">
+                    {{ modoEdicion ? 'Guardar cambios' : 'Agregar' }}
+                </button>
+            </div>
+
+
+        </div>
+
+    </form>
+</div>

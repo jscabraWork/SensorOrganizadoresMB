@@ -1,0 +1,36 @@
+
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fila 1 -->
+  <rect x="10" y="15" width="12" height="12" rx="2" fill="#a9a9a9"/>
+  <rect x="26" y="15" width="12" height="12" rx="2" fill="#a9a9a9"/>
+  <rect x="42" y="15" width="12" height="12" rx="2" fill="#a9a9a9"/>
+  <rect x="62" y="15" width="12" height="12" rx="2" fill="#a9a9a9"/>
+  <rect x="78" y="15" width="12" height="12" rx="2" fill="#a9a9a9"/>
+  
+  <!-- Fila 2 -->
+  <rect x="10" y="32" width="12" height="12" rx="2" fill="#a9a9a9"/>
+  <rect x="26" y="32" width="12" height="12" rx="2" fill="#a9a9a9"/>
+  <rect x="42" y="32" width="12" height="12" rx="2" fill="#a9a9a9"/>
+  <rect x="62" y="32" width="12" height="12" rx="2" fill="#a9a9a9"/>
+  <rect x="78" y="32" width="12" height="12" rx="2" fill="#a9a9a9"/>
+  
+  <!-- Fila 3 -->
+  <rect x="10" y="49" width="12" height="12" rx="2" fill="#a9a9a9"/>
+  <rect x="26" y="49" width="12" height="12" rx="2" fill="#a9a9a9"/>
+  <rect x="42" y="49" width="12" height="12" rx="2" fill="#a9a9a9"/>
+  <rect x="62" y="49" width="12" height="12" rx="2" fill="#a9a9a9"/>
+  <rect x="78" y="49" width="12" height="12" rx="2" fill="#a9a9a9"/>
+  
+  <!-- Fila 4 -->
+  <rect x="10" y="66" width="12" height="12" rx="2" fill="#a9a9a9"/>
+  <rect x="26" y="66" width="12" height="12" rx="2" fill="#a9a9a9"/>
+  <rect x="42" y="66" width="12" height="12" rx="2" fill="#a9a9a9"/>
+  <rect x="62" y="66" width="12" height="12" rx="2" fill="#a9a9a9"/>
+  <rect x="78" y="66" width="12" height="12" rx="2" fill="#a9a9a9"/>
+  
+  <!-- Pasillo central (línea sutil) -->
+  <line x1="58" y1="10" x2="58" y2="83" stroke="#a9a9a9" stroke-width="0.5" opacity="0.3"/>
+  
+  <!-- Indicador de escenario/frente -->
+  <rect x="20" y="85" width="60" height="4" rx="2" fill="#a9a9a9" opacity="0.6"/>
+</svg>

@@ -1,0 +1,77 @@
+<section class="propiedades-panel">
+  <h3 class="panel-title">Propiedades de Imagen</h3>
+  
+  <!-- Selección de Imagen -->
+  <div class="panel-section">
+    <div class="form-group">
+      <label class="label">Seleccionar Imagen</label>
+      <app-recursos 
+        [paginaId]="paginaId"
+        (recursoSeleccionado)="seleccionarRecurso($event)"
+        [tiposPermitidos]="tipos"
+      ></app-recursos>
+    </div>
+    
+    <div *ngIf="imagen.recurso" class="recurso-seleccionado">
+      <p class="label">Recurso seleccionado:</p>
+      <div class="recurso-info">
+        <div><strong>Nombre:</strong> {{ imagen.recurso.nombre }}</div>
+        <div><strong>Tamaño:</strong> {{ formatearTamano(imagen.recurso.size) }}</div>
+        <div><strong>Formato:</strong> {{ imagen.recurso.formato }}</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Enlace para la imagen (opcional) -->
+  <div class="panel-section" *ngIf="imagen.recurso">
+    <h4 class="section-title">Enlace</h4>
+    
+    <div class="form-group">
+      <label class="label">URL del Enlace</label>
+      <input 
+        type="url" 
+        class="input-name"
+        [(ngModel)]="imagen.target" 
+        placeholder="https://ejemplo.com"
+      >
+      <small *ngIf="imagen.target && !esUrlValida(imagen.target)" class="error-text">
+        URL no válida. Debe incluir http:// o https://
+      </small>
+    </div>
+  </div>
+
+
+  <div class="panel-section">
+    <h4 class="section-title">Ajuste de Imagen</h4>
+    <div class="form-group">
+
+      <label class="label">Object-Fit</label>
+
+      <div class="input-group">
+
+        <select class="input-select-full" [(ngModel)]="imagen.objectFit">
+        <option *ngFor="let option of objectFitOptions" [value]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+
+      </div>
+
+      
+    </div>
+  </div>
+
+  
+  <!-- Propiedades Comunes usando templates del componente base -->
+  <app-editor-propiedades-comunes [contenido]="imagen"></app-editor-propiedades-comunes>
+  
+  <!-- Botones de Acción -->
+  <div class="panel-section action-buttons">
+    <button 
+      class="btn-guardar"
+      (click)="guardar()"
+    >
+      Aplicar cambios
+    </button>
+  </div>
+</section>

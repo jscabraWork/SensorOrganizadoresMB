@@ -1,0 +1,17 @@
+<div class="container-fluid">
+    <app-title 
+    [title]="'Temporadas'" 
+    (onBack)="goBack()">
+    </app-title>
+
+   <!-- Componente de navegación -->
+  <app-navigation
+    [menuItems]="menuItems"
+    [addButtonLabel]="'Agregar'"
+    (onAdd)="navigateToAgregarTemporada()"
+    (onMenuItemClick)="extenderMenu()">
+  </app-navigation>
+  
+</div>
+
+<router-outlet></router-outlet>

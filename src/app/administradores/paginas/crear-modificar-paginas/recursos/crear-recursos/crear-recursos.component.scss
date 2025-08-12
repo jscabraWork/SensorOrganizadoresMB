@@ -1,0 +1,199 @@
+// crear-recursos.component.scss
+@use "sass:color";
+@use '../../../../../../styles/variables' as v;
+@use '../../../../../../styles/components' as c;
+
+.crear-recursos {
+  border-radius: v.$border-radius;
+  padding: v.$spacer-3;
+  font-family: v.$font-primary;
+  margin-bottom: v.$spacer-3;
+}
+
+// Tabs reutilizando estilo de menú
+.tabs {
+  display: flex;
+  gap: v.$spacer-2;
+  margin-bottom: v.$spacer-3;
+  list-style: none;
+  padding: 0;
+}
+
+.tab {
+  @extend .button-form;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+
+  &:hover {
+    background-color: color.adjust(v.$color-gris, $lightness: -10%);
+  }
+
+  &.active {
+    @extend .button-primary;
+    width: fit-content;
+    border-radius: 9px !important;
+    padding: 0.1rem 1.5rem;
+  }
+}
+
+// Formularios reutilizando inputs del sistema
+.form-url {
+  display: flex;
+  flex-direction: column;
+  gap: v.$spacer-3;
+}
+
+.input, .select {
+  @extend .input-select-field;
+  font-family: v.$font-primary;
+  padding: 10px!important;
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(v.$color-base, 0.2);
+  }
+
+  &:disabled {
+    background: color.adjust(v.$color-gris, $lightness: -5%);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+// Drop zone
+.drop-zone {
+  border: 2px dashed color.adjust(v.$color-gris, $lightness: -20%);
+  border-radius: v.$border-radius;
+  padding: v.$spacer-5;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: v.$color-blanco;
+  font-family: v.$font-primary;
+
+  &:hover, &.active {
+    border-color: v.$color-base;
+    background: color.adjust(v.$color-base, $lightness: 97%);
+  }
+}
+
+.drop-content {
+  .upload-icon {
+    font-size: 2.5rem;
+    margin-bottom: v.$spacer-2;
+    color: v.$color-base;
+  }
+
+  p {
+    margin: v.$spacer-2 0 v.$spacer-3 0;
+    color: v.$color-secundario;
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+
+// Botones reutilizando sistema
+.btn-crear {
+  @extend .button-primary;
+  width: fit-content;
+  border-radius: 9px !important;
+  padding: 0.6rem 2.5rem;
+}
+
+.btn-select {
+  @extend .button-secondary;
+  background-color: v.$color-secundario;
+  color: v.$color-blanco;
+  border: none;
+  width: fit-content;
+  border-radius: 9px !important;
+  padding: 0.6rem 2.5rem;
+
+  &:hover {
+    background-color: v.$color-base;
+  }
+}
+
+.btn-subir {
+  @extend .button-third;
+}
+
+// Lista de archivos
+.archivos-lista {
+  margin-top: v.$spacer-3;
+  background: v.$color-blanco;
+  border-radius: v.$border-radius;
+  padding: v.$spacer-3;
+  border: 1px solid color.adjust(v.$color-gris, $lightness: -10%);
+}
+
+.lista-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: v.$spacer-3;
+  padding-bottom: v.$spacer-3;
+  border-bottom: 1px solid v.$color-gris;
+
+  h4 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: v.$color-base;
+    font-family: v.$font-primary;
+  }
+}
+
+.archivo-item {
+  display: flex;
+  align-items: center;
+  gap: v.$spacer-3;
+  padding: v.$spacer-2 0;
+  border-bottom: 1px solid v.$color-gris;
+  font-family: v.$font-primary;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .archivo-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    color: v.$color-base;
+  }
+
+  .archivo-info {
+    flex: 1;
+    min-width: 0;
+
+    .archivo-nombre {
+      font-size: 14px;
+      font-weight: 600;
+      color: v.$color-base;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 2px;
+    }
+
+    .archivo-size {
+      font-size: 12px;
+      font-weight: 300;
+      color: v.$color-secundario;
+    }
+  }
+
+  .btn-remove {
+    @extend .btn-sm;
+    background: v.$color-error;
+    color: v.$color-blanco;
+    flex-shrink: 0;
+    font-size: 14px;
+
+    &:hover {
+      background: color.adjust(v.$color-error, $lightness: -10%);
+      transform: scale(1.1);
+    }
+  }
+}

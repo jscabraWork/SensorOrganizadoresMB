@@ -1,0 +1,9 @@
+<div class="title-container">
+  <div class="title-component">
+    <div class="title-component-row">
+      <div *ngIf="showBackButton" class="icon-back" (click)="onBack.emit()"></div>
+      <p>{{title}}</p>
+    </div>
+    <hr class="title-line">
+  </div>
+</div>

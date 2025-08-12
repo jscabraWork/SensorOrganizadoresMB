@@ -1,0 +1,34 @@
+<div class="contenido-editor-container">
+      <!-- Selector de Tipo de Contenido -->
+      <app-selector-tipo-contenido 
+        *ngIf="!tipoContenidoSeleccionado && tipoContenidoSeleccionado != 0"
+        (tipoSeleccionado)="seleccionarTipoContenido($event)"
+      ></app-selector-tipo-contenido>
+
+      <!-- Editores específicos -->
+      <app-editor-texto 
+        *ngIf="tipoContenidoSeleccionado === 2"
+        [contenidoExistente]="obtenerTexto()"
+        (contenidoCreado)="guardarContenido($event)"
+      ></app-editor-texto>
+
+      <app-editor-imagen 
+        *ngIf="tipoContenidoSeleccionado === 0"
+        [contenidoExistente]="obtenerImagen()"
+        [paginaId]="paginaId"
+        (contenidoCreado)="guardarContenido($event)"
+      ></app-editor-imagen>
+
+      <app-editor-video 
+        *ngIf="tipoContenidoSeleccionado === 1"
+        [contenidoExistente]="obtenerVideo()"
+        [paginaId]="paginaId"
+        (contenidoCreado)="guardarContenido($event)"
+      ></app-editor-video>
+
+      <app-editor-enlace 
+        *ngIf="tipoContenidoSeleccionado === 3"
+        [contenidoExistente]="obtenerEnlace()"
+        (contenidoCreado)="guardarContenido($event)"
+      ></app-editor-enlace>
+    </div>

@@ -1,0 +1,157 @@
+@use "sass:meta";
+@use "sass:string";
+@use "sass:color" as color;
+@use 'variables' as v;
+
+@mixin elevation($level) {
+  @if $level == 1 {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  } @else if $level == 2 {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  } @else {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+}
+
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Flex centrado
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Efecto de tarjeta
+@mixin card($elevation: 2) {
+  background-color: v.$color-blanco;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  
+  @if $elevation == 1 {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  } @else if $elevation == 2 {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  } @else {
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  &:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  }
+}
+
+// Input styles
+@mixin form-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid color.adjust(v.$color-base, $lightness: 70%);
+  border-radius: 4px;
+  font-family: v.$font-primary;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+
+  &:focus {
+    outline: none;
+    border-color: v.$color-base;
+    box-shadow: 0 0 0 2px rgba(v.$color-base, 0.1);
+  }
+}
+
+@mixin sidebar-shadow {
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+@mixin adjust-color($property, $color, $amount) {
+  #{$property}: color.adjust($color, $lightness: $amount);
+}
+
+// Mixins para responsive design
+@mixin for-tablet-down {
+  @media (max-width: 870px) {
+    @content;
+  }
+}
+
+@mixin for-mobile-down {
+  @media (max-width: 520px) {
+    @content;
+  }
+} 
+
+
+@mixin icon-arrow-left-circle($color) {
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  
+  // Función para convertir color a formato hexadecimal para SVG
+  $hex-color: if(meta.type-of($color) == 'color', '#{$color}', $color);
+  $encoded-color: str-replace('#{$hex-color}', '#', '%23');
+  
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctitle%3Earrow-left-circle%3C/title%3E%3Cpath fill='#{$encoded-color}' d='M2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12M18,11H10L13.5,7.5L12.08,6.08L6.16,12L12.08,17.92L13.5,16.5L10,13H18V11Z' /%3E%3C/svg%3E");
+}
+
+@mixin icon-chevron-right($color) {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  
+  $hex-color: if(meta.type-of($color) == 'color', '#{$color}', $color);
+  $encoded-color: str-replace('#{$hex-color}', '#', '%23');
+  
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctitle%3Echevron-right%3C/title%3E%3Cpath fill='#{$encoded-color}' d='M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z' /%3E%3C/svg%3E");
+}
+
+@mixin icon-chevron-left($color) {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  
+  $hex-color: if(meta.type-of($color) == 'color', '#{$color}', $color);
+  $encoded-color: str-replace('#{$hex-color}', '#', '%23');
+  
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctitle%3Echevron-left%3C/title%3E%3Cpath fill='#{$encoded-color}' d='M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z' /%3E%3C/svg%3E");
+}
+
+@mixin icon-window-close($color) {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  
+  $hex-color: if(meta.type-of($color) == 'color', '#{$color}', $color);
+  $encoded-color: str-replace('#{$hex-color}', '#', '%23');
+  
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctitle%3Ewindow-close%3C/title%3E%3Cpath fill='#{$encoded-color}' d='M13.46,12L19,17.54V19H17.54L12,13.46L6.46,19H5V17.54L10.54,12L5,6.46V5H6.46L12,10.54L17.54,5H19V6.46L13.46,12Z' /%3E%3C/svg%3E");
+}
+
+@function str-replace($string, $search, $replace) {
+  $index: string.index($string, $search);
+  
+  @if $index {
+    @return string.slice($string, 1, $index - 1) + $replace + str-replace(string.slice($string, $index + string.length($search)), $search, $replace);
+  }
+  
+  @return $string;
+}
+

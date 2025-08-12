@@ -1,0 +1,107 @@
+<div class="modal-overlay" *ngIf="visible" (click)="onOverlayClick($event)">
+  <div class="modal-content">
+    <!-- Header del modal -->
+    <div class="modal-header">
+      <h3>{{ tituloModal }}</h3>
+      <button 
+        type="button" 
+        class="btn-close" 
+        (click)="onCerrar()"
+        [disabled]="asignandoEventos">
+        ×
+      </button>
+    </div>
+
+    <!-- Información de la entidad seleccionada -->
+    <div class="modal-info" *ngIf="entidadSeleccionada">
+      <p><strong>{{ nombreEntidad }}:</strong> {{ entidadSeleccionada.nombre }}</p>
+      <p><strong>Documento:</strong> {{ entidadSeleccionada.numeroDocumento }}</p>
+    </div>
+
+    <!-- Contenido del modal -->
+    <div class="modal-body">
+      <!-- Loading de eventos -->
+      <div *ngIf="cargandoEventos" class="text-center">
+        <p>Cargando eventos disponibles...</p>
+      </div>
+
+      <!-- Controles de selección -->
+      <div *ngIf="!cargandoEventos && eventosDisponibles.length > 0" class="eventos-controles">
+        <div class="controles-header">
+          <span class="field-label">Eventos Disponibles ({{ eventosDisponibles.length }})</span>
+          <div class="controles-actions">
+            <button 
+              type="button" 
+              class="btn-toggle"
+              (click)="onToggleTodos()"
+              [disabled]="asignandoEventos">
+              {{ todosSelecionados ? 'Deseleccionar Todo' : 'Seleccionar Todo' }}
+            </button>
+            <span class="contador">{{ eventosSeleccionados.length }} seleccionados</span>
+          </div>
+        </div>
+
+        <!-- Filtro de eventos por nombre -->
+        <div class="filtro-eventos">
+          <input 
+            type="text" 
+            [(ngModel)]="filtroNombreEvento" 
+            placeholder="Filtrar eventos por nombre..." 
+            class="input" 
+            [disabled]="cargandoEventos || asignandoEventos" />
+        </div>
+
+        <div class="eventos-lista">
+          <div 
+            *ngFor="let evento of getEventosFiltrados()" 
+            class="evento-item"
+            [class.selected]="isEventoSeleccionado(evento.id)">
+            
+            <label class="evento-checkbox">
+              <input 
+                type="checkbox" 
+                [checked]="isEventoSeleccionado(evento.id)"
+                (change)="onToggleEvento(evento.id)"
+                [disabled]="asignandoEventos">
+            </label>
+            
+            <div class="evento-info-compacta" (click)="onToggleEvento(evento.id)">
+              <div class="evento-nombre">
+                <strong>{{ evento.nombre }}</strong>
+                <span class="evento-id">id: {{ evento.id }}</span>
+              </div>
+              <div class="evento-detalles">
+                <span *ngIf="evento.artistas">{{ evento.artistas }}</span>
+                <span class="venue" *ngIf="evento.venue">{{ evento.venue.nombre }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sin eventos disponibles -->
+      <div *ngIf="!cargandoEventos && eventosDisponibles.length === 0" class="no-eventos-mensaje">
+        <p>No hay eventos disponibles para asignar.</p>
+      </div>
+    </div>
+
+    <!-- Footer del modal -->
+    <div class="modal-footer">
+      <button 
+        type="button" 
+        class="button-secondary"
+        (click)="onCerrar()"
+        [disabled]="asignandoEventos">
+        Cancelar
+      </button>
+      <button 
+        type="button" 
+        class="button-primary"
+        (click)="onAsignar()"
+        [disabled]="cargandoEventos || asignandoEventos">
+        <span *ngIf="asignandoEventos">Guardando...</span>
+        <span *ngIf="!asignandoEventos">Guardar Cambios</span>
+      </button>
+    </div>
+  </div>
+</div>

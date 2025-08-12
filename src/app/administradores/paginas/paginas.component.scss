@@ -1,0 +1,19 @@
+@use "sass:color";
+@use "sass:map";
+@use '../../../styles/variables' as v;
+@use '../../../styles/components' as c;
+
+.table-container {
+    width: 100% !important;
+}
+
+.tabla {
+    @extend .tabla-default
+}
+
+.contendedor-acciones {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}

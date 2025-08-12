@@ -1,0 +1,103 @@
+<div *ngIf="cargando" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+<div class="container-margin">
+  <div class="container2">
+    <div class="titulo">Buscar todas las ordenes por Número de Documento</div>
+    <form class="container1" (ngSubmit)="buscarOrdenesPorClienteId()">
+      <input class="inputs" placeholder="Número de orden" name="idOrden" (keyup.enter)="buscarOrdenesPorClienteId()" [(ngModel)]="clienteId">
+      <button class="button-lupa" type="submit"></button>
+    </form>
+  </div>
+<div>
+  <div *ngIf="ordenesEncontradas">
+    <div class="titulo">Ordenes</div>
+    <div class="row flex-centrar">
+      <div class="esconder table-container">
+        <table class="tabla" id="temporada-table">
+          <thead>
+            <tr class="header-tr">
+              <th class="">ID</th>
+              <th class="">Estado</th>
+              <th class="">Fecha</th>
+              <th class="">Tipo</th>
+              <th class="">Valor Orden</th>
+              <th class="">Cliente</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <!-- Spinner de carga -->
+            <tr *ngIf="cargando" class="centrarTexto">
+              <td colspan="100%">
+                <div class="lds-ellipsis">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              </td>
+            </tr>
+
+            <tr class="centrarTexto">
+              <td colspan="100%" *ngIf="ordenes.length == 0" class="mensaje-vacio">
+                No tiene tickets comprados en esta orden
+              </td>
+            </tr>
+
+            <ng-container  *ngFor="let orden of ordenes, let i=index">
+              <tr class="body-td">
+                <td class="d-none-384">
+                  <button class="btn btn-sm" (click)="toggleTicketItem(i)">
+                    {{ selectedTicketItem === i ? '−' : '+' }}
+                  </button>
+                  {{orden?.id}}
+                </td>
+                <td class="d-none-687">{{checkEstado(orden?.estado)}}</td>
+                <td>{{orden?.creationDate | date:'medium' }}</td>
+                <td class="d-none-687">{{checktipo(orden?.tipo)}}</td>
+                <td class="d-none-687">{{orden?.valorOrden | currency: 'COP '  }}</td>
+                <td class="d-none-687">{{orden?.cliente?.nombre}}</td>
+              </tr>
+              <tr *ngIf="selectedTicketItem === i">
+                <td colspan="100%" class="expandir-table">
+                  <div class="detalle-expandido">
+                    <div>
+                      <p class="p">Información</p>
+                    </div>
+                    <div class="informacion-container">
+                        <div class="detalle-item">
+                          <p class="etiqueta">ID:</p>
+                          <span class="valor">{{orden?.id}}</span>
+                        </div>
+                        <div class="detalle-item">
+                          <p class="etiqueta">Estado:</p>
+                          <span class="valor">{{checkEstado(orden?.estado)}}</span>
+                        </div>
+                        <div class="detalle-item">
+                          <p class="etiqueta">Fecha:</p>
+                          <span class="valor">{{orden?.creationDate | date:'medium' }}</span>
+                        </div>
+                        <div class="detalle-item">
+                          <p class="etiqueta">Tipo:</p>
+                          <span class="valor">{{checktipo(orden?.tipo)}}</span>
+                        </div>
+                        <div class="detalle-item">
+                          <p class="etiqueta">Valor Orden:</p>
+                          <span class="valor">{{orden?.valorOrden | currency: 'COP '  }}</span>
+                        </div>
+                        <div class="detalle-item">
+                          <p class="etiqueta">Nombre:</p>
+                          <span class="valor">{{orden?.cliente?.nombre}}</span>
+                        </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+    </div>

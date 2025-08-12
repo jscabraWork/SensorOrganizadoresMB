@@ -1,0 +1,106 @@
+@use "sass:color";
+@use "sass:map";
+@use '../../../../styles/variables' as v;
+@use '../../../../styles/components' as c;
+
+.form-title-container{
+    width: 100%;
+    display: flex;
+}
+
+
+.form-container {
+    width: 80%;
+}
+
+
+.btn-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 99%;
+    margin-top: 1rem;
+}
+
+  .btn-agregar {
+
+    margin-left: auto;
+    align-items: end;
+
+    button {
+      @extend .button-primary;
+      width: fit-content;
+      border-radius: 9px !important;
+      padding: 0.6rem 2.5rem;
+    }
+  }
+
+
+
+.label {
+    margin: 5px;
+    font-family: v.$font-primary;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.inputs {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    margin-left: 0;
+
+
+    & .label {
+        font-family: v.$font-primary;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .input-field {
+        width: auto;
+        padding: 8px 12px;
+        background-image: url(../../../../assets/images/vector/calendario.png);
+        background-repeat: no-repeat;
+        background-position: left 10px center;
+        background-size: 18px;
+        padding-left: 40px !important ;
+        background-color: v.$color-gris;
+        border-radius: 10px;
+        font-family: v.$font-primary;
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+
+    .input-name {
+        padding: 8px 12px;
+        width: auto;
+        background-color: v.$color-gris;
+        border-radius: 10px;
+        font-family: v.$font-primary;
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+}
+
+.error-message {
+    font-family: v.$font-primary;
+    font-size: 12px;
+    color: red;
+    margin-left: 5px;
+}
+
+.input-error {
+    border: 2px solid red !important;
+    animation: shake 0.5s ease-in-out;
+
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+

@@ -1,0 +1,23 @@
+@use "sass:color";
+@use "sass:map";
+@use '../../../../../styles/variables' as v;
+@use '../../../../../styles/components' as c;
+
+.inputs {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    margin-left: 0;
+    margin-right: 0;
+
+    .input-name {
+        @extend %input-field
+    }
+}
+
+.btn-container {
+    display: flex;           
+    justify-content: flex-end;
+    margin-top: 1rem;        
+}

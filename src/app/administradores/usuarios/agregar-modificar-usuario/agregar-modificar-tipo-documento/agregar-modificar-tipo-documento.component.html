@@ -1,0 +1,32 @@
+<div *ngIf="loading" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+
+<div class="container-fluid">
+    <div class="form-title-container">
+        <div class="form-title">
+          <div class="form-title-row"> 
+            <div class="icon-back" (click)="goBack()"></div>
+            <p >{{  'Agregar' }} Tipo de Documento</p>
+          </div>
+            <hr class="linea">
+        </div>
+    </div>
+
+    <form class="form-container">
+      <div class="inputs">
+        <input type="text" id="nombre" name="nombre" [class.input-error]="formEnviado && !tipoDocumento.nombre"  [(ngModel)]="tipoDocumento.nombre" class="input-name" placeholder="Nombre del Tipo" required>
+          <div *ngIf="formEnviado && !tipoDocumento.nombre" class="error-message">
+                El nombre es obligatorio
+          </div>
+      </div>
+
+      <div class="btn-container">
+        <div class="btn-agregar">
+            <button type="submit" (click)="crearTipo()">{{ 'Agregar' }}</button>
+        </div>
+      </div>
+
+    </form>
+
+</div>

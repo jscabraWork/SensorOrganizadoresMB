@@ -1,0 +1,16 @@
+<app-search-filter
+  [filters]="searchFilters"
+  (onBuscar)="filtrar($event)">
+</app-search-filter>
+
+<app-table
+  [pageData]="ticketsPage"
+  [headers]="['ID', 'Número', 'Precio Total', 'Personas en el ticket', 'Estado']"
+  [columnas]="['id', 'numero', 'precioTotal', 'personasPorTicket']"
+  [selects]="selectsTabla"
+  [expandableConfig]="expandableConfig"
+  [cargando]="cargando"
+  [mensajeVacio]="'No tiene tickets ' + getTextoEstado()"
+  (paginaCambiada)="cambiarPagina($event)"
+  (selectedIndexChange)="onExpandRow($event >= 0 ? ticketsPage?.content[$event] : null)">
+</app-table>

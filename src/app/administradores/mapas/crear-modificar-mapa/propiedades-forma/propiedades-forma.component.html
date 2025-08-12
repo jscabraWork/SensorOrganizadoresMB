@@ -1,0 +1,311 @@
+<div class="propiedades-panel">
+  <div class="panel-header">
+    <h3>Propiedades de Forma</h3>
+    <button type="button" class="btn-eliminar" (click)="eliminarForma()">
+      <i class="fas fa-trash"></i>
+    </button>
+  </div>
+
+  <!-- Propiedades básicas -->
+  <div class="form-group">
+    <label for="nombre">Nombre:</label>
+  </div>
+
+  <div class="form-group">
+    <label for="tipo">Tipo de Forma:</label>
+    <select 
+      id="tipo" 
+      [(ngModel)]="forma.tipo"
+      (ngModelChange)="onFormaChange()"
+      class="form-control">
+      <option [ngValue]="null">-- Seleccionar tipo --</option>
+      <option *ngFor="let tipo of tiposForma" [ngValue]="tipo.id">
+        {{tipo.nombre}}
+      </option>
+    </select>
+  </div>
+
+  <!-- Selector de Estilo -->
+  <div class="form-group">
+    <label for="estilo">Estilo Predefinido:</label>
+    <select 
+      id="estilo" 
+      [ngModel]="forma.estilo?.id || null"
+      (ngModelChange)="onEstiloChange($event)"
+      class="form-control">
+      <option [ngValue]="null">-- Crear estilo personalizado --</option>
+      <option *ngFor="let estilo of estilosDisponibles" [ngValue]="estilo.id">
+        Estilo {{estilo.id}} ({{estilo.backgroundColor || '#default'}})
+      </option>
+    </select>
+  </div>
+
+  <!-- Propiedades de estilo personalizadas -->
+  <div class="style-properties" *ngIf="forma.estilo">
+    <h4>Propiedades de Estilo</h4>
+    
+    <div class="form-row">
+      <div class="form-group">
+        <label for="ancho">Ancho (px):</label>
+        <input 
+          type="number" 
+          id="ancho"
+          [ngModel]="forma.estilo?.width || 100" 
+          (ngModelChange)="updateStyleProperty('width', $event)"
+          class="form-control"
+          min="10"
+          max="500"
+          placeholder="100">
+      </div>
+
+      <div class="form-group">
+        <label for="alto">Alto (px):</label>
+        <input 
+          type="number" 
+          id="alto"
+          [ngModel]="forma.estilo?.height || 100" 
+          (ngModelChange)="updateStyleProperty('height', $event)"
+          class="form-control"
+          min="10"
+          max="500"
+          placeholder="100">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="colorFondo">Color de Fondo:</label>
+        <div class="color-input-group">
+          <input 
+            type="color" 
+            id="colorFondo"
+            [ngModel]="forma.estilo?.backgroundColor || '#f8f9fa'" 
+            (ngModelChange)="updateStyleProperty('backgroundColor', $event)"
+            class="color-picker">
+          <input 
+            type="text" 
+            [ngModel]="forma.estilo?.backgroundColor || '#f8f9fa'" 
+            (ngModelChange)="updateStyleProperty('backgroundColor', $event)"
+            class="form-control color-text"
+            placeholder="#f8f9fa">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="borderColor">Color de Borde:</label>
+        <div class="color-input-group">
+          <input 
+            type="color" 
+            id="borderColor"
+            [ngModel]="forma.estilo?.borderColor || '#dee2e6'" 
+            (ngModelChange)="updateStyleProperty('borderColor', $event)"
+            class="color-picker">
+          <input 
+            type="text" 
+            [ngModel]="forma.estilo?.borderColor || '#dee2e6'" 
+            (ngModelChange)="updateStyleProperty('borderColor', $event)"
+            class="form-control color-text"
+            placeholder="#dee2e6">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="borderWidth">Grosor Borde (px):</label>
+        <input 
+          type="number" 
+          id="borderWidth"
+          [ngModel]="forma.estilo?.borderWidth || 1" 
+          (ngModelChange)="updateStyleProperty('borderWidth', $event)"
+          class="form-control"
+          min="0"
+          max="20"
+          placeholder="1">
+      </div>
+
+      <div class="form-group">
+        <label for="borderRadius">Border Radius (px):</label>
+        <input 
+          type="number" 
+          id="borderRadius"
+          [ngModel]="forma.estilo?.borderRadius || 4" 
+          (ngModelChange)="updateStyleProperty('borderRadius', $event)"
+          class="form-control"
+          min="0"
+          max="100"
+          placeholder="4"
+          [disabled]="forma.tipo === 2">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="zIndex">Z-Index:</label>
+      <input 
+        type="number" 
+        id="zIndex"
+        [ngModel]="forma.estilo?.zIndex || 1" 
+        (ngModelChange)="updateStyleProperty('zIndex', $event)"
+        class="form-control"
+        placeholder="1">
+    </div>
+  </div>
+
+  <!-- Propiedades de posición -->
+  <div class="position-properties">
+    <h4>Posición y Transformación</h4>
+      <div class="form-row">
+      <div class="form-group">
+        <label for="posicionX">Posición X (px):</label>
+        <input 
+          type="number" 
+          id="posicionX"
+          [ngModel]="forma.estilo.positionX || 0" 
+          (ngModelChange)="updateStyleProperty('positionX', $event)"
+          class="form-control"
+          min="0"
+          placeholder="0">
+      </div>
+
+      <div class="form-group">
+        <label for="posicionY">Posición Y (px):</label>
+        <input 
+          type="number" 
+          id="posicionY"
+          [ngModel]="forma.estilo.positionY || 0" 
+          (ngModelChange)="updateStyleProperty('positionY', $event)"
+          class="form-control"
+          min="0"
+          placeholder="0">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="rotacion">Rotación (grados):</label>
+      <input 
+        type="number" 
+        id="rotacion"
+        [ngModel]="forma.estilo.rotation || 0" 
+        (ngModelChange)="updateStyleProperty('rotation', $event)"
+        class="form-control"
+        min="-360"
+        max="360"
+        placeholder="0">
+    </div>
+  </div>
+
+  <!-- Gestión de Localidades -->
+  <div class="localidades-section">
+    <h4>Localidades Vinculadas</h4>
+    
+    <div class="localidades-header">
+      <div class="localidades-info">
+        <span class="localidades-count">
+          Total: {{forma.localidades?.length || 0}} localidades
+        </span>
+      </div>
+      
+      <div class="localidades-acciones">
+        <div class="form-group" *ngIf="obtenerLocalidadesDisponiblesParaAgregar().length > 0">
+          <label for="nuevaLocalidad">Agregar Localidad:</label>
+          <select 
+            id="nuevaLocalidad"
+            [ngModel]="null"
+            (ngModelChange)="onLocalidadChange($event)"
+            class="form-control">
+            <option [ngValue]="null">-- Seleccionar localidad --</option>
+            <option *ngFor="let localidad of obtenerLocalidadesDisponiblesParaAgregar()" [ngValue]="localidad.id">
+              {{localidad.nombre}}
+            </option>
+          </select>
+        </div>
+        
+        <button 
+          type="button" 
+          class="btn btn-outline-danger btn-sm"
+          (click)="eliminarTodasLocalidades()"
+          [disabled]="!forma.localidades || forma.localidades.length === 0">
+          <i class="fas fa-trash"></i>
+          Eliminar Todas
+        </button>
+      </div>
+    </div>
+
+    <!-- Lista de localidades -->
+    <div class="localidades-lista" *ngIf="forma.localidades && forma.localidades.length > 0">
+      <div 
+        *ngFor="let localidad of forma.localidades; let i = index"
+        class="localidad-item">
+        
+        <div class="localidad-info">
+          <div class="localidad-nombre">
+            <strong>{{localidad.nombre}}</strong>
+          </div>
+          <div class="localidad-detalles">
+            <span class="localidad-id">ID: {{localidad.id}}</span>
+            <span class="localidad-estado">Estado: {{localidad.estado === 1 ? 'Activo' : 'Inactivo'}}</span>
+          </div>
+        </div>
+        
+        <div class="localidad-controles">
+          <button 
+            type="button" 
+            class="btn btn-outline-danger btn-xs"
+            (click)="eliminarLocalidad(i)"
+            title="Eliminar localidad">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mensaje cuando no hay localidades -->
+    <div class="no-localidades" *ngIf="!forma.localidades || forma.localidades.length === 0">
+      <p class="text-muted">
+        <i class="fas fa-info-circle"></i>
+        No hay localidades vinculadas a esta forma.
+      </p>
+    </div>
+
+    <!-- Mensaje cuando no hay localidades disponibles para agregar -->
+    <div class="no-localidades-disponibles" *ngIf="obtenerLocalidadesDisponiblesParaAgregar().length === 0 && localidadesDisponibles.length > 0">
+      <p class="text-muted">
+        <i class="fas fa-check-circle"></i>
+        Todas las localidades disponibles ya están vinculadas.
+      </p>
+    </div>
+  </div>
+
+  <!-- Propiedad de texto de la forma -->
+  <div class="form-group">
+    <label for="textoForma">Texto dentro de la forma:</label>
+    <input type="text"
+           id="textoForma"
+           [(ngModel)]="forma.texto"
+           (ngModelChange)="onFormaChange()"
+           class="form-control"
+           maxlength="50"
+           placeholder="Texto opcional...">
+  </div>
+
+  <!-- Estilo de texto -->
+  <div class="form-row" *ngIf="forma.estilo">
+    <div class="form-group">
+      <label for="colorTexto">Color de Texto:</label>
+      <input type="color"
+             id="colorTexto"
+             [ngModel]="forma.estilo.color || '#ffffff'"
+             (ngModelChange)="updateStyleProperty('color', $event)"
+             class="color-picker">
+    </div>
+    <div class="form-group">
+      <label for="fontSize">Tamaño de Texto (px):</label>
+      <input type="number"
+             id="fontSize"
+             [ngModel]="forma.estilo.fontSize || 16"
+             (ngModelChange)="updateStyleProperty('fontSize', $event)"
+             class="form-control"
+             min="8" max="60" placeholder="16">
+    </div>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+<div class="propiedades-panel">
+  <h3 class="panel-title">Propiedades de Enlace</h3>
+  
+  <!-- Propiedades específicas de Enlace -->
+  <div class="panel-section">
+    <div class="form-group">
+      <label class="label">URL</label>
+      <input 
+        type="url" 
+        class="input-name"
+        [(ngModel)]="enlace.url" 
+        placeholder="https://ejemplo.com"
+      >
+      <small *ngIf="enlace.url && !esUrlValida(enlace.url)" class="error-text">
+        URL no válida. Debe incluir http:// o https://
+      </small>
+    </div>
+    
+    <div class="form-group">
+      <label class="label">Texto de Enlace</label>
+      <input 
+        type="text" 
+        class="input-name"
+        [(ngModel)]="enlace.texto" 
+        placeholder="Texto a mostrar"
+      >
+    </div>
+
+     <div class="form-group">
+      <label class="label">Tamaño de Fuente (px)</label>
+      <input 
+        type="number" 
+        class="input-name"
+        [(ngModel)]="enlace.fontSize" 
+        min="2"
+      >
+    </div>
+    
+    <div class="form-group">
+      <label class="label">Abrir en nueva ventana</label>
+      <div class="checkbox-wrapper">
+        <input 
+          type="checkbox" 
+          id="nuevaVentana"
+          class="input-checkbox"
+          [ngModel]="enlace.target === '_blank'"
+          (ngModelChange)="enlace.target = $event ? '_blank' : '_self'"
+        >
+        <label for="nuevaVentana" class="checkbox-label">
+          Sí, abrir enlace en nueva pestaña
+        </label>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label class="label">Color del Enlace</label>
+      <div class="color-picker-group">
+        <input 
+          type="color" 
+          class="color-picker"
+          [(ngModel)]="enlace.color"
+        >
+        <input 
+          type="text" 
+          class="color-hex"
+          [(ngModel)]="enlace.color"
+          placeholder="#007bff"
+        >
+      </div>
+    </div>
+
+
+     <div class="form-group">
+      <label class="label">Alineación</label>
+      <select 
+        class="input-name"
+        [(ngModel)]="enlace.estilos.textAlign"
+      >
+        <option *ngFor="let opt of textAlignOptions" [value]="opt.value">{{opt.label}}</option>
+      </select>
+    </div>
+  </div>
+  
+  <!-- Propiedades Comunes usando templates del componente base -->
+  <app-editor-propiedades-comunes [contenido]="enlace"></app-editor-propiedades-comunes>
+  
+  <!-- Botones de Acción -->
+  <div class="panel-section action-buttons">
+    <button 
+      class="btn-guardar"
+      (click)="guardar()"
+    >
+      Aplicar cambios
+    </button>
+  </div>
+</div>

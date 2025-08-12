@@ -1,0 +1,20 @@
+<div class="container-fluid">
+  <div class="container-fluid-menu">
+    <div class="title-container">
+      <div class="title-component">
+        <div class="title-component-row">
+          <div class="icon-back" (click)="goBack()"></div>
+          <p *ngIf="esRutaPorEvento">Localidades del Evento {{evento?.nombre}}</p>
+          <p *ngIf="!esRutaPorEvento">Localidades del Día {{dia?.nombre}}</p>
+        </div>
+        <hr class="title-line">
+      </div>
+    </div>
+
+    <div class="btn-agregar">
+      <button (click)="navigateToAgregarLocalidad()">Agregar</button>
+    </div>
+  </div>
+  <hr class="linea-menu">
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,38 @@
+<section class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <h2 class="login-title">Iniciar Sesión</h2>
+            <p class="login-subtitle">Ingresa con tu usuario de administrador</p>
+        </div>
+        
+        <form (ngSubmit)="handleLogin()" class="login-form">
+            <div class="form-group">
+                <input 
+                    type="text" 
+                    name="username" 
+                    class="form-input" 
+                    placeholder="Usuario" 
+                    [(ngModel)]="usuario.usuario"
+                >
+                <div class="input-hint"> 
+                    <small>Ingresa con tu usuario</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input 
+                    type="password" 
+                    name="password" 
+                    class="form-input" 
+                    placeholder="Contraseña" 
+                    [(ngModel)]="usuario.contrasena"
+                >
+            </div>
+
+            <div class="form-footer">
+                <small *ngIf="invalidLogin" class="error-message">{{errorMessage}}</small>
+                <button class="login-button" type="submit">Iniciar Sesión</button>
+            </div>
+        </form>
+    </div>
+</section>

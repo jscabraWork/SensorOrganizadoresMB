@@ -1,0 +1,41 @@
+<div class="container-fluid">
+  <!-- Título de la página -->
+  <app-title 
+    [title]="'Gestión de Puntos Físicos'" 
+    (onBack)="goBack()">
+  </app-title>
+
+  <!-- Componente de filtros de búsqueda -->
+  <app-search-filter
+    [filters]="searchFilters"
+    (onBuscar)="onBuscarPuntosFisicos($event)">
+  </app-search-filter>
+
+  <!-- Tabla de puntos físicos -->
+  <app-table
+    [pageData]="puntosFisicosPage"
+    [headers]="['ID', 'Nombre', 'Documento', 'Correo', 'Acciones']"
+    [columnas]="['id', 'nombre', 'numeroDocumento', 'correo', 'acciones']"
+    [idField]="'numeroDocumento'"
+    [expandableConfig]="expandableConfig"
+    [columnaBotones]="columnaBotones"
+    [cargando]="cargandoPuntosFisicos"
+    [mensajeVacio]="'No hay puntos físicos disponibles'">
+  </app-table>
+
+  <!-- Modal de asignación de eventos -->
+  <app-asignar-eventos-modal
+    [visible]="mostrandoAsignacion"
+    [entidadSeleccionada]="puntoFisicoSeleccionado"
+    [eventosDisponibles]="eventosDisponibles"
+    [eventosSeleccionados]="eventosSeleccionados"
+    [cargandoEventos]="cargandoEventos"
+    [asignandoEventos]="asignandoEventos"
+    [tituloModal]="'Asignar Eventos a Punto Físico'"
+    [nombreEntidad]="'Punto Físico'"
+    (cerrar)="cerrarAsignacion()"
+    (asignar)="asignarEventos()"
+    (toggleEvento)="toggleEventoSeleccion($event)"
+    (toggleTodos)="toggleTodosEventos()">
+  </app-asignar-eventos-modal>
+</div>

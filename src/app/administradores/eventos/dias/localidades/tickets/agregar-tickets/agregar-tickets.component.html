@@ -1,0 +1,126 @@
+<div *ngIf="loading" class="spinner-overlay">
+    <div class="spinner"></div>
+</div>
+
+<div class="container-fluid">
+    <div class="form-title-container">
+      <div class="form-title">
+          <div class="form-title-row"> 
+            <div class="icon-back" (click)="goBack()"></div>
+            <p>{{ modoEdicion ? 'Modificar' : 'Agregar' }} Ticket</p>
+          </div>
+            <hr class="linea">
+      </div>
+    </div>
+
+    <form class="form-container">
+      <!-- Campos para modo agregar -->
+      <div *ngIf="!modoEdicion">
+        <div class="inputs" *ngIf="!numerados">
+          <span class="field-label">Cantidad de Tickets</span>
+          <input type="text" id="cantidad-ticket" name="cantidad-ticket" 
+                 [class.input-error]="formEnviado && !cantidadTicket"  
+                 [(ngModel)]="cantidadTicket" class="input-number" 
+                 (input)="onInputNumber($event, 'cantidadT')"
+                 placeholder="Cantidad de tickets" required>
+          <div *ngIf="formEnviado && !cantidadTicket" class="error-message">
+            La cantidad de tickets es obligatoria
+          </div>
+        </div>
+
+        <div class="inputs">
+          <span class="field-label">Numerados</span>
+          <select id="numerados" name="numerados" class="input-select"
+                  [(ngModel)]="numerados" (change)="onNumeradosChange()" required>
+            <option [ngValue]="null" disabled selected>Tickets numerados</option>
+            <option [ngValue]="true">Sí</option>
+            <option [ngValue]="false">No</option>
+          </select>
+          <div *ngIf="formEnviado && numerados === null" class="error-message">
+            Debe seleccionar si los tickets son numerados o no
+          </div>
+        </div>
+
+        <!-- Campos adicionales para tickets numerados -->
+        <div *ngIf="numerados" class="additional-fields">
+          <div class="inputs">
+            <span class="field-label">Número mínimo de ticket</span>
+            <input type="text" id="numero-minimo" name="numero-minimo" 
+                   [class.input-error]="formEnviado && numerados && !numeroAbajo"  
+                   [(ngModel)]="numeroAbajo" class="input-number"
+                   (input)="onInputNumber($event, 'minimo')"
+                   placeholder="Número mínimo de ticket" required>
+            <div *ngIf="formEnviado && numerados && !numeroAbajo" class="error-message">
+              El número mínimo de ticket es obligatorio
+            </div>
+          </div>
+
+          <div class="inputs">
+            <span class="field-label">Número máximo de ticket</span>
+            <input type="text" id="numero-maximo" name="numero-maximo" 
+                   [class.input-error]="formEnviado && numerados && !numeroArriba"  
+                   [(ngModel)]="numeroArriba" class="input-number"
+                   (input)="onInputNumber($event, 'maximo')" 
+                   placeholder="Número máximo de ticket" required>
+            <div *ngIf="formEnviado && numerados && !numeroArriba" class="error-message">
+              El número máximo de ticket es obligatorio
+            </div>
+          </div>
+
+          <div class="inputs">
+            <span class="field-label">Letra</span>
+            <input type="text" id="letra" name="letra" 
+                   [(ngModel)]="letra" class="input-text" 
+                   placeholder="Letra (opcional)">
+          </div>
+        </div>
+
+        <div class="inputs">
+          <span class="field-label">Cantidad de personas por Ticket</span>
+          <input type="text" id="cantidad-persona" name="cantidad-persona" 
+                 [class.input-error]="formEnviado && !cantidadPersona"  
+                 [(ngModel)]="cantidadPersona" class="input-number"
+                 (input)="onInputNumber($event, 'cantidadP')" 
+                 placeholder="Cantidad de personas por Ticket" required>
+          <div *ngIf="formEnviado && !cantidadPersona" class="error-message">
+            La cantidad de personas por ticket es obligatoria
+          </div>
+        </div>
+      </div>
+
+      <!-- Campos para modo edición -->
+      <div *ngIf="modoEdicion">
+
+        <div class="inputs">
+          <span class="field-label">Número de Ticket</span>
+          <input type="text" id="numero-ticket" name="numero-ticket" 
+                 [class.input-error]="formEnviado && !ticket.numero"  
+                 [(ngModel)]="ticket.numero" class="input-text"
+                 placeholder="Número de ticket" required>
+          <div *ngIf="formEnviado && !ticket.numero" class="error-message">
+            El número de ticket es obligatorio
+          </div>
+        </div>
+
+
+        <div class="inputs">
+          <span class="field-label">Tarifa</span>
+          <select id="tarifa" name="tarifa" class="input-select"
+                  [(ngModel)]="ticket.tarifa">
+            <option [ngValue]="null">Seleccione una tarifa</option>
+            <option *ngFor="let tarifa of tarifas" [ngValue]="tarifa">
+              {{ tarifa.nombre }} - ${{ tarifa.precio }}
+            </option>
+          </select>
+        </div>
+
+        
+      </div>
+       
+      <div class="btn-container">
+        <div class="btn-agregar">
+          <button type="submit" (click)="crearOActualizarTicket()">{{ modoEdicion ? 'Guardar' : 'Agregar' }}</button>
+        </div>
+      </div>
+    </form>
+</div>

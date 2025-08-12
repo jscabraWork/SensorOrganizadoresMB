@@ -1,0 +1,31 @@
+<div class="container-margin">
+  <app-title 
+    title="Gestión de Páginas" 
+    [showBackButton]="false">
+  </app-title>
+
+  <!-- Menú de estados de la página -->
+  <div class="container-fluid-menu">
+    <div class="menu-pequeño-container">
+      <ul class="menu-pequeño">
+        <li (click)="toggleMenu(1)" [ngClass]="{'menu-mediano-lista-activo': estado === 1}">Activas</li>
+        <li (click)="toggleMenu(2)" [ngClass]="{'menu-mediano-lista-activo': estado === 2}">Ocultas</li>
+        <li (click)="toggleMenu(0)" [ngClass]="{'menu-mediano-lista-activo': estado === 0}">Inactivas</li>
+      </ul>
+    </div>
+    <div class="btn-agregar">
+      <button (click)="navigateToCrear()">Crear Página</button>
+    </div>
+  </div>
+</div>
+
+<app-table
+  [data]="lista"
+  [cargando]="cargando"
+  [columnas]="['nombre', 'seccionesCount', 'tipoNombre']"
+  [headers]="['Id', 'Nombre', 'Cantidad de secciones', 'Tipo', 'Estado', 'Acciones']"
+  [botones]="botonesConfig"
+  [selects]="selectsConfig"
+  [expandableConfig]="expandableConfig"
+  [mensajeVacio]="'No hay páginas disponibles'">
+</app-table>

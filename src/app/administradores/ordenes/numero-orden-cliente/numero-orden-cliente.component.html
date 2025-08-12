@@ -1,0 +1,270 @@
+<div *ngIf="cargando" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+<div class="container-margin">
+  <div class="container2">
+    <div class="titulo">Buscar Orden por No.</div>
+    <form class="container1" (ngSubmit)="buscarOrden()">
+      <input class="inputs" placeholder="Número de orden" name="idOrden" (keyup.enter)="buscarOrden()" [(ngModel)]="idOrden">
+      <button class="button-lupa" type="submit"></button>
+    </form>
+  </div>
+
+  <div *ngIf="ordenEncontrada">
+    <div>
+      <div class="titulo">Orden del Evento {{orden?.evento?.nombre}} - ID: {{ orden?.evento?.id}}</div>
+      <div class="row flex-centrar">
+        <div class="esconder table-container">
+          <table class="tabla">
+            <tbody>
+              <tr class="body-td">
+                <td class="nombreColumna"><strong>Número</strong></td>
+                <td>{{orden?.id}}</td>
+              </tr>
+              <tr class="body-td">
+                <td class="nombreColumna"><strong>Estado</strong></td>
+                <td>{{checkEstado(orden?.estado)}}</td>
+              </tr>
+              <tr class="body-td">
+                <td class="nombreColumna"><strong>Fecha</strong></td>
+                <td>{{orden?.creationDate | date:'medium' }}</td>
+              </tr>
+              <tr class="body-td">
+                <td class="nombreColumna"><strong>Tipo</strong></td>
+                <td>{{checktipo(orden?.tipo)}}</td>
+              </tr>
+              <tr class="body-td">
+                <td class="nombreColumna"><strong>Cliente</strong></td>
+                <td>Numero De Documento: {{orden?.cliente?.numeroDocumento}} - Nombre: {{orden?.cliente?.nombre}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="titulo">Compra Realizada</div>
+      <div class="row flex-centrar">
+        <div class="esconder table-container">
+          <table class="tabla" id="temporada-table">
+            <thead>
+              <tr class="header-tr">
+                <th class="">ID</th>
+                <th class="">Número</th>
+                <th class="">Estado</th>
+                <th class="">Localidad</th>
+                <th class="">Precio</th>
+                <th class="">Cliente</th>
+                <th class="">Adicionales</th>
+                <th class="">Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <!-- Spinner de carga -->
+              <tr *ngIf="cargando" class="centrarTexto">
+                <td colspan="100%">
+                  <div class="lds-ellipsis">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr class="centrarTexto">
+                <td colspan="100%" *ngIf="orden?.tickets?.length == 0" class="mensaje-vacio">
+                  No tiene tickets comprados en esta orden
+                </td>
+              </tr>
+
+              <ng-container  *ngFor="let ticket of orden?.tickets let i=index">
+                <tr class="body-td">
+                  <td class="d-none-384">
+                    <button class="btn btn-sm" (click)="toggleTicketItem(i)">
+                      {{ selectedTicketItem === i ? '−' : '+' }}
+                    </button>
+                    {{tickets?.length-i}}
+                  </td>
+                  <td class="d-none-687">{{ticket?.id}}</td>
+                  <td class="d-none-384">{{checkEstadoTicket(ticket?.estado)}}</td>
+                  <td class="d-none-687">{{ticket?.localidad?.nombre}}</td>
+                  <td class="d-none-687">{{ticket?.tarifa?.precio | currency:'COP '}}</td>
+                  <td class="d-none-687">{{ticket?.cliente?.nombre}}</td>
+                  <td class="d-none-687"><button class="btn-sm">+</button></td>
+                  <td class="d-none-687">
+                    <div class="btn-ver">
+                      <button class="btn-eliminar" (click)="eliminarTicketDeOrden(ticket?.id)">Eliminar</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr *ngIf="selectedTicketItem === i">
+                  <td colspan="100%" class="expandir-table">
+                    <div class="detalle-expandido">
+                      <div>
+                        <p class="p">Información</p>
+                      </div>
+                      <div class="informacion-container">
+                        <div class="detalle-item">
+                          <p class="etiqueta">Número:</p>
+                          <span class="valor">{{ticket?.id}}</span>
+                        </div>
+                        <div class="detalle-item">
+                          <p class="etiqueta">Estado:</p>
+                          <span class="valor">{{checkEstadoTicket(ticket?.estado)}}</span>
+                        </div>
+                        <div class="detalle-item">
+                          <p class="etiqueta">Localidad:</p>
+                          <span class="valor">{{ticket?.localidad?.nombre}}</span>
+                        </div>
+                        <div class="detalle-item">
+                          <p class="etiqueta">Precio:</p>
+                          <span class="valor">{{ticket?.tarifa?.precio | currency:'COP '}}</span>
+                        </div>
+                        <div class="detalle-item">
+                          <p class="etiqueta">Cliente:</p>
+                          <span class="valor">{{ticket?.cliente?.nombre}}</span>
+                        </div>
+                        <div class="detalle-item">
+                          <p class="etiqueta">Adicionales:</p>
+                          <button class="btn-sm">+</button>
+                        </div>
+                        <div class="detalle-item">
+                          <button class="btn-eliminar">Eliminar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="titulo">Agregar numero de ticket a la orden</div>
+      <div class="container1">
+        <input placeholder="ID del ticket"
+        [(ngModel)]="idTicket"
+        name="nuevoTicketId">
+        <button class="button-ordenes" (click)="agregarTicket()">Agregar</button>
+      </div>
+    </div>
+    <div>
+      <div class="titulo">Transacciones realizadas sobre la orden</div>
+      <div class="row flex-centrar">
+        <div class="esconder table-container">
+          <table class="tabla" id="temporada-table">
+            <thead>
+              <tr class="header-tr">
+                <th class="">ID</th>
+                <th class="">Fecha</th>
+                <th class="">Estado</th>
+                <th class="">Método</th>
+                <th class="">Documento</th>
+                <th class="">Celular</th>
+                <th class="">Email</th>
+                <th class="">Monto</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <!-- Spinner de carga -->
+              <tr *ngIf="cargando" class="centrarTexto">
+                <td colspan="100%">
+                  <div class="lds-ellipsis">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr class="centrarTexto">
+                <td colspan="100%" *ngIf=" orden?.transacciones.length == 0 && cargando == false" class="mensaje-vacio">
+                  No tiene transacciones esta orden
+                </td>
+              </tr>
+
+              <ng-container *ngFor="let transaccion of orden?.transacciones let i=index">
+                <tr class="body-td">
+                  <td class="d-none-384">
+                    <button class="btn btn-sm" (click)="toggleTransaccionItem(i)">
+                      {{ selectedTransaccionItem === i ? '−' : '+' }}
+                    </button>
+                    {{transaccion?.id}}
+                  </td>
+                  <td class="d-none-687">{{transaccion?.creationDate | date}}</td>
+                  <td class="d-none-384">{{checkEstadoTransaccion(transaccion?.status)}}</td>
+                  <td class="d-none-687">{{checkMetodo(transaccion?.metodo)}}</td>
+                  <td class="d-none-687">{{transaccion?.idPersona}}</td>
+                  <td class="d-none-687">{{transaccion?.phone}}</td>
+                  <td class="d-none-687">{{transaccion?.email}}</td>
+                  <td class="d-none-687">{{transaccion?.amount}}</td>
+                </tr>
+                <tr *ngIf="selectedTransaccionItem === i" >
+                  <td colspan="100%" class="expandir-table">
+                    <div class="detalle-expandido">
+                      <div>
+                        <p class="p">Información</p>
+                      </div>
+                      <div class="informacion-container">
+                        <div class="detalle-item">
+                          <p class="etiqueta">Fecha:</p>
+                          <span class="valor">{{transaccion?.creationDate | date}}</span>
+                        </div>
+                        <div class="detalle-item">
+                          <p class="etiqueta">Estado:</p>
+                          <span class="valor">{{checkEstadoTransaccion(transaccion?.status)}}</span>
+                        </div>
+                        <div class="detalle-item">
+                          <p class="etiqueta">Método:</p>
+                          <span class="valor">{{checkMetodo(transaccion?.metodo)}}</span>
+                        </div>
+                        <div class="detalle-item">
+                          <p class="etiqueta">Documento:</p>
+                          <span class="valor">{{transaccion?.idPersona}}</span>
+                        </div>
+                        <div class="detalle-item">
+                          <p class="etiqueta">Celular:</p>
+                          <span class="valor">{{transaccion?.phone}}</span>
+                        </div>
+                        <div class="detalle-item">
+                          <p class="etiqueta">Email:</p>
+                          <span class="valor">{{transaccion?.email}}</span>
+                        </div>
+                        <div class="detalle-item">
+                          <p class="etiqueta">Monto:</p>
+                          <span class="valor">{{transaccion?.amount}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="titulo">Cambiar estado de la orden</div>
+      <div class="container3">
+        <select placeholder="Estado actual de la orden" class="input-select-field-triangulo" [(ngModel)]="orden.estado">
+          <option [ngValue]="orden.estado">Estado Actual de la orden: {{checkEstado(orden?.estado)}}</option>
+          <option [ngValue]="6">Upgrade</option>
+          <option [ngValue]="4">Devolucion</option>
+          <option [ngValue]="5">Fraude</option>
+        </select>
+        <button class="button-ordenes" (click)="cambiarEstado(orden)">Cambiar</button>
+      </div>
+      <hr class="linea-menu">
+      <div class="titulo">Consultar estado a la pasarela de pagos</div>
+      <div class="container1">
+        <p>En caso de que el estado de la orden no es el mismo que en la pasarela puede ir a consultarlo con el siguiente botón</p>
+      </div>
+      <button class="button-ordenes" (click)="validacionContraPtp(idOrden)">Consultar</button>
+    </div>
+  </div>
+</div>

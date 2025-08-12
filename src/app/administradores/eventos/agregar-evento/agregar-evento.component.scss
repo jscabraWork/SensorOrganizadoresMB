@@ -1,0 +1,200 @@
+@use "sass:color";
+@use "sass:map";
+@use '../../../../styles/variables' as v;
+@use '../../../../styles/components' as c;
+
+
+.form-container {
+    width: 80%;
+}
+
+.linea {
+    background-color: v.$color-base;
+    height: 3px;
+    border: 1px;
+    width: 450px;
+  }
+
+  .btn-container {
+    display: flex;           
+    justify-content: flex-end; 
+    width: 99%;             
+    margin-top: 1rem;        
+}
+
+  .btn-agregar {
+
+    flex: 0 0 16%;
+    display: flex;
+    justify-content: center; 
+    align-items: flex-start; 
+    margin-left: auto;
+
+    & button {
+      @extend .button-primary;
+      width: fit-content;
+      border-radius: 9px !important;
+      padding: 0.6rem 2.5rem;
+    } 
+  }
+
+  .btn-otro,
+  .boton-agregar-pequeno {
+    @extend .button-form;
+    width: fit-content;
+    border-radius: 9px !important;
+    padding: 0.6rem 2.5rem;
+    margin-left: 10px; 
+  }
+
+  .select-with-button {
+    display: flex;
+    width: 100%;
+    
+    #tipo {
+      width: 90%;
+    }
+    
+    .btn-otro {
+      width: 10%;
+  }
+}
+
+  .select-orga-with-button {
+    display: flex;
+    width: 100%;
+    
+    #organizador {
+      width: 90%;
+    }
+    
+    
+  }
+
+  .contenedor-orgas-boton {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px; 
+    margin-bottom: 30px;
+    margin-top: 20px;
+  
+    .lista-organizadores {
+      flex: 0 0 75%;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+  
+      .lista-orgas {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 8px;
+  
+        p {
+          display: flex;
+          align-items: center;
+          background-color: v.$color-base;
+          color: v.$color-blanco;
+          padding: 6px 12px 6px 10px;
+          border-radius: 20px;
+          font-size: 14px;
+          position: relative;
+          max-width: 100%;
+          transition: background-color 0.3s ease;
+  
+          &:hover {
+            background-color: v.$color-secundario;
+          }
+  
+          .eliminar-lista {
+            background-color: v.$color-base;
+            color: v.$color-blanco;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+  
+            &:hover {
+              background-color: v.$color-secundario;
+            }
+          }}}}}
+        
+      
+    
+
+  .label {
+    margin: 5px;
+    font-family: v.$font-primary !important;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.inputs {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    margin-left: 0;
+    
+
+    & .label {
+        font-family: v.$font-primary !important;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .input-name,
+    .input-field,
+    .flatpickr-input {
+       @extend %input-field 
+    }
+
+    .input-select {
+        background-image: url(../../../../assets/images/vector/triangulo.png);
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        @extend .input-select-field
+    }
+}
+
+.flatpickr-input,
+.flatpickr-alt-input,
+.flatpickr-wrapper,
+.inputs-flatpickr,
+.flatpickr-wrapper input.flatpickr-input[readonly="readonly"] {
+  @extend %input-field;
+  width: -moz-available !important;
+}
+
+
+.inputs-edicion {
+  @extend .inputs;
+  margin: 0.3rem;
+}
+
+.error-message {
+    font-family: v.$font-primary;
+    font-size: 12px;
+    color: red;
+    margin-left: 5px;
+}
+
+.input-error {
+    border: 2px solid red !important;
+    animation: shake 0.5s ease-in-out; 
+    
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }

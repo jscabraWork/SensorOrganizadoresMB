@@ -1,0 +1,142 @@
+<section class="imagenes-eventos">
+  <button class="close-btn" (click)="dialog.closeAll()" title="Cerrar" aria-label="Cerrar ventana">
+  </button>
+
+  <h4>{{ evento?.nombre || 'Imágenes del Evento' }}</h4>
+
+  <hr class="title-line">
+
+  <!-- Upload Section -->
+  <section class="upload-section mb-3" aria-label="Subir imágenes">
+    <div 
+      class="drop-zone"
+      [class.active]="dragActive"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave($event)"
+      (drop)="onDrop($event)"
+      role="button"
+      tabindex="0"
+      aria-label="Zona para arrastrar y soltar imágenes">
+      
+      <div class="upload-content">
+        <div class="upload-icon"></div>
+        <span>Arrastra imágenes o</span>
+        <button class="button-third" (click)="agregarImagenes(); $event.stopPropagation()">
+          Seleccionar
+        </button>
+      </div>
+      <small class="format-info">
+        Formatos: JPG, PNG, <strong>WebP recomendado</strong> • Máximo: 3MB
+      </small>
+    </div>
+
+    <input 
+      #fileInput
+      type="file" 
+      multiple 
+      accept="image/jpeg,image/jpg,image/png,image/webp"
+      (change)="onFileSelected($event)"
+      hidden>
+  </section>
+
+  <!-- Selected Files Preview -->
+  <section *ngIf="selectedFiles.length > 0" class="selected-files mb-3" aria-label="Archivos seleccionados">
+    <header class="section-header">
+      <h4>Archivos ({{ selectedFiles.length }})</h4>
+      <div class="actions">
+        <button 
+          class="button-third"
+          [disabled]="cargando"
+          (click)="subirImagenes()">
+          <span *ngIf="cargando" class="spinner"></span>
+          {{ cargando ? 'Subiendo...' : 'Subir' }}
+        </button>
+        <button 
+          class="btn-sm" 
+          (click)="clearSelectedFiles()"
+          [disabled]="cargando"
+          title="Cancelar"
+          aria-label="Cancelar selección">
+        </button>
+      </div>
+    </header>
+    
+    <ul class="files-list" role="list">
+      <li *ngFor="let file of selectedFiles; let i = index" class="file-item" role="listitem">
+
+        <figure class="preview">
+            <img [src]="getFilePreviewUrl(file)" [alt]="file.name">
+        </figure>
+        
+        <div class="details">
+          <strong class="name">{{ file.name }}</strong>
+          <small class="size">{{ getFileSize(file) }}</small>
+        </div>
+        
+        <div class="actions">
+          <select 
+            [(ngModel)]="selectedTypes[i]"
+            aria-label="Tipo de imagen">
+            <option value="">Tipo</option>
+            <option *ngFor="let type of imageTypes | keyvalue" [value]="+type.key">
+              {{ type.value }}
+            </option>
+          </select>
+          
+          <button 
+            class="btn-sm" 
+            (click)="removeFile(i)"
+            [attr.aria-label]="'Eliminar ' + file.name">
+          </button>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Images List -->
+  <section class="images-section" aria-label="Imágenes del evento">
+    <header class="section-header">
+      <h4>Imágenes ({{ lista?.length || 0 }})</h4>
+      <button class="btn-sm refresh" (click)="refrescar()" [disabled]="cargando" title="Actualizar" aria-label="Actualizar lista">
+      </button>
+    </header>
+
+    <div *ngIf="cargando" class="loading" role="status" aria-live="polite">
+      <span class="spinner"></span>
+      <span>Cargando...</span>
+    </div>
+
+    <div *ngIf="!cargando && (!lista || lista.length === 0)" class="empty" role="status">
+      <div class="empty-icon"></div>
+      <span>No hay imágenes</span>
+    </div>
+
+    <ul *ngIf="!cargando && lista && lista.length > 0" class="images-list" role="list">
+      <li *ngFor="let imagen of lista" class="image-item" role="listitem">
+        <figure class="preview">
+          <img [src]="imagen.url" [alt]="imagen.nombre">
+        </figure>
+        
+        <div class="details">
+          <strong class="name">{{ imagen.nombre }}</strong>
+          <select 
+            [(ngModel)]="imagen.tipo"
+            (change)="editarTipoImagen(imagen)"
+            [attr.aria-label]="'Cambiar tipo de ' + imagen.nombre">
+            <option *ngFor="let type of imageTypes | keyvalue" [value]="+type.key">
+              {{ type.value }}
+            </option>
+          </select>
+        </div>
+        
+        <div class="actions">
+          <button 
+            class="btn-sm" 
+            (click)="eliminarImagen(imagen)"
+            [attr.aria-label]="'Eliminar ' + imagen.nombre">
+          </button>
+        </div>
+      </li>
+    </ul>
+  </section>
+</section>

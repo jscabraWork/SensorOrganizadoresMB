@@ -1,0 +1,47 @@
+<div *ngIf="loading" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+
+<div class="container-fluid">
+    <div class="form-title-container">
+    <div class="form-title">
+        <div class="form-title-row"> 
+            <div class="icon-back" (click)="goBack()"></div>
+            <p>{{ modoEdicion ? 'Modificar' : 'Agregar' }} Temporada</p>
+        </div>
+        <hr class="linea">
+    </div>
+</div>
+    
+    <form class="form-container">
+        <div class="inputs">
+            <input type="text" id="nombre" name="nombre" [class.input-error]="formEnviado && !temporada.nombre"  [(ngModel)]="temporada.nombre" class="input-name" placeholder="Nombre de la temporada" required>
+            <div *ngIf="formEnviado && !temporada.nombre" class="error-message">
+                El nombre es obligatorio
+            </div>
+        </div>
+  
+      <div class="inputs">
+        <label for="fecha-inicio" class="label"> Fecha Inicio</label>
+        <input type="date" id="fecha-inicio" name="fecha-inicio" [class.input-error]="formEnviado && !temporada.fechaInicio" [(ngModel)]="temporada.fechaInicio" class="input-field" placeholder="DD/MM/AA">
+        <div *ngIf="formEnviado && !temporada.fechaInicio" class="error-message">
+            La fecha de inicio es obligatoria
+        </div>
+    </div>
+  
+      <div class="inputs">
+        <label for="fecha-fin" class="label"> Fecha Fin</label>
+        <input type="date" id="fecha-fin" name="fecha-fin" [class.input-error]="formEnviado && !temporada.fechaFin" [(ngModel)]="temporada.fechaFin" class="input-field" placeholder="DD/MM/AA">
+        <div *ngIf="formEnviado && !temporada.fechaFin" class="error-message">
+            La fecha de fin es obligatoria
+        </div>
+    </div>
+  
+      <div class="btn-container">
+        <div class="btn-agregar">
+            <button type="submit" (click)="crearTemporada()">{{ modoEdicion ? 'Guardar' : 'Agregar' }}</button>
+        </div>
+      </div>
+      
+    </form>
+  </div>

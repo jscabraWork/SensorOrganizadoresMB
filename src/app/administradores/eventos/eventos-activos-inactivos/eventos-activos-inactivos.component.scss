@@ -1,0 +1,54 @@
+@use "sass:color";
+@use "sass:map";
+@use '../../../../styles/variables' as v;
+@use '../../../../styles/components' as c;
+
+.container-fluid {
+    @extend .container-margin;
+    margin-top: 1rem !important;
+    
+}
+
+.row {
+    @extend .row
+}
+
+.flex-centrar{
+    @extend .flex-centrar
+}
+
+.esconder {
+    @extend .esconder
+}
+
+.table-container {
+    width: 100% !important;
+}
+
+.tabla {
+    @extend .tabla-default
+}
+
+
+
+.btn-editar,
+.btn-eliminar,
+.btn-dias,
+.btn-localidades,
+.btn-tarifas {
+    @extend .button-third;
+    margin-right: 10px;
+}
+
+.btn-ver {     
+    button {
+        @extend .button-primary;
+        width: fit-content;
+        border-radius: 9px !important;
+        padding: 0.1rem 1.5rem;
+      } 
+}
+
+.estado-select-detalle {
+    margin-left: 10px;
+}

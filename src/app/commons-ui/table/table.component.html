@@ -1,0 +1,306 @@
+<div *ngIf="cargando" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+
+<div class="container-fluid">
+  <div class="row flex-centrar">
+    <div class="table-container">
+      <table class="tabla">
+        <thead>
+          <tr class="header-tr">
+            <th *ngFor="let header of headers">{{ header }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Spinner de carga -->
+          <tr *ngIf="cargando" class="centrarTexto">
+            <td colspan="100%">
+              <div class="lds-ellipsis">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Mensaje vacío -->
+          <tr *ngIf="!cargando && ((!pageData && data.length === 0) || (pageData?.content?.length === 0))"
+            class="centrarTexto">
+            <td colspan="100%" class="mensaje-vacio">
+              {{ mensajeVacio }}
+            </td>
+          </tr>
+
+
+          <!-- Filas -->
+          <ng-container *ngFor="let row of getFilas(); let i = index">
+            <!-- Fila principal -->
+            <tr class="body-td">
+              <!-- Columna con botón expandir (solo si hay configuración expandible) -->
+              <td *ngIf="expandableConfig">
+                <button class="btn btn-sm expand-btn" (click)="toggleExpand(i)" [class.expanded]="selectedIndex === i">
+                  {{ selectedIndex === i ? '−' : '+' }}
+                </button>
+                {{ row[idField] }}
+              </td>
+
+              <!-- Columna ID (solo mostrar si no hay configuración expandible) -->
+              <td *ngIf="!expandableConfig && columnas.includes('id')">
+                {{ row.id }}
+              </td>
+
+              <!-- Otras columnas de datos (omitir ID si ya se mostró con el botón expandir) -->
+              <td *ngFor="let col of getColumnasFiltradas()">
+                <ng-container *ngIf="getColumnaSelect(col, row) as selectConfig; else notSelect">
+                  <select [ngClass]="selectConfig.clase" [ngModel]="row[selectConfig.nombreCampo]"
+                    [disabled]="selectConfig.disabled" (change)="onColumnaSelectChange(row, selectConfig, $event)">
+                    <option *ngFor="let opcion of selectConfig.opciones" [ngValue]="opcion.value">
+                      {{ opcion.label }}
+                    </option>
+                  </select>
+                </ng-container>
+                <ng-template #notSelect>
+                  <ng-container *ngIf="getColumnaBotones(col, row).length > 0; else normalValue">
+                    <button *ngFor="let boton of getColumnaBotones(col, row)" [ngClass]="boton.clase"
+                      (click)="boton.accion(row)">
+                      {{ boton.texto }}
+                    </button>
+                  </ng-container>
+                  <ng-template #normalValue>
+                    {{ row[col] }}
+                  </ng-template>
+                </ng-template>
+              </td>
+              <!-- Selects -->
+              <td *ngIf="selects?.length > 0" class="selects-col">
+                <ng-container *ngFor="let select of selects">
+                  <select [ngClass]="select.clase" [ngModel]="row[select.nombreCampo]" [disabled]="select.disabled"
+                    (change)="onSelectChange(row, select, $event)">
+                    <option *ngFor="let opcion of select.opciones" [ngValue]="opcion.value">
+                      {{ opcion.label }}
+                    </option>
+                  </select>
+                </ng-container>
+              </td>
+
+              <!-- Botones -->
+              <td *ngIf="botones?.length > 0" class="botones-col">
+                <button *ngFor="let boton of botones" [ngClass]="boton.clase" (click)="boton.accion(row)">
+                  {{ boton.texto }}
+                </button>
+              </td>
+            </tr>
+
+            <!-- Fila expandida -->
+            <tr *ngIf="selectedIndex === i && expandableConfig" class="expanded-row">
+              <td colspan="100%" class="expandir-table">
+                <div class="detalle-expandido">
+                  <!-- Sección de Información -->
+                  <div>
+                    <p class="p">Información</p>
+                  </div>
+                  <div class="informacion-container">
+                    <ng-container *ngFor="let field of expandableConfig.infoFields">
+                      <div class="detalle-item" *ngIf="!field.showWhen || field.showWhen(row)">
+                        <p class="etiqueta">{{ field.label }}:</p>
+                        <span class="valor">
+                          {{ field.isNested ? getNestedProperty(row, field.property) : row[field.property] }}
+                        </span>
+                      </div>
+                    </ng-container>
+                  </div>
+
+                  <hr class="linea-detalle-expandido">
+
+                  <!-- Sección de Acciones -->
+                  <div>
+                    <p class="p">Acciones</p>
+                  </div>
+                  <div class="action-buttons">
+                    <ng-container *ngFor="let btn of expandableConfig.actionButtons">
+                      <button *ngIf="!btn.mostrar || btn.mostrar(row)" [class]="btn.class" (click)="btn.action(row)">
+                        {{ btn.text }}
+                      </button>
+                    </ng-container>
+
+                    <!-- Select único -->
+                    <ng-container *ngIf="expandableConfig.selectConfig && !expandableConfig.selects">
+                      <select class="form-select estado-select-detalle"
+                        [(ngModel)]="row[expandableConfig.selectConfig.property]"
+                        (change)="onExpandedSelectChange(row, $event)">
+                        <option *ngFor="let opt of expandableConfig.selectConfig.options" [ngValue]="opt.value">
+                          {{ opt.label }}
+                        </option>
+                      </select>
+                    </ng-container>
+
+                    <!-- Múltiples selects -->
+                    <ng-container *ngIf="expandableConfig.selects">
+                      <div *ngFor="let select of expandableConfig.selects" class="expanded-select-container">
+                        <label *ngIf="select.label" class="select-label">{{ select.label }}</label>
+                        <select class="form-select {{ select.class || '' }}" [(ngModel)]="row[select.property]"
+                          [disabled]="select.disabled" (change)="onExpandedSelectChange(row, $event, select)">
+                          <option *ngFor="let opt of select.options" [ngValue]="opt.value">
+                            {{ opt.label }}
+                          </option>
+                        </select>
+                      </div>
+                    </ng-container>
+                  </div>
+
+                  <!-- SubtTabla -->
+                  <div class="subtable-expandable-container"
+                    *ngIf="expandableConfig.subTableConfig && row[expandableConfig.subTableConfig.dataProperty]?.length > 0">
+                    <hr class="linea-detalle-expandido-subtable">
+                    <div>
+                      <p class="p">Detalles</p>
+                    </div>
+
+                    <div class="subtable-container">
+                      <table class="subtable">
+                        <thead>
+                          <tr class="header-tr">
+                            <!-- Columna para botón expandir si hay configuración expandible -->
+                            <th *ngIf="expandableConfig.subTableConfig.expandableConfig"></th>
+
+                            <th *ngFor="let col of expandableConfig.subTableConfig.columns">
+                              {{ getColumnLabel(col) }}
+                            </th>
+                            <th
+                              *ngIf="expandableConfig.subTableConfig.buttons || expandableConfig.subTableConfig.selects">
+                              Acciones
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <ng-container
+                            *ngFor="let subRow of row[expandableConfig.subTableConfig.dataProperty]; let j = index">
+                            <!-- Fila principal de la subtabla -->
+                            <tr class="subtable-row">
+                              <!-- Botón expandir si hay configuración expandible -->
+                              <td *ngIf="expandableConfig.subTableConfig.expandableConfig">
+                                <button class="btn btn-sm expand-btn" (click)="toggleSubTableExpand(i, j)"
+                                  [class.expanded]="isSubTableRowExpanded(i, j)">
+                                  {{ isSubTableRowExpanded(i, j) ? '−' : '+' }}
+                                </button>
+                              </td>
+
+                              <td *ngFor="let col of expandableConfig.subTableConfig.columns">
+                                {{ subRow[getColumnKey(col)] }}
+                              </td>
+
+                              <td
+                                *ngIf="expandableConfig.subTableConfig.buttons || expandableConfig.subTableConfig.selects"
+                                class="subtable-actions">
+                                <div class="subtable-actions-container">
+                                  <!-- Botones en subtabla -->
+                                  <ng-container *ngFor="let btn of expandableConfig.subTableConfig.buttons">
+                                    <button *ngIf="!btn.mostrar || btn.mostrar(row, subRow)" [class]="btn.class"
+                                      (click)="btn.action(row, subRow)">
+                                      {{ btn.text }}
+                                    </button>
+                                  </ng-container>
+
+                                  <!-- Selects en subtabla -->
+                                  <div *ngIf="expandableConfig.subTableConfig.selects" class="subtable-selects">
+                                    <ng-container *ngFor="let select of expandableConfig.subTableConfig.selects">
+                                      <div class="subtable-select-container">
+                                        <label *ngIf="select.label" class="select-label">{{ select.label }}</label>
+                                        <select class="form-select {{ select.class || '' }}"
+                                          [(ngModel)]="subRow[select.property]"
+                                          (change)="select.action(row, subRow, $any($event.target).value)">
+                                          <option *ngFor="let opt of select.options" [ngValue]="opt.value">
+                                            {{ opt.label }}
+                                          </option>
+                                        </select>
+                                      </div>
+                                    </ng-container>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+
+                            <!-- Fila expandida de la subtabla -->
+                            <tr *ngIf="expandableConfig.subTableConfig.expandableConfig && isSubTableRowExpanded(i, j)"
+                              class="subtable-expanded-row">
+                              <td colspan="100%">
+                                <div class="subtable-expanded-content">
+                                  <!-- Información expandida -->
+                                  <ng-container *ngIf="expandableConfig.subTableConfig.expandableConfig.infoFields">
+                                    <div class="subtable-informacion-container">
+                                      <ng-container
+                                        *ngFor="let field of expandableConfig.subTableConfig.expandableConfig.infoFields">
+                                        <div class="subtable-detalle-item"
+                                          *ngIf="!field.showWhen || field.showWhen(row, subRow)">
+                                          <p class="subtable-etiqueta">{{ field.label }}:</p>
+                                          <span class="subtable-valor">
+                                            {{ field.isNested ? getNestedProperty(subRow, field.property) :
+                                            subRow[field.property] }}
+                                          </span>
+                                        </div>
+                                      </ng-container>
+                                    </div>
+                                  </ng-container>
+
+                                  <!-- Acciones expandidas -->
+                                  <ng-container *ngIf="expandableConfig.subTableConfig.expandableConfig.actionButtons">
+                                    <hr class="subtable-divider">
+                                    <div class="subtable-action-buttons">
+                                      <ng-container
+                                        *ngFor="let btn of expandableConfig.subTableConfig.expandableConfig.actionButtons">
+                                        <button *ngIf="!btn.mostrar || btn.mostrar(row, subRow)" [class]="btn.class"
+                                          (click)="btn.action(row, subRow)">
+                                          {{ btn.text }}
+                                        </button>
+                                      </ng-container>
+                                    </div>
+                                  </ng-container>
+
+                                  <!-- Selects expandidos -->
+                                  <ng-container *ngIf="expandableConfig.subTableConfig.expandableConfig.selects">
+                                    <hr class="subtable-divider">
+                                    <div class="subtable-expanded-selects">
+                                      <ng-container
+                                        *ngFor="let select of expandableConfig.subTableConfig.expandableConfig.selects">
+                                        <div class="subtable-select-container">
+                                          <label *ngIf="select.label" class="select-label">{{ select.label }}</label>
+                                          <select class="form-select {{ select.class || '' }}"
+                                            [(ngModel)]="subRow[select.property]"
+                                            (change)="select.action(row, subRow, $any($event.target).value)">
+                                            <option *ngFor="let opt of select.options" [ngValue]="opt.value">
+                                              {{ opt.label }}
+                                            </option>
+                                          </select>
+                                        </div>
+                                      </ng-container>
+                                    </div>
+                                  </ng-container>
+                                </div>
+                              </td>
+                            </tr>
+                          </ng-container>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div> <!-- Cierre de detalle-expandido -->
+              </td> <!-- Cierre de td.expandir-table -->
+            </tr> <!-- Cierre de tr.expanded-row -->
+          </ng-container>
+        </tbody>
+      </table>
+
+      <!-- Paginación fuera de la tabla principal -->
+      <div *ngIf="pageData" class="paginacion-container">
+        <div class="icon-chevron-left" (click)="cambiarPagina(pageData.number - 1)"
+          [class.disabled]="pageData.number === 0">
+        </div>
+        <span>Página {{ pageData.number + 1 }} de {{ pageData.totalPages }}</span>
+        <div class="icon-chevron-right" (click)="cambiarPagina(pageData.number + 1)"
+          [class.disabled]="pageData.number + 1 >= pageData.totalPages">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

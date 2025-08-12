@@ -1,0 +1,93 @@
+<div *ngIf="cargando" class="spinner-overlay">
+    <div class="spinner"></div>
+  </div>
+  
+  <div class="container-fluid">
+    <div class="row flex-centrar">
+        <div class="esconder table-container">
+          <table class="tabla"  id="temporada-table">
+            <thead>
+              <tr class="header-tr">
+                <th class="">ID</th>
+                <th class="">Nombre</th>
+                <th class="">Tarifas</th>
+                <th class="">Tickets</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <!-- Spinner de carga -->
+              <tr *ngIf="cargando" class="centrarTexto">
+                <td colspan="100%">
+                  <div class="lds-ellipsis">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr class="centrarTexto">
+                <td colspan="100%" *ngIf="localidades?.length == 0 && cargando == false" class="mensaje-vacio">
+                  No tiene localidades
+                </td>
+              </tr>
+     
+              <ng-container *ngFor="let localidad of localidades; let i = index">
+                <tr class="body-td">
+                  <td class="d-none-384">
+                    <button class="btn btn-sm" (click)="toggleItem(i)">
+                      {{ selectedItem === i ? '−' : '+' }}
+                    </button>
+                    {{ localidad.id }}
+                  </td>
+                  <td class="d-none-687">{{ localidad.nombre }}</td>
+                  <td class="d-none-687">
+                    <div class="btn-ver">
+                      <button (click)="irATarifas(localidad.id)">Ver</button>
+                    </div>
+                  </td>
+                   <td class="d-none-687">
+                    <div class="btn-ver">
+                      <button (click)="irATickets(localidad.id)">Ver</button>
+                    </div>
+                  </td>
+                </tr>
+     
+                <!-- Sección Expandida -->
+                <tr *ngIf="selectedItem === i">
+                  <td colspan="100%" class="expandir-table">
+                      <div class="detalle-expandido">
+                        <div> 
+                          <p class="p">Información</p>
+                        </div>  
+                        <div class="informacion-container">               
+                          <div class="detalle-item">
+                            <p class="etiqueta">Nombre:</p> 
+                            <span class="valor">{{ localidad.nombre }}</span>
+                          </div>
+                        </div>
+                        <hr class="linea-detalle-expandido">
+                        <div>
+                          <p class="p">Acciones</p>
+                        </div>
+                        <div>
+                            <button class="btn-editar" (click)="editarLocalidad(localidad)">Editar</button>
+                            <button class="btn-eliminar" (click)="eliminarLocalidad(localidad.id)">Eliminar</button>
+                            <button class="btn-tarifas" (click)="irATarifas(localidad.id)">Tarifas</button>
+                            <button class="btn-tickets" (click)="irATickets(localidad.id)">Tickets</button>
+                        </div>
+                      </div>                        
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+    </div>
+
+
+    
+
+</div>

@@ -1,0 +1,137 @@
+<div class="modal-overlay" *ngIf="visible" (click)="cerrarModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Seleccionar Tickets para Asientos</h3>
+      <button type="button" class="btn-cerrar" (click)="cerrarModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Selector de Localidad -->
+      <div class="form-group">
+        <label for="localidad">Seleccionar Localidad:</label>
+        <select 
+          id="localidad" 
+          [(ngModel)]="localidadSeleccionada" 
+          (ngModelChange)="onLocalidadChange()"
+          class="form-control"
+          [disabled]="cargandoLocalidades">
+          <option [ngValue]="null">
+            {{ cargandoLocalidades ? 'Cargando localidades...' : '-- Seleccione una localidad --' }}
+          </option>
+          <option *ngFor="let localidad of localidades" [ngValue]="localidad">
+            {{localidad.nombre}}
+          </option>
+        </select>
+    </div>
+
+      <!-- Indicador de carga de tickets -->
+      <div *ngIf="cargandoTickets" class="loading-indicator">
+        <div class="spinner"></div>
+        <span>Cargando tickets...</span>      </div>
+
+      <!-- Indicador de carga de tickets -->
+      <div *ngIf="cargandoTickets" class="loading-indicator">
+        <div class="spinner"></div>
+        <span>Cargando tickets...</span>
+      </div>
+
+      <!-- Lista de Tickets por Estado -->
+      <div class="tickets-container" *ngIf="localidadSeleccionada">
+        <div class="tickets-info">
+          <p>Localidad: <strong>{{localidadSeleccionada.nombre}}</strong></p>
+          <p>Total de tickets: <strong>{{tickets.length}}</strong></p>
+          <p>Seleccionados: <strong>{{ticketsSeleccionadosIds.size}}</strong></p>
+        </div>        <!-- Tickets agrupados por estado -->
+        <div class="estados-container">
+          <ng-container *ngFor="let estado of [0, 1, 2, 3, 4]">
+            <div 
+              class="estado-grupo"
+              *ngIf="ticketsPorEstado[estado]?.length > 0">
+            
+            <div class="estado-header">
+              <h4 class="estado-titulo" [style.color]="obtenerColorEstado(estado)">
+                <i class="fas fa-circle"></i>
+                {{obtenerNombreEstado(estado)}} ({{ticketsPorEstado[estado].length}})
+              </h4>
+              <div class="estado-acciones">
+                <button 
+                  type="button" 
+                  class="btn btn-sm btn-outline-primary"
+                  (click)="seleccionarTodosDeEstado(estado)">
+                  Todos
+                </button>
+                <button 
+                  type="button" 
+                  class="btn btn-sm btn-outline-secondary"
+                  (click)="deseleccionarTodosDeEstado(estado)">
+                  Ninguno
+                </button>
+              </div>
+            </div>
+
+            <div class="tickets-grid">
+              <div 
+                *ngFor="let ticket of ticketsPorEstado[estado]" 
+                class="ticket-item"
+                [class.selected]="ticketsSeleccionadosIds.has(ticket.id)"
+                (click)="toggleTicketSeleccion(ticket)">
+                
+                <input 
+                  type="checkbox" 
+                  [checked]="ticketsSeleccionadosIds.has(ticket.id)"
+                  (click)="$event.stopPropagation()"
+                  (change)="toggleTicketSeleccion(ticket)">
+                
+                <div class="ticket-info">
+                  <div class="ticket-numero">{{ticket.numero}}</div>
+                  <div class="ticket-detalles">
+                    <small>ID: {{ticket.id}}</small>
+                    <small *ngIf="ticket.tarifa">{{ticket.tarifa.nombre}}</small>
+                  </div>
+                </div>                <div 
+                  class="ticket-estado-indicator" 
+                  [style.background-color]="obtenerColorEstado(ticket.estado)">
+                </div>
+              </div>
+            </div>
+          </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- Mensaje cuando no hay localidad seleccionada -->
+      <div class="no-localidad" *ngIf="!localidadSeleccionada">
+        <p class="text-muted">
+          <i class="fas fa-info-circle"></i>
+          Seleccione una localidad para ver los tickets disponibles
+        </p>
+      </div>
+
+      <!-- Mensaje cuando no hay tickets -->
+      <div class="no-tickets" *ngIf="localidadSeleccionada && tickets.length === 0">
+        <p class="text-muted">
+          <i class="fas fa-exclamation-circle"></i>
+          No hay tickets disponibles en esta localidad
+        </p>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button 
+        type="button" 
+        class="btn btn-secondary" 
+        (click)="cerrarModal()">
+        Cancelar
+      </button>
+      <button 
+        type="button" 
+        class="btn btn-primary" 
+        [disabled]="ticketsSeleccionadosIds.size === 0"
+        (click)="confirmarSeleccion()">
+        Agregar {{ticketsSeleccionadosIds.size}} Asientos
+      </button>
+    </div>
+  </div>
+</div>

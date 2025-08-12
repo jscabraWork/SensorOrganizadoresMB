@@ -1,0 +1,8 @@
+{
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "github.copilot.nextEditSuggestions.fixes": true,
+    "merge-conflict.autoNavigateNextConflict.enabled": true,
+    "path-intellisense.autoTriggerNextSuggestion": true,
+    "workbench.experimental.share.enabled": true,
+    "workbench.commandPalette.preserveInput": true
+}

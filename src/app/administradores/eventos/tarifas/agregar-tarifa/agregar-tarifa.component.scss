@@ -1,0 +1,142 @@
+@use "sass:color";
+@use "sass:map";
+@use '../../../../../styles/variables' as v;
+@use '../../../../../styles/components' as c;
+
+.container-fluid {
+    @extend .container-margin;
+}
+
+.form-title-container{
+    width: 100%;
+    display: flex;
+}
+
+.form-title {
+    line-height: normal;
+    color: v.$color-base;
+    font-weight: 800;
+    font-style: bold;
+
+    & p {
+        font-size: 24px;
+    }
+}
+
+.form-container {
+    width: 80%;
+}
+
+.linea {
+    background-color: v.$color-base;
+    height: 3px;
+    border: 1px;
+    width: 450px;
+  }
+
+  .btn-container {
+    display: flex;           
+    justify-content: flex-end; 
+    width: 98%;  
+    gap: 1rem;           
+    margin-top: 1rem;        
+}
+
+  .btn-agregar {
+
+    margin-left: auto;
+    align-items: end;
+
+    button {
+      @extend .button-primary;
+      width: fit-content;
+      border-radius: 9px !important;
+      padding: 0.6rem 2.5rem;
+    } 
+  }
+
+
+
+.label {
+    margin: 5px;
+    font-family: v.$font-primary;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.inputs {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    margin-left: 0;
+    
+
+    & .label {
+        font-family: v.$font-primary;
+        font-size: 14px;
+        font-weight: 700;
+    }   
+
+    .input-name {
+        @extend %input-field
+    }
+
+    .input-number {
+        @extend %input-field;
+        -moz-appearance: textfield; // Para Firefox
+        appearance: textfield;
+    }
+
+}
+
+.error-message {
+    font-family: v.$font-primary;
+    font-size: 12px;
+    color: red;
+    margin-left: 5px;
+}
+
+.input-error {
+    border: 2px solid red !important;
+    animation: shake 0.5s ease-in-out; 
+    
+  }
+
+.iva-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+  label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  input[type="checkbox"] {
+    margin: 0;
+    cursor: pointer;
+  }
+}
+
+.input-number:disabled {
+  background-color: v.$color-secundario;
+  color: v.$color-base;
+}
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+
+  

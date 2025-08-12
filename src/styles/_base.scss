@@ -1,0 +1,29 @@
+@use 'variables' as *;
+@use "sass:map";
+
+body {
+  font-family: $font-primary;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: $color-base;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-secondary;
+  font-weight: 600;
+  margin: 0 0 map.get($spacers, "3");
+}
+
+p {
+  margin: 0 0 map.get($spacers, "3");
+  line-height: 1.6;
+}
+
+select {
+  font-family: $font-primary !important;
+}
+
+select-option {
+  font-family: $font-primary !important;
+}

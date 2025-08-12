@@ -1,0 +1,90 @@
+@use "sass:color";
+@use "sass:map";
+@use '../../../../../styles/variables' as v;
+@use '../../../../../styles/components' as c;
+
+.container-fluid {
+    @extend .container-margin
+}
+
+.tittle-container {
+    width: 100%;
+    display: flex;
+}
+
+.btn-agregar {
+
+    margin-left: auto;
+  
+    button {
+      @extend .button-primary;
+      width: fit-content;
+      border-radius: 9px !important;
+      padding: 0.6rem 2.5rem;
+    } 
+  }
+
+  .tittle {
+    line-height: normal;
+    color: v.$color-base;
+    font-weight: 800;
+    font-style: bold;
+  
+    & p {
+      font-size: 24px;
+      margin: 0;
+    }
+  
+    .linea {
+      background-color: v.$color-base;
+      height: 3px;
+      border: none; 
+      width: 650px;
+      margin: 10px 0 10px 0; 
+      text-align: left;
+      display: block;
+    }
+  }
+
+
+.container-fluid-menu {
+    width: 100%;
+    display: flex;
+    justify-content: space-between
+}
+
+  
+  .menu-pequeño {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 50px;
+    margin-top: 15px;
+  }
+  
+  .menu-pequeño li {
+    cursor: pointer;
+    font-size: 14px;
+    color: v.$color-base;
+    font-weight: 400;
+    transition: color 0.3s;
+  }
+  
+  .menu-pequeño li:hover {
+    color: v.$color-gris;
+  }
+  
+  .menu-mediano-lista-activo {
+    border-bottom: 2px solid v.$color-base;
+    padding-bottom: 2px !important;
+    opacity: 1;
+  }
+  
+  /* Media Queries para responsividad */
+  @media(max-width: 945px) {
+    .menu-pequeño {
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+  }

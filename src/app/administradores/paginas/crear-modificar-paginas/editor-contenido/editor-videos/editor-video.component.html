@@ -1,0 +1,98 @@
+<div class="propiedades-panel">
+  <h3 class="panel-title">Propiedades de Video</h3>
+  
+  <!-- Selección de Video -->
+  <div class="panel-section">
+    <div class="form-group">
+      <label class="label">Seleccionar Video</label>
+      <app-recursos 
+        [paginaId]="paginaId"
+        (recursoSeleccionado)="seleccionarRecurso($event)"
+        [tiposPermitidos]="tipos"
+      ></app-recursos>
+    </div>
+    
+    <div *ngIf="video.recurso" class="recurso-seleccionado">
+      <p class="label">Recurso seleccionado:</p>
+      <div class="recurso-info">
+        <div><strong>Nombre:</strong> {{ video.recurso.nombre }}</div>
+        <div><strong>Tamaño:</strong> {{ formatearTamano(video.recurso.size) }}</div>
+        <div><strong>Formato:</strong> {{ video.recurso.formato }}</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Opciones de reproducción -->
+  <div class="panel-section" *ngIf="video.recurso">
+    <h4 class="section-title">Opciones de Reproducción</h4>
+    
+    <div class="form-group">
+      <div class="checkbox-wrapper">
+        <input 
+          type="checkbox" 
+          id="videoAutoplay"
+          class="input-checkbox"
+          [(ngModel)]="video.autoplay"
+        >
+        <label for="videoAutoplay" class="checkbox-label">
+          Reproducción automática
+        </label>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <div class="checkbox-wrapper">
+        <input 
+          type="checkbox" 
+          id="videoLoop"
+          class="input-checkbox"
+          [(ngModel)]="video.bucle"
+        >
+        <label for="videoLoop" class="checkbox-label">
+          Reproducir en bucle
+        </label>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <div class="checkbox-wrapper">
+        <input 
+          type="checkbox" 
+          id="videoControls"
+          class="input-checkbox"
+          [(ngModel)]="video.controls"
+        >
+        <label for="videoControls" class="checkbox-label">
+          Mostrar controles
+        </label>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <div class="checkbox-wrapper">
+        <input 
+          type="checkbox" 
+          id="videoMuted"
+          class="input-checkbox"
+          [(ngModel)]="video.muted"
+        >
+        <label for="videoMuted" class="checkbox-label">
+          Silenciar por defecto
+        </label>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Propiedades Comunes usando templates del componente base -->
+  <app-editor-propiedades-comunes [contenido]="video"></app-editor-propiedades-comunes>
+  
+  <!-- Botones de Acción -->
+  <div class="panel-section action-buttons">
+    <button 
+      class="btn-guardar"
+      (click)="guardar()"
+    >
+      Aplicar cambios
+    </button>
+  </div>
+</div>

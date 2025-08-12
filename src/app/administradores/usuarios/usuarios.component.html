@@ -1,0 +1,17 @@
+<div class="container-fluid">
+    <app-title 
+    [title]="'Manejo de Usuario'" 
+    (onBack)="goBack()">
+    </app-title>
+
+   <!-- Componente de navegación -->
+  <app-navigation
+    [menuItems]="menuItems"
+    [addButtonLabel]="'Agregar'"
+    (onAdd)="navigateToAgregarUsuario()"
+    (onMenuItemClick)="extenderMenu()">
+  </app-navigation>
+  
+</div>
+
+<router-outlet></router-outlet>

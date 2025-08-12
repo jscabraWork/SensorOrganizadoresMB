@@ -1,0 +1,98 @@
+<div *ngIf="cargando" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+<div class="container-fluid">
+  <div class="title-container">
+    <div class="title-component">
+      <div class="title-component-row">
+        <div class="icon-back" (click)="goBack()"></div>
+        <p>Ciudades</p>
+      </div>
+      <hr class="title-line">
+    </div>
+    <div class="btn-agregar">
+      <button (click)="navigateToAgregarCiudad()">Agregar</button>
+    </div>
+</div>
+
+<div class="row flex-centrar">
+  <div class="esconder table-container">
+    <table class="tabla"  id="temporada-table">
+      <thead>
+        <tr class="header-tr">
+          <th class="">ID</th>
+          <th class="">Nombre</th>
+          <th class="">Venues</th>
+          </tr>
+        </thead>
+        <tbody>
+
+                  <!-- Spinner de carga -->
+          <tr *ngIf="cargando" class="centrarTexto">
+            <td colspan="100%">
+              <div class="lds-ellipsis">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="centrarTexto">
+            <td colspan="100%" *ngIf="ciudades?.length == 0 && cargando == false" class="mensaje-vacio">
+                No tienes ciudades
+            </td>
+          </tr>
+
+      <ng-container *ngFor="let ciudad of ciudades; let i = index">
+                    <tr class="body-td">
+                      <td class="d-none-384">
+                        <button class="btn btn-sm" (click)="toggleItem(i)">
+                          {{ selectedItem === i ? '−' : '+' }}
+                        </button>
+                        {{ ciudad?.id }}
+                      </td>
+                      <td class="d-none-687">{{ ciudad?.nombre }}</td>
+                      <td class="d-none-687">
+                        <div class="btn-ver">
+                          <button (click)="irAVenues(ciudad?.id)">Ver</button>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!-- Sección Expandida -->
+                    <tr *ngIf="selectedItem === i">
+                      <td colspan="100%" class="expandir-table">
+                          <div class="detalle-expandido">
+                            <div>
+                              <p class="p">Información</p>
+                            </div>
+                            <div class="informacion-container">
+                              <div class="detalle-item">
+                                <p class="etiqueta">Nombre:</p>
+                                <span class="valor">{{ ciudad.nombre }}</span>
+                              </div>
+                            </div>
+                            <hr class="linea-detalle-expandido">
+                            <div>
+                              <p class="p">Acciones</p>
+                            </div>
+                            <div>
+                                <button class="btn-editar" (click)="editarCiudad(ciudad)">Editar</button>
+                                <button class="btn-eliminar" (click)="eliminarCiudad(ciudad?.id)">Eliminar</button>
+                                <button class="btn-eventos" (click)="irAVenues(ciudad?.id)">Venues</button>
+                            </div>
+                          </div>
+                      </td>
+                    </tr>
+      </ng-container>
+     </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+

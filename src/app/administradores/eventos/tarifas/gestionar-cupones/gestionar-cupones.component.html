@@ -1,0 +1,100 @@
+<div *ngIf="loading" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+
+<div class="container-fluid">
+
+  <app-title 
+    [title]="'Cupones de la Tarifa ' + (tarifa?.nombre || '')"
+    (onBack)="goBack()">
+  </app-title>
+
+
+
+  <!-- Botón usando estilos globales -->
+  <div class="btn-container" *ngIf="!mostrarFormulario && tarifa?.estado === 3">
+    <button class="button-primary" (click)="mostrarFormularioCrear()">Crear Cupón</button>
+  </div>
+
+  <!-- Formulario usando estilos globales -->
+  <form class="form-container" *ngIf="mostrarFormulario">
+    <div class="form-header">
+      <h4>{{ modoEdicion ? 'Editar' : 'Crear' }} Cupón</h4>
+    </div>
+    
+    <div class="form-grid-cupon">
+      <div class="inputs">
+        <span class="field-label">Código *</span>
+        <input type="text" 
+               [(ngModel)]="cupon.codigo" 
+               name="codigo"
+               class="input-name" 
+               [class.input-error]="formEnviado && !cupon.codigo"
+               placeholder="Código del cupón">
+        <div *ngIf="formEnviado && !cupon.codigo" class="error-message">Requerido</div>
+      </div>
+
+      <div class="inputs">
+        <span class="field-label">Vigencia *</span>
+        <input type="datetime-local" 
+               [(ngModel)]="cupon.vigencia" 
+               name="vigencia"
+               class="input-name" 
+               [class.input-error]="formEnviado && !cupon.vigencia">
+        <div *ngIf="formEnviado && !cupon.vigencia" class="error-message">Requerido</div>
+      </div>
+
+      <div class="inputs">
+        <span class="field-label">Cantidad Mínima</span>
+        <input type="number" 
+               [(ngModel)]="cupon.cantidadMinima" 
+               name="cantidadMinima"
+               class="input-name" 
+               min="0"
+               placeholder="0 (opcional)">
+        <small class="field-help">Dejar vacío o 0 para sin límite mínimo</small>
+      </div>
+
+      <div class="inputs">
+        <span class="field-label">Cantidad Máxima</span>
+        <input type="number" 
+               [(ngModel)]="cupon.cantidadMaxima" 
+               name="cantidadMaxima"
+               class="input-name" 
+               min="0"
+               placeholder="0 (opcional)">
+        <small class="field-help">Dejar vacío o 0 para sin límite máximo</small>
+      </div>
+
+      <div class="inputs">
+        <span class="field-label">Venta Máxima</span>
+        <input type="number" 
+               [(ngModel)]="cupon.ventaMaxima" 
+               name="ventaMaxima"
+               class="input-name" 
+               min="0"
+               placeholder="0 (opcional)">
+        <small class="field-help">Dejar vacío o 0 para sin límite máximo</small>
+      </div>
+
+    </div>
+
+    <div class="btn-container">
+      <button type="button" class="button-secondary" (click)="cancelarFormulario()">Cancelar</button>
+      <button type="submit" class="button-primary" (click)="crearCupon()">
+        {{ modoEdicion ? 'Actualizar' : 'Crear' }}
+      </button>
+    </div>
+  </form>
+
+  <!-- Usando el componente TABLA -->
+  <app-table
+    [data]="cupones"
+    [headers]="headers"
+    [columnas]="columnas"
+    [columnaBotones]="columnaBotones"
+    [columnaSelects]="columnaSelects"
+    [cargando]="cargando"
+    [mensajeVacio]="'No hay cupones creados para esta tarifa'">
+  </app-table>
+</div>

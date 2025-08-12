@@ -1,0 +1,197 @@
+<!-- Dimensiones -->
+<div class="panel-section">
+  <h4 class="section-title">Dimensiones</h4>
+  <div class="grid-2-col">
+    <div class="form-group">
+      <label class="label">Ancho</label>
+      <div class="input-group">
+        <input 
+          type="number" 
+          class="input-number"
+          [ngModel]="dimensiones.width.valor"
+          (ngModelChange)="actualizarValorDimension('width', $event)"
+        >
+        <select 
+          class="input-select"
+          [ngModel]="dimensiones.width.unidad"
+          (ngModelChange)="actualizarUnidadDimension('width', $event)"
+        >
+          <option *ngFor="let unidad of unidades" [value]="unidad">{{unidad}}</option>
+          <option value="auto">auto</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label class="label">Alto</label>
+      <div class="input-group">
+        <input 
+          type="number" 
+          class="input-number"
+          [ngModel]="dimensiones.height.valor"
+          (ngModelChange)="actualizarValorDimension('height', $event)"
+        >
+        <select 
+          class="input-select"
+          [ngModel]="dimensiones.height.unidad"
+          (ngModelChange)="actualizarUnidadDimension('height', $event)"
+        >
+          <option *ngFor="let unidad of unidades" [value]="unidad">{{unidad}}</option>
+          <option value="auto">auto</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Márgenes -->
+<div class="panel-section">
+  <h4 class="section-title">Márgenes</h4>
+  
+  <!-- Opción de Márgenes Verticales Automáticos -->
+  <div class="form-group margin-auto-option">
+    <label class="checkbox-label">
+      <input 
+        type="checkbox" 
+        [checked]="marginVerticalAuto"
+        (change)="toggleMarginVerticalAuto()"
+      >
+      Auto
+    </label>
+  </div>
+  
+  <div class="grid-2-col" [class.disabled]="marginVerticalAuto">
+     <div class="form-group">
+      <label class="label">Superior</label>
+      <input 
+        type="number" 
+        class="input-name"
+        [ngModel]="contenido.estilos.marginTop"
+        (ngModelChange)="actualizarPropiedad('estilos.marginTop', $event)"
+        min="0"
+        [disabled]="marginVerticalAuto"
+
+      >
+    </div>
+    
+    <div class="form-group">
+      <label class="label">Inferior</label>
+      <input 
+        type="number" 
+        class="input-name"
+        [ngModel]="contenido.estilos.marginBottom"
+        (ngModelChange)="actualizarPropiedad('estilos.marginBottom', $event)"
+        min="0"
+       [disabled]="marginVerticalAuto"
+
+      >
+    </div>
+  </div>
+  
+  <!-- Opción de Márgenes Horizontales Automáticos -->
+  <div class="form-group margin-auto-option">
+    <label class="checkbox-label">
+      <input 
+        type="checkbox" 
+        [checked]="marginHorizontalAuto"
+        (change)="toggleMarginHorizontalAuto()"
+      >
+      Auto
+    </label>
+  </div>
+  
+  <div class="grid-2-col" [class.disabled]="marginHorizontalAuto">
+    <div class="form-group">
+      <label class="label">Izquierdo</label>
+      <input 
+        type="number" 
+        class="input-name"
+        [ngModel]="contenido.estilos.marginLeft"
+        (ngModelChange)="actualizarPropiedad('estilos.marginLeft', $event)"
+        min="0"
+        [disabled]="marginHorizontalAuto"
+      >
+    </div>
+    
+    <div class="form-group">
+      <label class="label">Derecho</label>
+      <input 
+        type="number" 
+        class="input-name"
+        [ngModel]="contenido.estilos.marginRight"
+        (ngModelChange)="actualizarPropiedad('estilos.marginRight', $event)"
+        min="0"
+        [disabled]="marginHorizontalAuto"
+      >
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Apariencia -->
+<div class="panel-section">
+  <h4 class="section-title">Apariencia</h4>
+  
+  <div class="form-group">
+    <label class="label">Color de Fondo</label>
+    <div class="color-picker-group">
+      <input 
+        type="color" 
+        class="color-picker"
+        [ngModel]="contenido.estilos.backgroundColor"
+        (ngModelChange)="actualizarPropiedad('estilos.backgroundColor', $event)"
+      >
+      <input 
+        type="text" 
+        class="color-hex"
+        [ngModel]="contenido.estilos.backgroundColor"
+        (ngModelChange)="actualizarPropiedad('estilos.backgroundColor', $event)"
+        placeholder="#FFFFFF"
+      >
+    </div>
+  </div>
+  
+  <div class="grid-2-col">
+    <div class="form-group">
+      <label class="label">Ancho de Borde (px)</label>
+      <input 
+        type="number" 
+        class="input-name"
+        [ngModel]="contenido.estilos.borderWidth"
+        (ngModelChange)="actualizarPropiedad('estilos.borderWidth', $event)"
+        min="0"
+      >
+    </div>
+    
+    <div class="form-group">
+      <label class="label">Radio de Borde (px)</label>
+      <input 
+        type="number" 
+        class="input-name"
+        [ngModel]="contenido.estilos.borderRadius"
+        (ngModelChange)="actualizarPropiedad('estilos.borderRadius', $event)"
+        min="0"
+      >
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label class="label">Color de Borde</label>
+    <div class="color-picker-group">
+      <input 
+        type="color" 
+        class="color-picker"
+        [ngModel]="contenido.estilos.borderColor"
+        (ngModelChange)="actualizarPropiedad('estilos.borderColor', $event)"
+      >
+      <input 
+        type="text" 
+        class="color-hex"
+        [ngModel]="contenido.estilos.borderColor"
+        (ngModelChange)="actualizarPropiedad('estilos.borderColor', $event)"
+        placeholder="#000000"
+      >
+    </div>
+  </div>
+</div>

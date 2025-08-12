@@ -1,0 +1,16 @@
+<app-search-filter
+  [filters]="searchFilters"
+  >
+</app-search-filter>
+
+<app-table
+  [pageData]="usuariosPage"
+  [headers]="['ID', 'Nombre', 'Correo', 'Celular']"
+  [columnas]="['id','nombre', 'correo', 'celular']"
+  [idField]="'numeroDocumento'"
+  [expandableConfig]="expandableConfig"
+  [cargando]="cargando"
+  [mensajeVacio]="'No hay usuarios disponibles'"
+  (paginaCambiada)="cambiarPagina($event)"
+  (selectedIndexChange)="onExpandRow($event >= 0 ? usuariosPage?.content[$event] : null)">
+</app-table>

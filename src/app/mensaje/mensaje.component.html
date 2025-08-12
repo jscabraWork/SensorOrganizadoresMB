@@ -1,0 +1,21 @@
+<section class="message-card">
+  <div class="message-header">
+    <h4 class="message-title">Mensaje</h4>
+    <div class="message-divider"></div>
+  </div>
+  <div class="message-body">
+    <p class="message-content">{{mensaje}}</p>
+
+    <input *ngIf="mostrarInputNumero" type="number" [(ngModel)]="numeroInput" placeholder="Ingrese un número"
+      class="input-number" />
+
+    <div class="botones" *ngIf="mostrarBotones">
+      <button class="message-action" mat-button (click)="confirmar()">Sí</button>
+      <button class="message-action" mat-button (click)="cancelar()">No</button>
+    </div>
+
+    <div class="botones" *ngIf="!mostrarBotones">
+      <button class="message-action" mat-button (click)="cerrar()">Cerrar</button>
+    </div>
+  </div>
+</section>

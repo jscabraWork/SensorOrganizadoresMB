@@ -1,0 +1,41 @@
+<div class="container-fluid">
+  <!-- Título de la página -->
+  <app-title 
+    [title]="'Gestión de Promotores'" 
+    (onBack)="goBack()">
+  </app-title>
+
+  <!-- Componente de filtros de búsqueda -->
+  <app-search-filter
+    [filters]="searchFilters"
+    (onBuscar)="onBuscarPromotores($event)">
+  </app-search-filter>
+
+  <!-- Tabla de promotores -->
+  <app-table
+    [pageData]="promotoresPage"
+    [headers]="['ID', 'Nombre', 'Documento', 'Correo', 'Acciones']"
+    [columnas]="['id', 'nombre', 'numeroDocumento', 'correo', 'acciones']"
+    [idField]="'numeroDocumento'"
+    [expandableConfig]="expandableConfig"
+    [columnaBotones]="columnaBotones"
+    [cargando]="cargandoPromotores"
+    [mensajeVacio]="'No hay promotores disponibles'">
+  </app-table>
+
+  <!-- Modal de asignación de eventos -->
+  <app-asignar-eventos-modal
+    [visible]="mostrandoAsignacion"
+    [entidadSeleccionada]="promotorSeleccionado"
+    [eventosDisponibles]="eventosDisponibles"
+    [eventosSeleccionados]="eventosSeleccionados"
+    [cargandoEventos]="cargandoEventos"
+    [asignandoEventos]="asignandoEventos"
+    [tituloModal]="'Asignar Eventos a Promotor'"
+    [nombreEntidad]="'Promotor'"
+    (cerrar)="cerrarAsignacion()"
+    (asignar)="asignarEventos()"
+    (toggleEvento)="toggleEventoSeleccion($event)"
+    (toggleTodos)="toggleTodosEventos()">
+  </app-asignar-eventos-modal>
+</div>

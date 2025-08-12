@@ -1,0 +1,27 @@
+
+<div class="container-fluid">
+    <div class="title-container">
+      <div class="title-component">
+        <div class="title-component-row">
+          <div class="icon-back" (click)="goBack()"></div>
+          <p>Días del Evento {{evento?.nombre}}</p>
+        </div>
+        <hr class="title-line">
+      </div>
+    </div>
+    
+    <div class="container-fluid-menu">
+        <div class="menu-pequeño-container">
+          <ul class="menu-pequeño" [ngClass]="{'d-none-menu': extender}">
+            <li routerLink="activos" routerLinkActive="menu-mediano-lista-activo" (click)="extenderMenu()">Días Activos</li>
+            <li routerLink="inactivos" routerLinkActive="menu-mediano-lista-activo" (click)="extenderMenu()">Días Inactivos</li>
+          </ul>
+        </div>
+        <div class="btn-agregar"> 
+            <button (click)="navigateToAgregarDia()">Agregar</button>
+        </div>
+    </div>
+    <hr class="linea-menu">
+    </div>
+    <router-outlet></router-outlet>
+

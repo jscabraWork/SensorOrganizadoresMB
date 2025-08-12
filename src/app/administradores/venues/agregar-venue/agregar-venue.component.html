@@ -1,0 +1,53 @@
+<div *ngIf="loading" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+
+<div class="container-fluid">
+    <div class="form-title-container">
+        <div class="form-title">
+          <div class="form-title-row"> 
+            <div class="icon-back" (click)="goBack()"></div>
+            <p >{{ modoEdicion ? 'Modificar' : 'Agregar' }} Venue</p>
+          </div>
+            <hr class="linea">
+        </div>
+
+    </div>
+
+    <form class="form-container">
+      <div class="inputs">
+        <input type="text" id="nombre" name="nombre" [class.input-error]="formEnviado && !venue.nombre"  [(ngModel)]="venue.nombre" class="input-name" placeholder="Nombre del venue" required>
+          <div *ngIf="formEnviado && !venue.nombre" class="error-message">
+                El nombre es obligatorio
+          </div>
+      </div>
+
+      <div class="inputs">
+        <input type="text" id="urlMapa" name="urlMapa" [class.input-error]="(formEnviado && !venue.urlMapa) || (venue.urlMapa && !validateGoogleMapsUrl(venue.urlMapa))" [(ngModel)]="venue.urlMapa" class="input-name" placeholder="Google Maps URL" required>
+        <div *ngIf="formEnviado && !venue.urlMapa" class="error-message">
+            La URL del mapa es obligatoria
+        </div>
+        <div *ngIf="venue.urlMapa && !validateGoogleMapsUrl(venue.urlMapa) && formEnviado" class="error-message">
+          Por favor ingrese una URL válida de Google Maps
+        </div>
+      </div>
+
+
+      <div class="inputs">
+        <input type="number" id="aforo" name="aforo" [(ngModel)]="venue.aforo" class="input-name" placeholder="Aforo">
+        <div *ngIf="formEnviado && !venue.aforo" class="error-message">
+            El aforo es obligatorio
+        </div>
+        <div *ngIf="venue.urlMapa && !validateGoogleMapsUrl(venue.urlMapa) && formEnviado" class="error-message">
+          Por favor ingrese una URL válida de Google Maps
+        </div>
+      </div>
+
+      <div class="btn-container">
+        <div class="btn-agregar">
+            <button type="submit" (click)="modoEdicion ? actualizarVenue() : crearVenue()">{{ modoEdicion ? 'Guardar' : 'Agregar' }}</button>
+        </div>
+      </div>
+
+    </form>
+  </div>

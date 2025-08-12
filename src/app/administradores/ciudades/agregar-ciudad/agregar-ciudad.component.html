@@ -1,0 +1,32 @@
+<div *ngIf="loading" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+
+<div class="container-fluid">
+    <div class="form-title-container">
+        <div class="form-title">
+          <div class="form-title-row"> 
+            <div class="icon-back" (click)="goBack()"></div>
+            <p >{{ modoEdicion ? 'Modificar' : 'Agregar' }} Ciudad</p>
+          </div>
+            <hr class="linea">
+        </div>
+
+    </div>
+
+    <form class="form-container">
+      <div class="inputs">
+        <input type="text" id="nombre" name="nombre" [class.input-error]="formEnviado && !ciudad.nombre"  [(ngModel)]="ciudad.nombre" class="input-name" placeholder="Nombre de la ciudad" required>
+          <div *ngIf="formEnviado && !ciudad.nombre" class="error-message">
+                El nombre es obligatorio
+          </div>
+      </div>
+
+      <div class="btn-container">
+        <div class="btn-agregar">
+            <button type="submit" (click)="crearCiudad()">{{ modoEdicion ? 'Guardar' : 'Agregar' }}</button>
+        </div>
+      </div>
+
+    </form>
+  </div>

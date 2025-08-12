@@ -1,0 +1,10 @@
+<app-table
+  [data]="eventos"
+  [headers]="['ID', 'PULEP', 'Nombre', 'Tipo', 'Estado', 'Días', 'Localidades']"
+  [columnas]="['id', 'pulep', 'nombre', 'tipoNombre', 'estado', 'dias', 'localidades']"
+  [columnaBotones]="columnaBotonesTabla"
+  [columnaSelects]="columnaSelectsTabla"
+  [expandableConfig]="expandableConfig"
+  [cargando]="cargando"
+  [mensajeVacio]="mensajeVacio">
+</app-table>

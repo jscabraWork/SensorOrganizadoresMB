@@ -1,0 +1,281 @@
+@use '../../../styles/variables' as v;
+
+// Modal overlay y contenido (experiencia anterior pero con variables globales)
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: v.$color-blanco;
+  border-radius: v.$border-radius * 2;
+  width: 90%;
+  max-width: 600px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: v.$spacer-2 v.$spacer-4;
+  border-bottom: 1px solid v.$color-gris;
+  
+  h3 {
+    margin: 0;
+    color: v.$color-base;
+    font-size: 18px;
+    font-weight: 800;
+  }
+  
+  .btn-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: v.$color-secundario;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &:hover {
+      background-color: v.$color-gris;
+      border-radius: v.$border-radius;
+    }
+  }
+}
+
+.modal-info {
+  padding: v.$spacer-3 v.$spacer-4;
+  border-bottom: 1px solid v.$color-gris;
+
+  p {
+    margin: v.$spacer-1 0;
+    font-size: 0.9rem;
+    color: v.$color-secundario;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.modal-body {
+  padding: v.$spacer-2 v.$spacer-4;
+  overflow-y: auto;
+  flex: 1;
+
+  .filtro-eventos{
+  margin-bottom: 1rem;
+}
+  .input{
+    width: 95%;
+  }
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: v.$spacer-3;
+  padding: v.$spacer-2 v.$spacer-4;
+  border-top: 1px solid v.$color-gris;
+  
+  button {
+    min-width: 100px;
+  }
+}
+
+// Controles de eventos (experiencia anterior)
+.eventos-controles {
+  .controles-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: v.$spacer-3;
+    flex-wrap: wrap;
+    gap: v.$spacer-2;
+  }
+  
+  .field-label {
+    font-weight: 600;
+    color: v.$color-base;
+    font-size: 14px;
+  }
+  
+  .controles-actions {
+    display: flex;
+    align-items: center;
+    gap: v.$spacer-3;
+  }
+  
+  .btn-toggle {
+    background: v.$color-gris;
+    border: 1px solid v.$color-gris;
+    padding: v.$spacer-2 v.$spacer-2;
+    border-radius: v.$border-radius;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: rgba(v.$color-base, 0.1);
+    }
+  }
+  
+  .contador {
+    font-size: 14px;
+    color: v.$color-secundario;
+    font-weight: 500;
+  }
+}
+
+// Lista compacta de eventos (experiencia anterior)
+.eventos-lista {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid v.$color-gris;
+  border-radius: v.$border-radius;
+}
+
+.evento-item {
+  display: flex;
+  align-items: center;
+  padding: v.$spacer-2;
+  border-bottom: 1px solid rgba(v.$color-gris, 0.7);
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+  
+  &:hover {
+    background-color: rgba(v.$color-gris, 0.3);
+  }
+  
+  &.selected {
+    background-color: rgba(v.$color-base, 0.1);
+    border-left: 3px solid v.$color-base;
+  }
+}
+
+.evento-checkbox {
+  display: flex;
+  align-items: center;
+  margin-right: v.$spacer-2;
+  cursor: pointer;
+  
+  input[type="checkbox"] {
+    margin: 0;
+    cursor: pointer;
+    width: 16px;
+    height: 12px;
+  }
+}
+
+.evento-info-compacta {
+  flex: 1;
+  cursor: pointer;
+}
+
+.evento-nombre {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: v.$spacer-1;
+  
+  strong {
+    font-size: 14px;
+    color: v.$color-base;
+  }
+  
+  .evento-id {
+    font-size: 12px;
+    color: v.$color-secundario;
+    background: v.$color-gris;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+}
+
+.evento-detalles {
+  font-size: 13px;
+  color: v.$color-secundario;
+  
+  span {
+    margin-right: v.$spacer-2;
+    
+    &.venue {
+      color: v.$color-base;
+      font-weight: 500;
+    }
+  }
+}
+
+.no-eventos-mensaje {
+  text-align: center;
+  padding: v.$spacer-5;
+  color: v.$color-secundario;
+  
+  p {
+    margin: 0;
+    font-style: italic;
+  }
+}
+
+.text-center {
+  text-align: center;
+  padding: v.$spacer-5;
+  color: v.$color-secundario;
+}
+
+// Responsive para modal
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    max-height: 90vh;
+  }
+  
+  .modal-header, 
+  .modal-body, 
+  .modal-footer {
+    padding: v.$spacer-3;
+  }
+  
+  .controles-header {
+    flex-direction: column;
+    align-items: stretch;
+    
+    .controles-actions {
+      justify-content: space-between;
+    }
+  }
+  
+  .modal-footer {
+    flex-direction: column;
+    
+    button {
+      width: 100%;
+    }
+  }
+}
+
+
+

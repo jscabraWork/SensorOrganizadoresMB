@@ -1,0 +1,45 @@
+@use "sass:color";
+@use "sass:map";
+@use '../../../../../styles/variables' as v;
+@use '../../../../../styles/components' as c;
+
+// Estilos mínimos usando clases globales
+.info-tarifa {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  
+  span {
+    padding: 0.25rem 0.5rem;
+  }
+}
+
+.form-header {
+  margin-bottom: 1rem;
+  
+  h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+}
+
+.form-grid-cupon {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .info-tarifa {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-grid-cupon {
+    grid-template-columns: 1fr;
+  }
+}

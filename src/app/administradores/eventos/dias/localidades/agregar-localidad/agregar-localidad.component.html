@@ -1,0 +1,92 @@
+<div *ngIf="loading" class="spinner-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="form-title-container">
+      <div class="form-title">
+          <div class="form-title-row"> 
+            <div class="icon-back" (click)="goBack()"></div>
+            <p>{{ modoEdicion ? 'Modificar' : 'Agregar' }} Localidad</p>
+          </div>
+            <hr class="linea">
+      </div>
+    </div>
+    
+    <form class="form-container">
+        <div class="inputs">
+            <span class="field-label" *ngIf="modoEdicion">Nombre</span>
+            <input type="text" id="nombre" name="nombre" [class.input-error]="formEnviado && !localidad.nombre"  [(ngModel)]="localidad.nombre" class="input-name" placeholder="Nombre de la localidad" required>
+            <div *ngIf="formEnviado && !localidad.nombre" class="error-message">
+                El nombre es obligatorio
+            </div>
+        </div>
+  
+
+         <div class="inputs">
+            <span class="field-label" *ngIf="modoEdicion">Descripción</span>
+            <input type="text" id="descripcion" name="descripcion" [(ngModel)]="localidad.descripcion" class="input-name" placeholder="Descripción de la localidad">
+        </div>
+
+        <!-- Select de Tipo -->
+        <div class="inputs">
+            <span class="field-label" *ngIf="modoEdicion">Tipo de Localidad</span>
+            <select class="input-select" id="tipo" name="tipo" [(ngModel)]="localidad.tipo" (change)="onTipoChange()">
+                <option [value]="0">Venta Estándar</option>
+                <option [value]="1">Alcancía</option>
+            </select>
+        </div>
+
+        <!-- Aporte Mínimo (solo para Alcancía) -->
+        <div class="inputs" *ngIf="localidad.tipo == 1">
+            <span class="field-label" *ngIf="modoEdicion">Aporte Mínimo</span>
+            <input type="number" id="aporteMinimo" name="aporteMinimo" [(ngModel)]="localidad.aporteMinimo" class="input-name" placeholder="Aporte mínimo" min="0" step="0.01">
+        </div>
+  
+
+        <!-- Select de Dias -->
+        <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">
+            <div class="select-dia-with-button">
+              <select class="input-select" id="dia" name="dia" [(ngModel)]="diaAgregar">
+                <option [ngValue]="null" disabled>Agregar a más de un día</option>
+                <option *ngFor="let dia of dias" [ngValue]="dia">
+                  {{dia.nombre}}
+                </option>
+              </select>
+              <button class="boton-agregar-pequeno" type="button" (click)="agregarALista('dia')">Agregar Dia</button>
+            </div>
+        </div>
+
+          <!-- Contenedor general Dias -->
+          <div class="contenedor-dias-boton">
+            <!-- Lista Dias -->
+            <div *ngIf="!modoEdicion && diasLocalidad?.length > 0" class="inputs lista-dias">
+            <label class="label-dia">Días en los que esta la Localidad</label>
+            <div class="lista-dias-s">
+                <p *ngFor="let dia of diasLocalidad; let i = index">
+                {{dia.nombre}}
+                <span class="eliminar-lista" (click)="quitarLista(i, 'dia')">X</span>
+                </p>
+            </div>
+            </div>
+
+            <!-- Modo edición (solo mostrar los dias ya asignados) -->
+            <div *ngIf="modoEdicion" class="inputs lista-dias">
+              <label class="label-dia">Días</label>
+                <div class="lista-dias-s">
+                  <p *ngFor="let dia of diasLocalidad; let i = index">
+                    {{dia.nombre}}
+                    <span class="eliminar-lista" (click)="quitarLista(i, 'dia')"> X</span>
+                  </p>
+                </div>
+            </div>
+          </div>
+
+                    <div class="btn-container">
+                            <div class="btn-agregar">
+                                <button type="submit" (click)="crearLocalidad()">{{ modoEdicion ? 'Guardar' : 'Agregar' }}</button>
+                            </div>
+                    </div>
+
+    </form>
+  </div>

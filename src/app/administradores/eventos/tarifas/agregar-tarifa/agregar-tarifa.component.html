@@ -1,0 +1,82 @@
+<div *ngIf="loading" class="spinner-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="form-title-container">
+      <div class="form-title">
+          <div class="form-title-row"> 
+            <div class="icon-back" (click)="goBack()"></div>
+            <p>{{ modoEdicion ? 'Modificar' : 'Agregar' }} Tarifa</p>
+          </div>
+            <hr class="linea">
+      </div>
+    </div>
+    
+    <form class="form-container">
+
+        <!-- Nombre del Evento -->
+        <div class="inputs">
+            <span class="field-label" *ngIf="modoEdicion">Nombre del evento</span>
+              <input type="text" id="nombre" name="nombre" [class.input-error]="formEnviado && !tarifa.nombre" [(ngModel)]="tarifa.nombre" class="input-name" placeholder="Nombre de la Tarifa" required>
+              <div *ngIf="formEnviado && !tarifa.nombre" class="error-message">
+                  El nombre de la tarifa es obligatorio
+              </div>
+        </div>
+
+          <!-- Precio de la Tarifa -->
+        <div class="inputs">
+          <span class="field-label" *ngIf="modoEdicion">Precio de la Tarifa</span>
+          <input type="text" id="precio" name="precio" [class.input-error]="formEnviado && !tarifa.precio" [value]="formatNumber(tarifa.precio)" (input)="onInputTarifa($event, 'precio')" class="input-number" placeholder="Precio de la Tarifa" required>
+          <div *ngIf="formEnviado && !tarifa.precio" class="error-message">
+            El precio de la tarifa es obligatorio
+          </div>
+        </div>
+
+
+        <!-- Servicio de la Tarifa -->
+        <div class="inputs">
+            <span class="field-label" *ngIf="modoEdicion">Servicio de la Tarifa</span>
+            <input type="text" id="servicio" name="servicio" [class.input-error]="formEnviado && !tarifa.servicio" [value]="formatNumber(tarifa.servicio)" (input)="onInputTarifa($event,  'servicio')" class="input-number"  placeholder="Servicio"  required>
+            <div *ngIf="formEnviado && !tarifa.servicio" class="error-message">
+                El servicio de la tarifa es obligatorio
+            </div>
+        </div>
+
+        <!-- IVA de la Tarifa -->
+        <div class="inputs">
+          <span class="field-label" *ngIf="modoEdicion">IVA de la Tarifa</span>
+          <div class="iva-container">
+            <input type="text" id="iva" name="iva" class="input-number" 
+                  [class.input-error]="formEnviado && !tarifa.iva" 
+                  [value]="formatNumber(tarifa.iva)" 
+                  (input)="onInputIva($event)"
+                  placeholder="IVA de la Tarifa">
+            <div class="checkbox-container">
+              <label>
+                <input type="checkbox" [(ngModel)]="ivaSugerido" name="ivaSugerido" (change)="toggleIvaSugerido()">
+                Usar IVA sugerido (19%)
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarifa para Cupón -->
+        <div class="inputs" *ngIf="!modoEdicion">
+          <div class="checkbox-container">
+            <label>
+              <input type="checkbox" [(ngModel)]="tarifaParaCupon" name="tarifaParaCupon">
+              Tarifa para cupón
+            </label>
+          </div>
+        </div>
+
+  
+      <div class="btn-container">
+        <div class="btn-agregar">
+            <button type="submit" (click)="crearTarifa()" >{{ modoEdicion ? 'Guardar' : 'Agregar' }}</button>
+        </div>
+      </div>
+      
+    </form>
+  </div>

@@ -1,0 +1,44 @@
+<div *ngIf="cargando" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+
+
+<div class="dialog-container">
+  <div class="dialog-card">
+    <div class="icon-window-close" (click)="cerrarDialogo()">
+    </div>
+
+    <div class="dialog-header">
+      <h3 class="dialog-title"><strong>Ingresa el número de documento del cliente que deseas buscar</strong></h3>
+      <h5 class="dialog-subtitle">Recuerda que la persona debe estar registrada para poder asignarle el Ticket</h5>
+    </div>
+    <hr class="dialog-divider">
+
+    <form #todoForm="ngForm" class="dialog-form">
+      <fieldset class="form-group">
+        <input type="text" class="input" name="numeroDocumento" required [(ngModel)]="numeroDocumento"
+          placeholder="Número de documento" (keyup.enter)="onEnterPressed()">
+      </fieldset>
+    </form>
+
+    <div class="cliente-info" *ngIf="clienteNuevo && clienteNuevo.numeroDocumento">
+      <h5 class="cliente-nombre">
+        <strong>Nombre:  </strong>{{ clienteNuevo.nombre }}
+      </h5>
+      <h5 class="cliente-documento">
+        <strong>No. Documento:  </strong> {{ clienteNuevo.numeroDocumento }}
+      </h5>
+      <h5 class="cliente-correo">
+        <strong>Correo:  </strong>{{ clienteNuevo.correo }}
+      </h5>
+      <div class="btn-asignar">
+        <button (click)="asignarCliente()" [disabled]="cargando">Agregar Al Ticket</button>
+      </div>
+    </div>
+
+    <!-- El botón Buscar solo se muestra si NO hay cliente encontrado -->
+    <div class="btn-buscar" *ngIf="!(clienteNuevo && clienteNuevo.numeroDocumento)">
+      <button type="button" (click)="buscarCliente()" [disabled]="cargando || !todoForm.valid">Buscar</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,121 @@
+<div *ngIf="cargando" class="spinner-overlay">
+    <div class="spinner"></div>
+  </div>
+  
+  <div class="container-fluid">
+          <div class="row flex-centrar">
+              <div class="esconder table-container">
+                <table class="tabla"  id="temporada-table">
+                  <thead>
+                    <tr class="header-tr">
+                      <th class="">ID</th>
+                      <th class="">Nombre</th>
+                      <th class="">Fecha Inicio</th>
+                      <th class="">Fecha Fin</th>
+                      <th class="">Localidades</th>
+                      <th class="">Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+  
+                    <!-- Spinner de carga -->
+                    <tr *ngIf="cargando" class="centrarTexto">
+                      <td colspan="100%">
+                        <div class="lds-ellipsis">
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                        </div>
+                      </td>
+                    </tr>
+  
+                    <tr class="centrarTexto">
+                      <td colspan="100%" *ngIf="dias?.length == 0 && cargando == false" class="mensaje-vacio">
+                        No tiene días {{ esRutaActivos ? 'activos' : 'inactivos'}}
+                      </td>
+                    </tr>
+           
+                    <ng-container *ngFor="let dia of dias; let i = index">
+                      <tr class="body-td">
+                        <td class="d-none-384">
+                          <button class="btn btn-sm" (click)="toggleItem(i)">
+                            {{ selectedItem === i ? '−' : '+' }}
+                          </button>
+                          {{ dia.id }}
+                        </td>
+                        <td class="d-none-687">{{ dia.nombre }}</td>
+                        <td class="d-none-384">{{dia.fechaInicio | date: 'longDate' }}</td>
+                        <td class="d-none-687">{{ dia.fechaFin | date: 'longDate' }}</td>
+                        <td class="d-none-687">
+                          <div class="btn-ver">
+                            <button (click)="irALocalidades(dia.id)">Ver</button>
+                          </div>
+                        </td>
+                        <td class="d-none-384">
+                          <select [(ngModel)]="dia.estado" 
+                            (change)="cambiarEstado(dia)"
+                            class="form-select estado-select">
+                            <option [ngValue]="1">Activado</option>
+                            <option [ngValue]="0">Desactivado</option>
+                          </select>
+                        </td>
+                      </tr>
+           
+                      <!-- Sección Expandida -->
+                      <tr *ngIf="selectedItem === i">
+                        <td colspan="100%" class="expandir-table">
+                            <div class="detalle-expandido">
+                              <div> 
+                                <p class="p">Información</p>
+                              </div>  
+                              <div class="informacion-container">               
+                                <div class="detalle-item">
+                                  <p class="etiqueta">Nombre:</p> 
+                                  <span class="valor">{{ dia.nombre }}</span>
+                                </div>
+                                <div class="detalle-item">
+                                  <p class="etiqueta">Fecha Inicio:</p> 
+                                  <span class="valor">{{ dia.fechaInicio | date: 'longDate' }}</span>
+                                </div>
+                                <div class="detalle-item">
+                                  <p class="etiqueta">Fecha Finalización:</p> 
+                                  <span class="valor">{{ dia.fechaFin | date: 'longDate' }}</span>
+                                </div>
+                                <div class="detalle-item">
+                                  <p class="etiqueta">Hora Inicio:</p> 
+                                  <span class="valor">{{ dia.horaInicio }}</span>
+                                </div>
+                                <div class="detalle-item">
+                                  <p class="etiqueta">Hora Fin:</p> 
+                                  <span class="valor">{{ dia.horaFin }}</span>
+                                </div>
+                              </div>
+                              <hr class="linea-detalle-expandido">
+                              <div>
+                                <p class="p">Acciones</p>
+                              </div>
+                              <div>
+                                  <button class="btn-editar" (click)="editarDia(dia)">Editar</button>
+                                  <button class="btn-eliminar" (click)="eliminarDia(dia.id)">Eliminar</button>
+                                  <button class="btn-eventos" (click)="irALocalidades(dia.id)">Localidades</button>
+                                  <select [(ngModel)]="dia.estado" 
+                                    (change)="cambiarEstado(dia)"
+                                    class="form-select estado-select-detalle">
+                                    <option [ngValue]="1">Activado</option>
+                                    <option [ngValue]="0">Desactivado</option>
+                                  </select>
+                              </div>
+                            </div>                        
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+          </div>
+  
+  
+          
+      
+  </div>

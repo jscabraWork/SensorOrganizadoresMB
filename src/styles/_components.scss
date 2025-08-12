@@ -1,0 +1,625 @@
+// _components.scss
+@use "sass:color" as color;
+@use 'variables' as v;
+@use 'mixins' as m;
+
+// Titulo Component
+
+.title-container {
+    width: 100%;
+    display: flex;
+}
+
+%title-base {
+  line-height: normal;
+  color: v.$color-base;
+  font-weight: 800;
+  font-style: bold;
+}
+
+.title-component {
+  @extend %title-base;
+
+  &-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .icon-back {
+    @include m.icon-arrow-left-circle(v.$color-base);
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.1);
+      opacity: 0.8;
+    }
+  }
+
+  p {
+    font-size: 24px;
+    margin: 0;
+  }
+
+  .title-line {
+    background-color: v.$color-base;
+    height: 2px;
+    border: none;
+    width: 450px;
+    margin: 10px 0;
+  }
+}
+// Nav Bar
+
+.container-fluid-menu {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px
+}
+
+.linea-menu {
+    background-color: v.$color-base;
+    height: 1px;
+    border: 1px;
+    width: 100%;
+    margin-top: 25px;
+}
+
+// Titulo Formulario
+
+.form-title {
+    line-height: normal;
+    color: v.$color-base;
+    font-weight: 800;
+    font-style: bold;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    &-row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .icon-back {
+        @include m.icon-arrow-left-circle(v.$color-base);
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+            transform: scale(1.1);
+            opacity: 0.8;
+        }
+    }
+
+    p {
+        font-size: 24px;
+        margin: 0;
+    }
+
+    .linea {
+        background-color: v.$color-base;
+        height: 3px;
+        border: 1px;
+        width: 100%;
+        max-width: 450px;
+        margin: 0;
+    }
+}
+
+.form-container {
+    width: 80%;
+}
+
+.form-title-container{
+    width: 100%;
+    display: flex;
+}
+// Nav Table
+.paginacion-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  gap: 16px;
+  padding: 16px 0; 
+  
+  .icon-chevron-left {
+    @include m.icon-chevron-left(v.$color-base);
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+            transform: scale(2.1);
+            opacity: 0.8;
+        }
+  }
+
+  .icon-chevron-right {
+    @include m.icon-chevron-right(v.$color-base);
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+            transform: scale(2.1);
+            opacity: 0.8;
+        }
+  }
+}
+
+.icon-window-close {
+  @include m.icon-window-close(v.$color-base);
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+            transform: scale(1.1);
+            opacity: 0.8;
+        }
+}
+
+.paginacion-texto {
+  font-size: 0.9rem;
+  color: v.$color-base; 
+}
+
+// Botón base
+%button-base {
+  font-family: v.$font-primary;
+  font-size: 13px;
+  width: 90px;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  display: inline-block;
+}
+
+// Estilos para tablas
+.tabla-default {
+  text-align: center;
+  border-collapse: collapse;
+  width: 100%;
+
+  td {
+      padding: 10px;
+      border-bottom: 1px solid v.$color-negro;
+  }
+
+  td:first-child {
+      border-left: 1px solid v.$color-negro;
+  }
+
+  td:last-child {
+      border-right: 1px solid v.$color-negro;
+  }
+
+  .header-tr th {
+    font-family: v.$font-primary;
+    font-size: 13px;
+    color: v.$color-base;
+    background-color: v.$color-gris;
+    font-weight: 700;
+    padding: 12px;
+  }
+}
+
+.p {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.container-fluid {
+    @extend .container-margin
+}
+
+.container-margin {
+    margin: none;
+}
+
+.row {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+
+.flex-centrar {
+  display: flex;
+  padding: 0px;
+  justify-content: center;
+}
+
+
+// Botón primario
+.button-primary {
+  @extend %button-base;
+  background-color: v.$color-base;
+  color: v.$color-blanco;
+  border: none;
+  font-weight: 600;
+  font-size: 13px;
+  font-family: v.$font-primary;
+  text-align: center;
+  width: fit-content;
+
+
+  &:hover {
+    background-color: color.adjust(v.$color-base, $lightness: -10%);
+  }
+}
+
+%input-field {
+  padding: 10px 12px;
+  width: auto;
+  background-color: v.$color-gris;
+  border-radius: 10px;
+  font-family: v.$font-primary;
+  font-size: 14px;
+  font-weight: 400;
+  border: none;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(v.$color-base, 0.2);
+  }
+}
+
+.input {
+  @extend %input-field;
+}
+
+.input-select-field {
+        width: auto;
+        padding: 0.75rem 1.5rem;
+        background-repeat: no-repeat;
+        background-position: left 10px center;
+        background-size: 18px;
+        padding-left: 40px !important ;
+        background-color: v.$color-gris;
+        border-radius: 10px;
+        font-family: v.$font-primary;
+        font-size: 14px;
+        font-weight: 400;
+        border: none;
+}
+
+.input-select-field-triangulo{
+        background-image: url(../assets/images/vector/triangulo.png);
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 100%;
+        @extend .input-select-field
+    }
+
+// Botón secundario
+.button-secondary {
+  @extend %button-base;
+  background-color: v.$color-blanco;
+  color: v.$color-base;
+  border: 1px solid v.$color-base;
+  width: fit-content;
+  &:hover {
+    background-color: color.adjust(v.$color-base, $lightness: 95%);
+  }
+}
+
+
+  .btn-container {
+    display: flex;  
+    gap: 0.5rem;           
+    margin-top: 1rem;        
+}
+
+.button-ordenes{
+  @extend %button-base;
+  background-color: v.$color-base;
+  color: v.$color-blanco;
+  border: none;
+  font-weight: 500;
+  font-size: 13px;
+  border-radius: 5px !important;
+  font-family: v.$font-primary;
+  width: fit-content;
+}
+
+.button-lupa{
+  @extend %button-base;
+  background-color: v.$color-base;
+  color: v.$color-blanco;
+  border: none;
+  font-weight: 500;
+  font-size: 13px;
+  border-radius: 5px !important;
+  font-family: v.$font-primary;
+  width: fit-content;
+  background-image: url(../assets/images/vector/lupa.png);
+  background-size: 10px contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.button-third {
+  @extend %button-base;
+    background-color: v.$color-base;
+    color: v.$color-blanco;
+    border: none;
+    font-weight: 500;
+    font-size: 13px;
+    font-family: v.$font-primary;
+    width: fit-content;
+    border-radius: 9px !important;
+    padding: 0.1rem 1.5rem;
+
+    &:hover {
+      background-color: color.adjust(v.$color-base, $lightness: -10%);
+    }
+}
+
+.btn-sm {
+  @extend %button-base;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border-radius: 50%;
+  background-color: v.$color-gris;
+  color: v.$color-base;
+  font-size: 16px;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  font-weight: 100;
+
+  &:hover {
+    background-color: color.adjust(v.$color-gris, $lightness: -10%);
+  }
+}
+
+
+.button-form {
+  @extend %button-base;
+  background-color: v.$color-gris;
+  color: v.$color-secundario;
+  border: none;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: v.$font-primary;
+  width: fit-content;
+  border-radius: 9px !important;
+  padding: 0.1rem 1.5rem;
+}
+
+.expandir-table {
+  padding: 8px 10px;
+  width: 100%;
+  box-sizing: border-box;
+  border-left: 1px solid transparent !important;
+  border-right: 1px solid transparent !important;
+
+  transition: all 0.3s ease;
+}
+
+.detalle-expandido {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.5rem;
+}
+
+.linea-detalle-expandido {
+  background-color: v.$color-base;
+  height: 1px;
+  border: 0;
+  width: 100%;
+}
+
+.linea-detalle-expandido-subtable { 
+  background-color: v.$color-base;
+  height: 1px;
+  border: 0;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.field-label,
+.filter-label {
+  font-size: 12px;
+  font-weight: 300;
+  color: v.$color-base;
+  margin-bottom: 3px;
+  display: block;
+}
+
+/* Estilos para contenedor de información expandible */
+.informacion-container,
+.subtable-informacion-container {
+  width: 100%;
+  font-family: v.$font-primary;
+
+
+  .detalle-item,
+  .subtable-detalle-item {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 0.50rem;
+    font-size: 14px;
+    line-height: 1.3;
+
+    .etiqueta,
+    .subtable-etiqueta {
+      color: v.$color-base;
+      margin: 0;
+      padding-right: 0.5rem;
+    }
+
+    .valor,
+    .subtable-valor {
+      font-weight: 400;
+      color: v.$color-secundario;
+      word-break: break-word;
+    }
+  }
+}
+
+.tittle-container {
+    width: 100%;
+    display: flex;
+}
+
+.btn-agregar,
+.btn-buscar,
+.btn-asignar {
+  margin-left: auto;
+  button {
+    @extend .button-primary;
+    width: fit-content;
+    border-radius: 9px !important;
+    padding: 0.6rem 2.5rem;
+  } 
+}
+
+.tittle {
+  line-height: normal;
+  color: v.$color-base;
+  font-weight: 800;
+  font-style: bold;
+
+  & p {
+    font-size: 24px;
+    margin: 0;
+  }
+
+  .linea {
+    background-color: v.$color-base;
+    height: 3px;
+    border: none; 
+    width: 450px;
+    margin: 10px 0 10px 0; 
+    text-align: left;
+    display: block;
+  }
+}
+
+.linea-menu {
+    background-color: v.$color-base;
+    height: 1px;
+    border: 1px;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.container-fluid-menu {
+    width: 100%;
+    display: flex;
+    justify-content: space-between
+}
+
+  
+  .menu-pequeño {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 50px;
+    margin-top: 15px;
+  }
+  
+  .menu-pequeño li {
+    cursor: pointer;
+    font-size: 14px;
+    color: v.$color-base;
+    font-weight: 400;
+    transition: color 0.3s;
+  }
+  
+  .menu-pequeño li:hover {
+    color: v.$color-gris;
+  }
+  
+  .menu-mediano-lista-activo {
+    border-bottom: 2px solid v.$color-base;
+    padding-bottom: 2px !important;
+    opacity: 1;
+  }
+  
+  /* Media Queries para responsividad */
+  @media(max-width: 945px) {
+    .menu-pequeño {
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+  }
+
+.btn-ver {     
+    button {
+        @extend .button-primary;
+        width: fit-content;
+        border-radius: 9px !important;
+        padding: 0.1rem 1.5rem;
+      } 
+}
+
+
+
+// Animacion de error en inputs
+
+.error-message {
+    font-family: v.$font-primary;
+    font-size: 12px;
+    color: red;
+    margin-left: 5px;
+}
+
+.input-error {
+    border: 2px solid red !important;
+    animation: shake 0.5s ease-in-out;
+
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+
+.inputs {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    margin-left: 0;
+    
+
+    & .label {
+        font-family: v.$font-primary;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .input-field {
+    @extend %input-field;
+  }
+  .input-select {
+    @extend .input-select-field;
+  }
+    
+
+    .input-name {
+        @extend %input-field
+    }
+  }
