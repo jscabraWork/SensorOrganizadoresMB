@@ -4,8 +4,6 @@ import { LogoutComponent } from './logout/logout.component';
 import { AdministradoresComponent } from './administradores/administradores.component';
 import { HomeAdminComponent } from './administradores/home-admin/home-admin.component';
 import { RouteGuardAdminService } from './service/route-guard-admin.service';
-import { TemporadasComponent } from './administradores/temporadas/temporadas.component';
-import { AgregarTemporadaComponent } from './administradores/temporadas/agregar-temporada/agregar-temporada.component';
 import { CiudadesComponent } from './administradores/ciudades/ciudades.component';
 import { AgregarCiudadComponent } from './administradores/ciudades/agregar-ciudad/agregar-ciudad.component';
 import { EventosComponent } from './administradores/eventos/eventos.component';
@@ -16,12 +14,10 @@ import { AgregarVenueComponent } from './administradores/venues/agregar-venue/ag
 import { DiasComponent } from './administradores/eventos/dias/dias.component';
 import { DiasActivosInactivosComponent } from './administradores/eventos/dias/dias-activos-inactivos/dias-activos-inactivos.component';
 import { AgregarDiaComponent } from './administradores/eventos/dias/agregar-dia/agregar-dia.component';
-import { MapasComponent } from './administradores/mapas/mapas.component';
 import { LocalidadesComponent } from './administradores/eventos/dias/localidades/localidades.component';
 import { AgregarLocalidadComponent } from './administradores/eventos/dias/localidades/agregar-localidad/agregar-localidad.component';
 import { TransaccionesComponent } from './administradores/transacciones/transacciones.component';
 import { EventosActivosInactivosComponent } from './administradores/eventos/eventos-activos-inactivos/eventos-activos-inactivos.component';
-import { TemporadasActivasInactivasComponent } from './administradores/temporadas/temporadas-activas-inactivas/temporadas-activas-inactivas.component';
 import { LocalidadesActivasInactivasComponent } from './administradores/eventos/dias/localidades/localidades-activas-inactivas/localidades-activas-inactivas.component';
 import { TarifasComponent } from './administradores/eventos/tarifas/tarifas.component';
 import { TarifasActivasInactivasComponent } from './administradores/eventos/tarifas/tarifas-activas-inactivas/tarifas-activas-inactivas.component';
@@ -38,7 +34,6 @@ import { UsuariosComponent } from './administradores/usuarios/usuarios.component
 import { AgregarModificarUsuarioComponent } from './administradores/usuarios/agregar-modificar-usuario/agregar-modificar-usuario.component';
 import { UsuariosActivosInactivosComponent } from './administradores/usuarios/usuarios-activos-inactivos/usuarios-activos-inactivos.component';
 import { RecursosComponent } from './administradores/paginas/crear-modificar-paginas/recursos/recursos.component';
-import { CrearModificarMapaComponent } from './administradores/mapas/crear-modificar-mapa/crear-modificar-mapa.component';
 import { AgregarModificarTipoDocumentoComponent } from './administradores/usuarios/agregar-modificar-usuario/agregar-modificar-tipo-documento/agregar-modificar-tipo-documento.component';
 import { PromotoresComponent } from './administradores/promotores/promotores.component';
 import { PuntosFisicosComponent } from './administradores/puntos-fisicos/puntos-fisicos.component';
@@ -116,39 +111,12 @@ export const routes: Routes = [
           pathMatch: 'full'
         },
         {
-          path: 'temporadas',
-          component: TemporadasComponent,
-          children: [
-            {
-              path: '',
-              redirectTo: 'activas',
-              pathMatch: 'full'
-            },
-            {
-              path: 'activas',
-              component: TemporadasActivasInactivasComponent
-            },
-            {
-              path: 'inactivas',
-              component: TemporadasActivasInactivasComponent
-            }
-          ]
-        },
-        {
-          path: 'temporadas/agregar',
-          component: AgregarTemporadaComponent
-        },
-        {
-          path: 'temporadas/editar/:id',
-          component: AgregarTemporadaComponent
-        },
-        {
-          path: 'temporada/:idTemporada/eventos',
+          path: 'eventos',
           component: EventosComponent,
           children: eventosChildren
         },
         {
-          path: 'temporada/:idTemporada/evento/:idEvento/dias',
+          path: 'evento/:idEvento/dias',
           component: DiasComponent,
           children: [
             {
@@ -167,117 +135,117 @@ export const routes: Routes = [
           ]
         },
         {
-          path: 'temporada/:idTemporada/evento/:idEvento/dia/:idDia/localidad/:idLocalidad/tarifas',
+          path: 'evento/:idEvento/dia/:idDia/localidad/:idLocalidad/tarifas',
           component: TarifasComponent,
           children: tarifasChildren
         },
         {
-          path: 'temporada/:idTemporada/evento/:idEvento/localidad/:idLocalidad/tarifas',
+          path: 'evento/:idEvento/localidad/:idLocalidad/tarifas',
           component: TarifasComponent,
           children: tarifasChildren
         },
         {
-          path: 'temporada/:idTemporada/evento/:idEvento/localidades',
+          path: 'evento/:idEvento/localidades',
           component: LocalidadesComponent,
           children: localidadesChildren
         },
         {
-          path: 'temporada/:idTemporada/evento/:idEvento/dia/:idDia/localidades',
+          path: 'evento/:idEvento/dia/:idDia/localidades',
           component: LocalidadesComponent,
           children: localidadesChildren
         },
         {
-          path: 'temporada/:idTemporada/evento/:idEvento/dia/:idDia/localidad/:idLocalidad/tickets',
+          path: 'evento/:idEvento/dia/:idDia/localidad/:idLocalidad/tickets',
           component: TicketsComponent,
           children: ticketsChildren
         },
         {
-          path: 'temporada/:idTemporada/evento/:idEvento/localidad/:idLocalidad/tickets',
+          path: 'evento/:idEvento/localidad/:idLocalidad/tickets',
           component: TicketsComponent,
           children: ticketsChildren
         },
         {
-          path: 'temporada/:idTemporada/evento/:idEvento/localidad/:idLocalidad/tickets/agregar',
+          path: 'evento/:idEvento/localidad/:idLocalidad/tickets/agregar',
           component: AgregarTicketsComponent
         },
         {
-          path: 'temporada/:idTemporada/evento/:idEvento/localidad/:idLocalidad/ticket/editar/:id',
+          path: 'evento/:idEvento/localidad/:idLocalidad/ticket/editar/:id',
           component: AgregarTicketsComponent
         },
         {
-          path: 'temporada/:idTemporada/evento/:idEvento/dia/:idDia/localidad/:idLocalidad/tickets/agregar',
+          path: 'evento/:idEvento/dia/:idDia/localidad/:idLocalidad/tickets/agregar',
           component: AgregarTicketsComponent
         },
         {
-          path: 'temporada/:idTemporada/evento/:idEvento/dia/:idDia/localidad/:idLocalidad/ticket/editar/:id',
+          path: 'evento/:idEvento/dia/:idDia/localidad/:idLocalidad/ticket/editar/:id',
           component: AgregarTicketsComponent
         },
         {
-          path: 'temporada/:idTemporada/evento/:idEvento/dia/:idDia/localidades/agregar',
+          path: 'evento/:idEvento/dia/:idDia/localidades/agregar',
           component: AgregarLocalidadComponent
         },
         {
-          path: 'temporada/:idTemporada/evento/:idEvento/localidades/agregar',
+          path: 'evento/:idEvento/localidades/agregar',
           component: AgregarLocalidadComponent
         },
         {
-          path: 'temporada/:idTemporada/evento/:idEvento/dia/:idDia/localidades/editar/:id',
+          path: 'evento/:idEvento/dia/:idDia/localidades/editar/:id',
           component: AgregarLocalidadComponent
         },
         {
-          path: 'temporada/:idTemporada/evento/:idEvento/localidades/editar/:id',
+          path: 'evento/:idEvento/localidades/editar/:id',
           component: AgregarLocalidadComponent
         },
         {
-            path: 'temporada/:idTemporada/eventos/agregar',
+            path: 'eventos/agregar',
             component: AgregarEventoComponent
           },
           {
-            path: 'temporada/:idTemporada/eventos/editar/:id',
+            path: 'eventos/editar/:id',
             component: AgregarEventoComponent
           },
           {
-            path: 'temporada/:idTemporada/eventos/agregar/tipo',
+            path: 'eventos/agregar/tipo',
             component: AgregarTipoComponent
           },
           {
-            path: 'temporada/:idTemporada/evento/:idEvento/dias/agregar',
+            path: 'evento/:idEvento/dias/agregar',
             component: AgregarDiaComponent
           },
           {
-            path: 'temporada/:idTemporada/evento/:idEvento/dias/editar/:id',
+            path: 'evento/:idEvento/dias/editar/:id',
             component: AgregarDiaComponent
           },
           {
-            path: 'temporada/:idTemporada/evento/:idEvento/dia/:idDia/localidades/:idLocalidad/tarifas/agregar',
+            path: 'evento/:idEvento/dia/:idDia/localidades/:idLocalidad/tarifas/agregar',
             component: AgregarTarifaComponent
           },
           {
-            path: 'temporada/:idTemporada/evento/:idEvento/localidades/:idLocalidad/tarifas/agregar',
+            path: 'evento/:idEvento/localidades/:idLocalidad/tarifas/agregar',
             component: AgregarTarifaComponent
           },
           {
-            path: 'temporada/:idTemporada/evento/:idEvento/localidades/:idLocalidad/tarifas/editar/:id',
+            path: 'evento/:idEvento/localidades/:idLocalidad/tarifas/editar/:id',
             component: AgregarTarifaComponent
           },
           {
-            path: 'temporada/:idTemporada/evento/:idEvento/dia/:idDia/localidades/:idLocalidad/tarifas/editar/:id',
+            path: 'evento/:idEvento/dia/:idDia/localidades/:idLocalidad/tarifas/editar/:id',
             component: AgregarTarifaComponent
           },
           {
-            path: 'temporada/:idTemporada/evento/:idEvento/dia/:idDia/localidades/:idLocalidad/tarifa/:idTarifa/cupones',
+            path: 'evento/:idEvento/dia/:idDia/localidades/:idLocalidad/tarifa/:idTarifa/cupones',
             component: GestionarCuponesComponent
           },
           {
-            path: 'temporada/:idTemporada/evento/:idEvento/localidades/:idLocalidad/tarifa/:idTarifa/cupones',
+            path: 'evento/:idEvento/localidades/:idLocalidad/tarifa/:idTarifa/cupones',
             component: GestionarCuponesComponent
           },
           {
-            path: 'temporada/:idTemporada/evento/:idEvento/dia/:idDia/localidades/:idLocalidad/tarifa/:idTarifa/cupones/editar/:idCupon',
+            path: 'evento/:idEvento/dia/:idDia/localidades/:idLocalidad/tarifa/:idTarifa/cupones/editar/:idCupon',
             component: GestionarCuponesComponent
           },
           {
-            path: 'temporada/:idTemporada/evento/:idEvento/localidades/:idLocalidad/tarifa/:idTarifa/cupones/editar/:idCupon',
+            path: 'evento/:idEvento/localidades/:idLocalidad/tarifa/:idTarifa/cupones/editar/:idCupon',
             component: GestionarCuponesComponent
           },
           {
@@ -303,14 +271,6 @@ export const routes: Routes = [
           {
             path: 'ciudad/:idCiudad/venues/editar/:id',
             component: AgregarVenueComponent
-          },
-          {
-            path: 'ciudad/:idCiudad/venues/:idVenue/mapa/agregar',
-            component: MapasComponent
-          },
-          {
-            path: 'ciudad/:idCiudad/venues/:idVenue/mapa/editar/:id',
-            component: MapasComponent
           },
           {
             path: 'transacciones',
@@ -350,21 +310,7 @@ export const routes: Routes = [
         ]
       },
 
-      //--------------------------------------------
-      //RUTAS DE MAPAS
-
-      {
-        path: 'mapas',
-        component: MapasComponent
-      },
-      {
-        path: 'mapas/crear',
-        component: CrearModificarMapaComponent,
-      },
-      {
-        path: 'mapas/modificar/:mapaId',
-        component: CrearModificarMapaComponent,
-      },
+    
 
       //--------------------------------------------
 

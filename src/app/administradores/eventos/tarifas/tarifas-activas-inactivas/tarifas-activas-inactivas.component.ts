@@ -26,7 +26,7 @@ export class TarifasActivasInactivasComponent {
   cargando: boolean
   tarifas: Tarifa[] = []
   nombre: string
-  idTemporada: number
+  // idTemporada: number // Removed for new routing
   idLocalidad: number
   idEvento: number
   idDia: number | null;
@@ -46,7 +46,7 @@ export class TarifasActivasInactivasComponent {
     this.nombre = this.autenticado.getAdmin()
 
     this.route.parent?.paramMap.subscribe(params => {
-      this.idTemporada = Number(params.get('idTemporada'))
+      // this.idTemporada = Number(params.get('idTemporada')) // Removed for new routing
       this.idLocalidad = Number(params.get('idLocalidad'))
       this.idEvento = Number(params.get('idEvento'))
       this.idDia = params.has('idDia') ? Number(params.get('idDia')) : null;
@@ -174,7 +174,6 @@ export class TarifasActivasInactivasComponent {
           this.router.navigate([
             '/administradores/admin',
             this.nombre,
-            'temporada', this.idTemporada,
             'evento', this.idEvento,
             'localidades', this.idLocalidad,
             'tarifas', 'editar', tarifa.id
@@ -183,7 +182,6 @@ export class TarifasActivasInactivasComponent {
           this.router.navigate([
             '/administradores/admin',
             this.nombre,
-            'temporada', this.idTemporada,
             'evento', this.idEvento,
             'dia', this.idDia,
             'localidades', this.idLocalidad,
@@ -202,7 +200,6 @@ export class TarifasActivasInactivasComponent {
       this.router.navigate([
         '/administradores/admin',
         this.nombre,
-        'temporada', this.idTemporada,
         'evento', this.idEvento,
         'localidades', this.idLocalidad,
         'tarifa', tarifa.id,
@@ -212,7 +209,6 @@ export class TarifasActivasInactivasComponent {
       this.router.navigate([
         '/administradores/admin',
         this.nombre,
-        'temporada', this.idTemporada,
         'evento', this.idEvento,
         'dia', this.idDia,
         'localidades', this.idLocalidad,

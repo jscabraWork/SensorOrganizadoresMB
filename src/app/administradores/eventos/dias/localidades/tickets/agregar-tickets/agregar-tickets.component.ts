@@ -34,7 +34,7 @@ export class AgregarTicketsComponent {
   // IDs de rutas
   ticketId: number;
   eventoId: number;
-  temporadaId: number;
+  // temporadaId: number;
   localidadId: number;
   diaId: number;
   esRutaPorEvento: boolean = false;
@@ -66,7 +66,7 @@ export class AgregarTicketsComponent {
 
     this.route.paramMap.subscribe(params => {
       this.eventoId = Number(params.get('idEvento'));
-      this.temporadaId = Number(params.get('idTemporada'));
+      // this.temporadaId = Number(params.get('idTemporada'));
       this.localidadId = Number(params.get('idLocalidad'));
       this.diaId = Number(params.get('idDia'));
       this.esRutaPorEvento = !params.has('idDia');
@@ -327,12 +327,12 @@ export class AgregarTicketsComponent {
   goBack(): void {
     if (this.esRutaPorEvento) {
       this.router.navigate([
-        '/administradores/admin', this.nombre, 'temporada', this.temporadaId,
+        '/administradores/admin', this.nombre,
         'evento', this.eventoId, 'localidad', this.localidadId, 'tickets'
       ]);
     } else {
       this.router.navigate([
-        '/administradores/admin', this.nombre, 'temporada', this.temporadaId,
+        '/administradores/admin', this.nombre,
         'evento', this.eventoId, 'dia', this.diaId, 'localidad', this.localidadId, 'tickets'
       ]);
     }

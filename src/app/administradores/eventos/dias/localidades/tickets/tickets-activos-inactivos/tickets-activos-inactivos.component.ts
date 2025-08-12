@@ -241,7 +241,7 @@ export class TicketsActivosInactivosComponent {
   cargando: boolean
   tickets: Ticket[] = []
   nombre: string;
-  temporadaId: number
+  // temporadaId: number
   eventoId: number
   diaId: number | null
   localidadId: number
@@ -260,7 +260,7 @@ export class TicketsActivosInactivosComponent {
     this.nombre = this.autenticado.getAdmin();
 
     this.route.parent?.paramMap.subscribe(params => {
-      this.temporadaId = Number(params.get('idTemporada'));
+      // this.temporadaId = Number(params.get('idTemporada'));
       this.eventoId = Number(params.get('idEvento'));
       this.localidadId = Number(params.get('idLocalidad'));
 
@@ -429,7 +429,6 @@ export class TicketsActivosInactivosComponent {
           if (this.esRutaPorEvento) {
             ruta = [
               '/administradores', 'admin', this.nombre,
-              'temporada', this.temporadaId,
               'evento', this.eventoId,
               'localidad', this.localidadId,
               'tickets', segmentoRuta
@@ -437,7 +436,6 @@ export class TicketsActivosInactivosComponent {
           } else {
             ruta = [
               '/administradores', 'admin', this.nombre,
-              'temporada', this.temporadaId,
               'evento', this.eventoId,
               'dia', this.diaId,
               'localidad', this.localidadId,
@@ -580,8 +578,8 @@ export class TicketsActivosInactivosComponent {
       return
     }
     const basePath = this.esRutaPorEvento
-      ? `administradores/admin/${this.nombre}/temporada/${this.temporadaId}/evento/${this.eventoId}/localidad/${this.localidadId}`
-      : `administradores/admin/${this.nombre}/temporada/${this.temporadaId}/evento/${this.eventoId}/dia/${this.diaId}/localidad/${this.localidadId}`;
+      ? `administradores/admin/${this.nombre}/evento/${this.eventoId}/localidad/${this.localidadId}`
+      : `administradores/admin/${this.nombre}/evento/${this.eventoId}/dia/${this.diaId}/localidad/${this.localidadId}`;
 
     this.router.navigate([`${basePath}/ticket/editar/${ticket.id}`]);
   }

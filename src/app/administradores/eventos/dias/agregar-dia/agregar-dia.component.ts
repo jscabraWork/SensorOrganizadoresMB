@@ -39,7 +39,7 @@ export class AgregarDiaComponent {
   modoEdicion = false;
   diaId: number;
   eventoId: number;
-  temporadaId: number;
+  // temporadaId: number; // Removed - no longer using temporada routes
   private horaInicioPicker: any;
   private horaFinPicker: any;
   private fechaInicioPicker: any;
@@ -62,7 +62,7 @@ export class AgregarDiaComponent {
 
     this.route.paramMap.subscribe(params => {
       this.eventoId = Number(params.get('idEvento'))
-      this.temporadaId = Number(params.get('idTemporada'))
+      // this.temporadaId = Number(params.get('idTemporada')) // Removed - no longer using temporada routes
 
       if (this.eventoId) {
         this.eventoService.getPorId(this.eventoId).subscribe({
@@ -119,7 +119,7 @@ export class AgregarDiaComponent {
         this.loading = false;
         this.openMensaje('Error al cargar los datos del dia');
         this.router.navigate([
-          '/administradores/admin', this.nombre, 'temporada', this.temporadaId, 'evento', this.eventoId, 'dias'
+          '/administradores/admin', this.nombre, 'evento', this.eventoId, 'dias'
         ]);
       }
     });
@@ -174,7 +174,7 @@ export class AgregarDiaComponent {
         this.loading = false
         this.openMensaje("Dia creado exitosamente")
         this.router.navigate([
-          '/administradores/admin', this.nombre, 'temporada', this.temporadaId, 'evento', this.eventoId, 'dias', 'inactivos'
+          '/administradores/admin', this.nombre, 'evento', this.eventoId, 'dias', 'inactivos'
         ])
       }
     })
@@ -190,11 +190,11 @@ export class AgregarDiaComponent {
         this.openMensaje("Dia actualizado exitosamente");
         if (response.estado == 1) {
           this.router.navigate([
-            '/administradores/admin', this.nombre, 'temporada', this.temporadaId, 'evento', this.eventoId, 'dias', 'inactivos'
+            '/administradores/admin', this.nombre, 'evento', this.eventoId, 'dias', 'inactivos'
           ])
         }
         this.router.navigate([
-          '/administradores/admin', this.nombre, 'temporada', this.temporadaId, 'evento', this.eventoId, 'dias'
+          '/administradores/admin', this.nombre, 'evento', this.eventoId, 'dias'
         ])
       },
       error: (err) => {
@@ -350,7 +350,7 @@ export class AgregarDiaComponent {
   }
 
   goBack() {
-    this.router.navigate(['/administradores/admin', this.nombre, 'temporada', this.temporadaId, 'evento', this.eventoId, 'dias']);
+    this.router.navigate(['/administradores/admin', this.nombre, 'evento', this.eventoId, 'dias']);
   }
 
 

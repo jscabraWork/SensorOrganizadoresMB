@@ -230,7 +230,7 @@ determinarRuta(): void {
 
 
   editarEvento(evento: Evento) {
-    this.router.navigate(['/administradores/admin', this.nombre, 'temporada', this.idTemporada, 'eventos', 'editar', evento.id])
+    this.router.navigate(['/administradores/admin', this.nombre, 'eventos', 'editar', evento.id])
   }
 
   toggleItem(index: number): void {
@@ -239,13 +239,13 @@ determinarRuta(): void {
 
   navigateDias(idEvento: number): void {
     this.router.navigate([
-      '/administradores', 'admin', this.nombre, 'temporada', this.idTemporada, 'evento', idEvento, 'dias'
+      '/administradores', 'admin', this.nombre, 'evento', idEvento, 'dias'
     ])
   }
 
   navigateLocalidades(idEvento: number): void {
     this.router.navigate([
-      '/administradores', 'admin', this.nombre, 'temporada', this.idTemporada, 'evento', idEvento, 'localidades'
+      '/administradores', 'admin', this.nombre, 'evento', idEvento, 'localidades'
     ]);
   }
 

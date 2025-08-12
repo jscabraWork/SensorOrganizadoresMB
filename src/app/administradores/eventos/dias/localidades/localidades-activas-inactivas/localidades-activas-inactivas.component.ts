@@ -26,7 +26,6 @@ export class LocalidadesActivasInactivasComponent {
   cargando: boolean
   localidades: Localidad[] = []
   nombre: string
-  idTemporada: number
   idEvento: number
   idDia: number | null = null
   esRutaPorEvento: boolean = false;
@@ -43,7 +42,7 @@ export class LocalidadesActivasInactivasComponent {
     this.nombre = this.autenticado.getAdmin();
 
     this.route.parent?.paramMap.subscribe(params => {
-      this.idTemporada = Number(params.get('idTemporada'))
+      // this.idTemporada = Number(params.get('idTemporada'))
       this.idEvento = Number(params.get('idEvento'))
       this.idDia = params.has('idDia') ? Number(params.get('idDia')) : null
       this.esRutaPorEvento = this.idDia === null;
@@ -117,7 +116,6 @@ export class LocalidadesActivasInactivasComponent {
       this.router.navigate([
         '/administradores/admin',
         this.nombre,
-        'temporada', this.idTemporada,
         'evento', this.idEvento,
         'localidades', 'editar', localidad.id  // <- localidades/editar/:id
       ]);
@@ -126,7 +124,6 @@ export class LocalidadesActivasInactivasComponent {
       this.router.navigate([
         '/administradores/admin',
         this.nombre,
-        'temporada', this.idTemporada,
         'evento', this.idEvento,
         'dia', this.idDia,
         'localidades', 'editar', localidad.id  // <- localidades/editar/:id
@@ -144,7 +141,6 @@ export class LocalidadesActivasInactivasComponent {
       this.router.navigate([
         '/administradores/admin',
         this.nombre,
-        'temporada', this.idTemporada,
         'evento', this.idEvento,
         'localidad', localidadId,
         'tarifas'
@@ -154,7 +150,6 @@ export class LocalidadesActivasInactivasComponent {
       this.router.navigate([
         '/administradores/admin',
         this.nombre,
-        'temporada', this.idTemporada,
         'evento', this.idEvento,
         'dia', this.idDia,
         'localidad', localidadId,
@@ -169,7 +164,6 @@ export class LocalidadesActivasInactivasComponent {
       this.router.navigate([
         '/administradores/admin',
         this.nombre,
-        'temporada', this.idTemporada,
         'evento', this.idEvento,
         'localidad', localidadId,
         'tickets'
@@ -179,7 +173,6 @@ export class LocalidadesActivasInactivasComponent {
       this.router.navigate([
         '/administradores/admin',
         this.nombre,
-        'temporada', this.idTemporada,
         'evento', this.idEvento,
         'dia', this.idDia,
         'localidad', localidadId,

@@ -26,7 +26,7 @@ export class DiasActivosInactivosComponent {
   cargando: boolean
   dias: Dia[] = []
   nombre: string
-  idTemporada: number
+  // idTemporada: number // Removed - no longer using temporada routes
   idEvento: number
   esRutaActivos: boolean;
 
@@ -42,7 +42,7 @@ export class DiasActivosInactivosComponent {
     this.nombre = this.autenticado.getAdmin();
 
     this.route.parent?.paramMap.subscribe(params => {
-      this.idTemporada = Number(params.get('idTemporada'))
+      // this.idTemporada = Number(params.get('idTemporada')) // Removed - no longer using temporada routes
       this.idEvento = Number(params.get('idEvento'))
       this.determinarRuta()
       this.refrescar()
@@ -137,7 +137,7 @@ export class DiasActivosInactivosComponent {
   }
 
   editarDia(dia: Dia) {
-    this.router.navigate(['/administradores/admin', this.nombre, 'temporada', this.idTemporada, 'evento', this.idEvento, 'dias', 'editar', dia.id])
+    this.router.navigate(['/administradores/admin', this.nombre, 'evento', this.idEvento, 'dias', 'editar', dia.id])
   }
 
   toggleItem(index: number): void {
@@ -146,7 +146,7 @@ export class DiasActivosInactivosComponent {
 
   irALocalidades(idDia: number): void {
     this.router.navigate([
-      '/administradores', 'admin', this.nombre, 'temporada', this.idTemporada, 'evento', this.idEvento, 'dia', idDia, 'localidades'
+      '/administradores', 'admin', this.nombre, 'evento', this.idEvento, 'dia', idDia, 'localidades'
     ])
   }
 

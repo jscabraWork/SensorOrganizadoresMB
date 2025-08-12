@@ -11,8 +11,6 @@ import { MensajeComponent } from '../../../mensaje/mensaje.component';
 import { CiudadDataService } from '../../../service/data/ciudad-data.service';
 import { Ciudad } from '../../../models/ciudad.model';
 import { Venue } from '../../../models/venue.model';
-import { TemporadaDataService } from '../../../service/data/temporada-data.service';
-import { Temporada } from '../../../models/temporada.model';
 import { OrganizadorDataService } from '../../../service/data/organizador-data.service';
 import { Organizador } from '../../../models/organizador.model';
 import { VenueDataService } from '../../../service/data/venue-data.service';
@@ -36,7 +34,7 @@ export class AgregarEventoComponent {
   evento: Evento;
   formEnviado = false;
   loading = false;
-  idTemporada: number;
+  // idTemporada: number; // Removed - no longer using temporada routes
   modoEdicion = false;
   eventoId: number;
   nombre: string;
@@ -46,7 +44,6 @@ export class AgregarEventoComponent {
   organizadoresEvento: Organizador[] = [];
   ciudades: Ciudad[] = []
   venues: Venue[] = []
-  temporada: Temporada
   organizadorRepetido = false;
   venuesDeCiudadSeleccionada: Venue[] = []
   ciudadSeleccionadaId: number | null = null
@@ -58,7 +55,6 @@ export class AgregarEventoComponent {
     private eventoService: EventoDataService,
     private tipoService: TipoDataService,
     private ciudadService: CiudadDataService,
-    private temporadaService: TemporadaDataService,
     private venueService: VenueDataService,
     private organizadorService: OrganizadorDataService,
     private dialog: MatDialog,
@@ -75,7 +71,7 @@ export class AgregarEventoComponent {
 
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
-      this.idTemporada = +params.get('idTemporada');
+      // this.idTemporada = +params.get('idTemporada'); // Removed - no longer using temporada routes
 
       // Primero cargar los datos maestros
       Promise.all([
@@ -98,7 +94,6 @@ export class AgregarEventoComponent {
       });
     });
 
-    this.cargarTemporada();
   }
 
   cargarEvento(): void {
@@ -165,19 +160,6 @@ export class AgregarEventoComponent {
 
 
 
-  cargarTemporada(): void {
-    this.loading = true;
-    this.temporadaService.getPorId(this.idTemporada).subscribe({
-      next: (data) => {
-        this.temporada = data;
-        this.evento.temporada = this.temporada
-        this.loading = false;
-      }, error: (error) => {
-        console.error('Error al buscar la temporada a asignar', error);
-        this.loading = false
-      }
-    })
-  }
 
   cargarOrganizadores(): Promise<void> {
     return new Promise((resolve, reject) => {
@@ -200,7 +182,7 @@ export class AgregarEventoComponent {
           console.error('Error al cargar organizadores: ', error);
           this.loading = false;
           this.openMensaje('Error al cargar los organizadores del evento');
-          this.router.navigate(['/administradores/admin', this.nombre, 'temporada', this.idTemporada, 'eventos']);
+          this.router.navigate(['/administradores/admin', this.nombre, 'eventos']);
           reject(error);
         }
       });
@@ -244,7 +226,7 @@ export class AgregarEventoComponent {
           console.error('Error al cargar tipos:', error);
           this.loading = false;
           this.openMensaje('Error al cargar los tipos de evento');
-          this.router.navigate(['/administradores/admin', this.nombre, 'temporada', this.idTemporada, 'eventos']);
+          this.router.navigate(['/administradores/admin', this.nombre, 'eventos']);
         }
       });
     });
@@ -263,7 +245,7 @@ export class AgregarEventoComponent {
           console.error('Error al cargar las ciudades: ', error);
           this.loading = false;
           this.openMensaje('Error al cargar las ciudades');
-          this.router.navigate(['/administradores/admin', this.nombre, 'temporada', this.idTemporada, 'eventos']);
+          this.router.navigate(['/administradores/admin', this.nombre, 'eventos']);
         }
       })
     })
@@ -315,7 +297,7 @@ export class AgregarEventoComponent {
     this.guardarEstadoFormulario();
 
     this.router.navigate([
-      '/administradores/admin', this.nombre, 'temporada', this.idTemporada, 'eventos', 'agregar', 'tipo']);
+      '/administradores/admin', this.nombre, 'eventos', 'agregar', 'tipo']);
   }
 
   private guardarEstadoFormulario() {
@@ -372,7 +354,6 @@ export class AgregarEventoComponent {
     }
 
     this.loading = true;
-    this.evento.temporada = this.temporada;
 
     if (this.modoEdicion) {
       this.actualizarEvento()
@@ -419,7 +400,7 @@ export class AgregarEventoComponent {
           this.loading = false;
           this.openMensaje('Evento modificado correctamente')
         }
-        this.router.navigate(['/administradores/admin', this.nombre, 'temporada', this.idTemporada, 'eventos']);
+        this.router.navigate(['/administradores/admin', this.nombre, 'eventos']);
       },
       error: (error) => {
         this.loading = false;
@@ -436,7 +417,7 @@ export class AgregarEventoComponent {
           this.loading = false;
           this.openMensaje('Se creo el evento exitosamente')
         }
-        this.router.navigate(['/administradores/admin', this.nombre, 'temporada', this.idTemporada, 'eventos']);
+        this.router.navigate(['/administradores/admin', this.nombre, 'eventos']);
       },
       error: (error) => {
         this.loading = false;
@@ -501,6 +482,6 @@ export class AgregarEventoComponent {
   }
 
   goBack() {
-    this.router.navigate(['/administradores/admin', this.nombre, 'temporada', this.idTemporada, 'eventos']);
+    this.router.navigate(['/administradores/admin', this.nombre, 'eventos']);
   }
 }

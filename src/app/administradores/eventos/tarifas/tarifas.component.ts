@@ -21,7 +21,7 @@ import { NavigationComponent } from '../../../commons-ui/navigation/navigation.c
 export class TarifasComponent implements OnInit {
 
   eventoId:any
-  temporadaId:any
+  // temporadaId:any // Eliminado porque ya no se usa temporada
   diaId: any
   localidadId: any
   localidad: Localidad
@@ -45,7 +45,7 @@ export class TarifasComponent implements OnInit {
   ngOnInit(): void {
     const rutaCompleta = this.route.snapshot;
     this.nombre = this.autenticado.getAdmin();
-    this.temporadaId = Number(rutaCompleta.paramMap.get('idTemporada'));
+    // this.temporadaId = Number(rutaCompleta.paramMap.get('idTemporada')); // Ya no se usa temporada
     this.eventoId = Number(rutaCompleta.paramMap.get('idEvento'));
     this.diaId = rutaCompleta.paramMap.has('idDia') 
       ? Number(rutaCompleta.paramMap.get('idDia')) 
@@ -54,7 +54,7 @@ export class TarifasComponent implements OnInit {
 
     this.esRutaPorEvento = this.diaId === null;
 
-    if (this.eventoId && this.nombre && this.temporadaId && this.localidadId) {
+    if (this.eventoId && this.nombre && this.localidadId) {
       this.localidadService.getPorId(this.localidadId).subscribe({
         next: (data) => {
           this.localidad = data;
@@ -72,7 +72,6 @@ export class TarifasComponent implements OnInit {
     if (this.esRutaPorEvento) {
       this.router.navigate([
         '/administradores/admin', this.nombre,
-        'temporada', this.temporadaId,
         'evento', this.eventoId,
         'localidades', this.localidadId,
         'tarifas', 'agregar'
@@ -80,7 +79,6 @@ export class TarifasComponent implements OnInit {
     } else {
       this.router.navigate([
         '/administradores/admin', this.nombre,
-        'temporada', this.temporadaId,
         'evento', this.eventoId,
         'dia', this.diaId,
         'localidades', this.localidadId,
@@ -93,14 +91,12 @@ export class TarifasComponent implements OnInit {
     if (this.esRutaPorEvento) {
       this.router.navigate([
         '/administradores/admin', this.nombre,
-        'temporada', this.temporadaId,
         'evento', this.eventoId,
         'localidades'
       ]);
     } else {
       this.router.navigate([
         '/administradores/admin', this.nombre,
-        'temporada', this.temporadaId,
         'evento', this.eventoId,
         'dia', this.diaId,
         'localidades'

@@ -1,7 +1,6 @@
 import { Dia } from "./dia.model"
 import { Imagen } from "./imagen.model"
 import { Organizador } from "./organizador.model"
-import { Temporada } from "./temporada.model"
 import { Tipo } from "./tipo.model"
 import { Venue } from "./venue.model"
 
@@ -18,7 +17,6 @@ export class Evento {
     organizadores: Organizador[]
     dias: Dia[]
     tipo: Tipo
-    temporada: Temporada
     imagenes: Imagen[]
 
 }

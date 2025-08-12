@@ -42,7 +42,7 @@ export class GestionarCuponesComponent extends CommonListarComponent<Cupon, Cupo
   eventoId: number;
   diaId: number;
   localidadId: number;
-  temporadaId: number;
+  // temporadaId: number; // Removed for new routing
   esRutaPorEvento: boolean = false;
   mostrarFormulario = false;
 
@@ -78,7 +78,7 @@ export class GestionarCuponesComponent extends CommonListarComponent<Cupon, Cupo
 
     this.route.paramMap.subscribe(params => {
       this.eventoId = Number(params.get('idEvento'));
-      this.temporadaId = Number(params.get('idTemporada'));
+      // this.temporadaId = Number(params.get('idTemporada')); // Removed for new routing
       this.localidadId = Number(params.get('idLocalidad'));
       this.tarifaId = Number(params.get('idTarifa'));
       this.diaId = params.has('idDia') ? Number(params.get('idDia')) : null;
@@ -278,7 +278,6 @@ export class GestionarCuponesComponent extends CommonListarComponent<Cupon, Cupo
       this.router.navigate([
         '/administradores/admin',
         this.nombre,
-        'temporada', this.temporadaId,
         'evento', this.eventoId,
         'localidad', this.localidadId,
         'tarifas'
@@ -287,7 +286,6 @@ export class GestionarCuponesComponent extends CommonListarComponent<Cupon, Cupo
       this.router.navigate([
         '/administradores/admin',
         this.nombre,
-        'temporada', this.temporadaId,
         'evento', this.eventoId,
         'dia', this.diaId,
         'localidad', this.localidadId,

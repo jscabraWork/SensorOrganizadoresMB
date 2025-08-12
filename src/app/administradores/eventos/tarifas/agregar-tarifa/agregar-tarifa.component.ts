@@ -35,7 +35,7 @@ export class AgregarTarifaComponent {
   eventoId: number
   diaId: number
   localidadId: number
-  temporadaId: number
+  // temporadaId: number // Removed for new routing
   esRutaPorEvento: boolean = false;
   ivaSugerido = false;
   tarifaParaCupon = false;
@@ -58,7 +58,7 @@ export class AgregarTarifaComponent {
 
     this.route.paramMap.subscribe(params => {
       this.eventoId = Number(params.get('idEvento'))
-      this.temporadaId = Number(params.get('idTemporada'))
+      // this.temporadaId = Number(params.get('idTemporada')) // Removed for new routing
       this.localidadId = Number(params.get('idLocalidad'))
       this.diaId = params.has('idDia') ? Number(params.get('idDia')) : null;
       this.esRutaPorEvento = this.diaId === null;
@@ -88,7 +88,7 @@ export class AgregarTarifaComponent {
         this.loading = false
         this.openMensaje('Error al cargar los datos de la tarifa')
         this.router.navigate([
-          '/administradores/admin', this.nombre, 'temporada', this.temporadaId, 'evento', this.eventoId, 'tarifas'
+          '/administradores/admin', this.nombre, 'evento', this.eventoId, 'tarifas'
         ])
       }
     })
@@ -264,7 +264,6 @@ export class AgregarTarifaComponent {
       this.router.navigate([
         '/administradores/admin',
         this.nombre,
-        'temporada', this.temporadaId,
         'evento', this.eventoId,
         'localidad', this.localidadId,
         'tarifas'
@@ -274,7 +273,6 @@ export class AgregarTarifaComponent {
       this.router.navigate([
         '/administradores/admin',
         this.nombre,
-        'temporada', this.temporadaId,
         'evento', this.eventoId,
         'dia', this.diaId,
         'localidad', this.localidadId,

@@ -32,7 +32,7 @@ export class AgregarLocalidadComponent {
   modoEdicion = false;
   diaId: number;
   eventoId: number;
-  temporadaId: number;
+  // temporadaId: number; // Removed for new routing
   diaAgregar: Dia | null = null
   dias: Dia[] = []
   diasLocalidad: Dia[] = []
@@ -59,7 +59,7 @@ export class AgregarLocalidadComponent {
 
     this.route.paramMap.subscribe(params => {
       const id = Number(params.get('id'));
-      this.temporadaId = Number(params.get('idTemporada'));
+      // this.temporadaId = Number(params.get('idTemporada')); // Removed for new routing
       this.eventoId = Number(params.get('idEvento'));
 
       // Determinar si viene de días o de evento
@@ -218,7 +218,7 @@ export class AgregarLocalidadComponent {
   }
 
   goBack() {
-    const basePath = ['/administradores/admin', this.nombre, 'temporada', this.temporadaId, 'evento', this.eventoId];
+    const basePath = ['/administradores/admin', this.nombre, 'evento', this.eventoId];
     const path = this.esRutaPorEvento ? [...basePath, 'localidades'] : [...basePath, 'dia', this.diaId, 'localidades'];
     this.router.navigate(path);
   }

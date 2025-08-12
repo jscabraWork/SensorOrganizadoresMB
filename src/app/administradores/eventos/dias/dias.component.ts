@@ -19,7 +19,7 @@ import { EventoDataService } from '../../../service/data/evento-data.service';
 export class DiasComponent implements OnInit {
 
   eventoId:any
-  temporadaId:any
+  // temporadaId:any // Removed for new routing
   evento: Evento
   extender: boolean
   nombre: string
@@ -35,9 +35,9 @@ export class DiasComponent implements OnInit {
     this.extender = true
     const rutaCompleta = this.route.snapshot;
     this.nombre = this.autenticado.getAdmin();
-    this.temporadaId = Number(rutaCompleta.paramMap.get('idTemporada'));
+    // this.temporadaId = Number(rutaCompleta.paramMap.get('idTemporada')); // Removed for new routing
     this.eventoId = Number(rutaCompleta.paramMap.get('idEvento'));
-    if(this.eventoId && this.nombre && this.temporadaId) {
+    if(this.eventoId && this.nombre) {
       this.eventoService.getPorId(this.eventoId).subscribe({
         next: (data) => {
           this.evento = data;
@@ -56,12 +56,12 @@ export class DiasComponent implements OnInit {
   }
 
   navigateToAgregarDia() {
-    this.router.navigate(['/administradores/admin',this.nombre,'temporada',this.temporadaId,'evento',this.eventoId,'dias', 'agregar'
+    this.router.navigate(['/administradores/admin',this.nombre,'evento',this.eventoId,'dias', 'agregar'
     ]);
   }
 
   goBack() {
-    this.router.navigate(['/administradores/admin',this.nombre,'temporada',this.temporadaId,'eventos'
+    this.router.navigate(['/administradores/admin',this.nombre,'eventos'
     ]);
   }
 }

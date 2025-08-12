@@ -21,7 +21,7 @@ import { EventoDataService } from '../../../../service/data/evento-data.service'
 export class LocalidadesComponent implements OnInit {
 
   eventoId: number;
-  temporadaId: number;
+  // temporadaId: number; // Removed - no longer using temporada routes
   diaId: number | null = null;
   dia: Dia;
   evento: Evento;
@@ -39,7 +39,7 @@ export class LocalidadesComponent implements OnInit {
 
   ngOnInit(): void {
     this.nombre = this.autenticado.getAdmin();
-    this.temporadaId = Number(this.route.snapshot.paramMap.get('idTemporada'));
+    // this.temporadaId = Number(this.route.snapshot.paramMap.get('idTemporada')); // Removed - no longer using temporada routes
     this.eventoId = Number(this.route.snapshot.paramMap.get('idEvento'));
     this.diaId = this.route.snapshot.paramMap.has('idDia') 
       ? Number(this.route.snapshot.paramMap.get('idDia')) 
@@ -67,7 +67,7 @@ export class LocalidadesComponent implements OnInit {
       });
     }
 
-    if (!this.eventoId || !this.nombre || !this.temporadaId) {
+    if (!this.eventoId || !this.nombre) {
       console.error('Datos no identificados');
     }
   }
@@ -79,7 +79,6 @@ export class LocalidadesComponent implements OnInit {
   navigateToAgregarLocalidad() {
   const baseRuta = [
     '/administradores/admin', this.nombre,
-    'temporada', this.temporadaId,
     'evento', this.eventoId
   ];
 
@@ -93,11 +92,11 @@ export class LocalidadesComponent implements OnInit {
   goBack() {
     if (this.esRutaPorEvento) {
       this.router.navigate([
-        '/administradores', 'admin', this.nombre, 'temporada', this.temporadaId, 'eventos'
+        '/administradores', 'admin', this.nombre, 'eventos'
       ]);
     } else {
       this.router.navigate([
-        '/administradores', 'admin', this.nombre, 'temporada', this.temporadaId, 'evento', this.eventoId, 'dias'
+        '/administradores', 'admin', this.nombre, 'evento', this.eventoId, 'dias'
       ]);
     }
   }

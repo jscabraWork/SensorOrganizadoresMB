@@ -23,7 +23,7 @@ import { HardcodedAutheticationService } from '../../../../../service/hardcoded-
 export class TicketsComponent implements OnInit {
 
   eventoId: number;
-  temporadaId: number;
+  // temporadaId: number; // Removed for new routing
   localidadId: number;
   diaId: number | null;
   localidad: Localidad;
@@ -49,7 +49,7 @@ export class TicketsComponent implements OnInit {
     this.extender = true;
     const rutaCompleta = this.route.snapshot;
     this.nombre = this.autenticado.getAdmin();
-    this.temporadaId = Number(rutaCompleta.paramMap.get('idTemporada'));
+    // this.temporadaId = Number(rutaCompleta.paramMap.get('idTemporada')); // Removed for new routing
     this.eventoId = Number(rutaCompleta.paramMap.get('idEvento'));
     this.diaId = rutaCompleta.paramMap.has('idDia')
       ? Number(rutaCompleta.paramMap.get('idDia'))
@@ -73,7 +73,6 @@ export class TicketsComponent implements OnInit {
       // Ruta SIN día (por evento)
       this.router.navigate([
         '/administradores', 'admin', this.nombre,
-        'temporada', this.temporadaId,
         'evento', this.eventoId,
         'localidad', this.localidadId,
         'tickets', 'agregar'
@@ -82,7 +81,6 @@ export class TicketsComponent implements OnInit {
       // Ruta CON día
       this.router.navigate([
         '/administradores', 'admin', this.nombre,
-        'temporada', this.temporadaId,
         'evento', this.eventoId,
         'dia', this.diaId,
         'localidad', this.localidadId,
@@ -96,7 +94,6 @@ export class TicketsComponent implements OnInit {
       // Volver a localidades SIN día
       this.router.navigate([
         '/administradores', 'admin', this.nombre,
-        'temporada', this.temporadaId,
         'evento', this.eventoId,
         'localidades'
       ]);
@@ -104,7 +101,6 @@ export class TicketsComponent implements OnInit {
       // Volver a localidades CON día
       this.router.navigate([
         '/administradores', 'admin', this.nombre,
-        'temporada', this.temporadaId,
         'evento', this.eventoId,
         'dia', this.diaId,
         'localidades'

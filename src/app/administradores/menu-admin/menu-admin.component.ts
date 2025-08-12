@@ -11,8 +11,11 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 })
 export class MenuAdminComponent implements OnInit {
   @Input() nombre: string = '';
+  
   isCollapsed = false;
+  
   isMobile = false;
+  
   navItems: any[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router) {}
