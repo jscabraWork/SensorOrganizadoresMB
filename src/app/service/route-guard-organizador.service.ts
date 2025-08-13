@@ -5,18 +5,12 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, ActivatedRoute } f
 @Injectable({
   providedIn: 'root'
 })
-export class RouteGuardAdminService {
+export class RouteGuardOrganizadorService {
 
   constructor(private autenticador:HardcodedAutheticationService, private route: Router, private router:ActivatedRoute) { }
   
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
-    // Solo permite acceso a administradores y contadores, NO a organizadores
-    if(this.autenticador.adminLoggin() || this.autenticador.contadorLoggin()){
-      // Verificar que no sea un organizador
-      if(this.autenticador.organizadorLoggin()){
-        this.route.navigate(['login']);
-        return false;
-      }
+    if(this.autenticador.organizadorLoggin()){
       return true;
     }
     else{

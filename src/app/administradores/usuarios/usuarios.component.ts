@@ -27,10 +27,8 @@ export class UsuariosComponent implements OnInit {
     { path: 'clientes', label: 'Clientes' },
     { path: 'organizadores', label: 'Organizadores' },
     { path: 'coordinadores', label: 'Coordinadores' },
-    { path: 'analistas', label: 'Analistas' },
     { path: 'promotores', label: 'Promotores' },
     { path: 'puntosfisicos', label: 'Puntos Físicos' },
-    { path: 'auditores', label: 'Auditores' },
     { path: 'administradores', label: 'Administradores' }
   ];
 

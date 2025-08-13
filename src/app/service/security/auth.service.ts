@@ -98,6 +98,7 @@ export class AuthService {
       sessionStorage.setItem('organizador', this._usuario.usuario);
       sessionStorage.setItem('cc',this._usuario.numeroDocumento);
       sessionStorage.setItem('nombre',this._usuario.nombre);
+      this.router.navigate(['organizadores/organizador', this._usuario.usuario]);
       this.dialog.closeAll();
       
     }
