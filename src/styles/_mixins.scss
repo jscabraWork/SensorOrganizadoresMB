@@ -49,7 +49,7 @@
 @mixin form-input {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid color.adjust(v.$color-base, $lightness: 70%);
+  border: 1px solid v.$color-gris-light;
   border-radius: 4px;
   font-family: v.$font-primary;
   font-size: 1rem;
@@ -57,8 +57,8 @@
 
   &:focus {
     outline: none;
-    border-color: v.$color-base;
-    box-shadow: 0 0 0 2px rgba(v.$color-base, 0.1);
+    border-color: v.$color-primario;
+    box-shadow: 0 0 0 2px rgba(v.$color-primario, 0.1);
   }
 }
 
@@ -68,6 +68,20 @@
 
 @mixin adjust-color($property, $color, $amount) {
   #{$property}: color.adjust($color, $lightness: $amount);
+}
+
+// Mixin para textos con color primario
+@mixin text-primary {
+  color: v.$color-primario;
+  font-weight: 600;
+}
+
+// Mixin para elementos destacados
+@mixin highlight {
+  background-color: v.$color-primario;
+  color: v.$color-negro;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
 }
 
 // Mixins para responsive design

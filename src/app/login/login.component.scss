@@ -32,7 +32,7 @@
   text-align: center;
 
   .login-title {
-    color: v.$color-base; // Manteniendo color específico del ejemplo
+    color: v.$color-negro;
     font-family: v.$font-secondary;
     font-weight: bold;
     margin-bottom: 0.5rem;
@@ -40,7 +40,7 @@
 
   .login-subtitle {
     font-size: 1.125rem; // 18px
-    color: v.$color-base;
+    color: v.$color-negro;
     text-align: center;
   }
 }
@@ -56,22 +56,22 @@
       width: 100%;
       padding: .475rem .85rem;
       font-size: 1rem;
-      border: 1px solid color.adjust(v.$color-base, $lightness: 70%);
+      border: 1px solid v.$color-gris-light;
       border-radius: 4px;
       font-family: v.$font-primary;
       box-sizing: border-box;
     
       &.ng-invalid:not(form),
       &.ng-valid:not(form) {
-        background-color: #eaeaea;
-        border-left: 2px solid v.$color-base; // Equivalente a tu .ng-invalid/.ng-valid
+        background-color: v.$color-gris-muy-light;
+        border-left: 2px solid v.$color-primario;
       }
     }
 
     .input-hint {
       font-size: 20px;
       text-align: center;
-      color: color.adjust(v.$color-base, $lightness: 40%);
+      color: v.$color-gris;
     }
   }
 
@@ -91,8 +91,8 @@
   width: 100%;
   padding: 0.75rem;
   margin: 1rem 0;
-  background: linear-gradient(v.$color-base, v.$color-secundario);
-  color: v.$color-blanco;
+  background: linear-gradient(135deg, v.$color-primario, v.$color-primario-dark);
+  color: v.$color-negro;
   border: none;
   border-radius: 4px;
   font-family: v.$font-primary;
@@ -102,9 +102,8 @@
   
   
   &:hover {
-    background: linear-gradient(
-      color.adjust(v.$color-base, $lightness: -5%),
-      color.adjust(v.$color-secundario, $lightness: -5%)
-    );
+    background: linear-gradient(135deg, v.$color-primario-dark, v.$color-primario);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(v.$color-primario, 0.3);
   }
 }

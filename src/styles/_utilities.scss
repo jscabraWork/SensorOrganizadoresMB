@@ -4,11 +4,15 @@
 
 // Color de textos
 .text-primary {
-  color: v.$color-base;
+  color: v.$color-negro;
 }
 
 .text-muted {
-  color: color.adjust(v.$color-base, $lightness: 40%);
+  color: v.$color-gris;
+}
+
+.text-accent {
+  color: v.$color-primario;
 }
 
 // Espaciado
@@ -35,7 +39,7 @@
   .spinner {
     border: 4px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
-    border-top: 4px solid v.$color-gris; 
+    border-top: 4px solid v.$color-primario; 
     width: 40px;
     height: 40px;
     animation: spin 1s linear infinite;

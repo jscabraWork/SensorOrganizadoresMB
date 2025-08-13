@@ -7,15 +7,27 @@ $font-primary: 'Inter';
 $font-secondary: 'Montserrat';
 $font-tertiary: 'Lato';
 
-// Colores
-$color-base: #505050;
-$color-secundario: #373737;
-$color-contraste: #bebebe;
-$color-gris: #D9D9D9;
+// Colores - Nueva paleta
+$color-primario: #FFD900;
+$color-primario-dark: #E6C300;
+$color-primario-light: #FFF44D;
+
+$color-negro: #1A1A1A;
+$color-negro-soft: #2D2D2D;
+$color-gris-dark: #404040;
+$color-gris: #808080;
+$color-gris-light: #C0C0C0;
+$color-gris-muy-light: #F5F5F5;
+
 $color-blanco: #FFFFFF;
-$color-negro: #000000;
 $color-error: #dc3545;
 $color-success: #28a745;
+$color-warning: #ffc107;
+
+// Variables para compatibilidad (mantener mientras se migra)
+$color-base: $color-negro;
+$color-secundario: $color-negro-soft;
+$color-contraste: $color-gris-light;
 
 // Espaciados (versión simplificada y funcional)
 $spacer: 1rem;

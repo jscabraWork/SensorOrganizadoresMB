@@ -213,8 +213,8 @@
   .header-tr th {
     font-family: v.$font-primary;
     font-size: 13px;
-    color: v.$color-base;
-    background-color: v.$color-gris;
+    color: v.$color-negro;
+    background-color: v.$color-gris-light;
     font-weight: 700;
     padding: 12px;
   }
@@ -248,8 +248,8 @@
 // Botón primario
 .button-primary {
   @extend %button-base;
-  background-color: v.$color-base;
-  color: v.$color-blanco;
+  background-color: v.$color-primario;
+  color: v.$color-negro;
   border: none;
   font-weight: 600;
   font-size: 13px;
@@ -259,23 +259,24 @@
 
 
   &:hover {
-    background-color: color.adjust(v.$color-base, $lightness: -10%);
+    background-color: v.$color-primario-dark;
   }
 }
 
 %input-field {
   padding: 10px 12px;
   width: auto;
-  background-color: v.$color-gris;
+  background-color: v.$color-gris-muy-light;
   border-radius: 10px;
   font-family: v.$font-primary;
   font-size: 14px;
   font-weight: 400;
-  border: none;
+  border: 1px solid v.$color-gris-light;
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(v.$color-base, 0.2);
+    border-color: v.$color-primario;
+    box-shadow: 0 0 0 2px rgba(v.$color-primario, 0.2);
   }
 }
 
@@ -290,12 +291,12 @@
         background-position: left 10px center;
         background-size: 18px;
         padding-left: 40px !important ;
-        background-color: v.$color-gris;
+        background-color: v.$color-gris-muy-light;
         border-radius: 10px;
         font-family: v.$font-primary;
         font-size: 14px;
         font-weight: 400;
-        border: none;
+        border: 1px solid v.$color-gris-light;
 }
 
 .input-select-field-triangulo{
@@ -311,11 +312,11 @@
 .button-secondary {
   @extend %button-base;
   background-color: v.$color-blanco;
-  color: v.$color-base;
-  border: 1px solid v.$color-base;
+  color: v.$color-negro;
+  border: 1px solid v.$color-negro;
   width: fit-content;
   &:hover {
-    background-color: color.adjust(v.$color-base, $lightness: 95%);
+    background-color: v.$color-gris-muy-light;
   }
 }
 
@@ -328,8 +329,8 @@
 
 .button-ordenes{
   @extend %button-base;
-  background-color: v.$color-base;
-  color: v.$color-blanco;
+  background-color: v.$color-primario;
+  color: v.$color-negro;
   border: none;
   font-weight: 500;
   font-size: 13px;
@@ -340,8 +341,8 @@
 
 .button-lupa{
   @extend %button-base;
-  background-color: v.$color-base;
-  color: v.$color-blanco;
+  background-color: v.$color-primario;
+  color: v.$color-negro;
   border: none;
   font-weight: 500;
   font-size: 13px;
@@ -356,8 +357,8 @@
 
 .button-third {
   @extend %button-base;
-    background-color: v.$color-base;
-    color: v.$color-blanco;
+    background-color: v.$color-primario;
+    color: v.$color-negro;
     border: none;
     font-weight: 500;
     font-size: 13px;
@@ -367,7 +368,7 @@
     padding: 0.1rem 1.5rem;
 
     &:hover {
-      background-color: color.adjust(v.$color-base, $lightness: -10%);
+      background-color: v.$color-primario-dark;
     }
 }
 
@@ -377,8 +378,8 @@
   height: 22px;
   padding: 0;
   border-radius: 50%;
-  background-color: v.$color-gris;
-  color: v.$color-base;
+  background-color: v.$color-gris-light;
+  color: v.$color-negro;
   font-size: 16px;
   align-items: center;
   justify-content: center;
@@ -386,15 +387,15 @@
   font-weight: 100;
 
   &:hover {
-    background-color: color.adjust(v.$color-gris, $lightness: -10%);
+    background-color: v.$color-gris;
   }
 }
 
 
 .button-form {
   @extend %button-base;
-  background-color: v.$color-gris;
-  color: v.$color-secundario;
+  background-color: v.$color-gris-light;
+  color: v.$color-negro;
   border: none;
   font-weight: 500;
   font-size: 14px;
