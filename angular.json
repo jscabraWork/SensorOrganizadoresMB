@@ -26,7 +26,8 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/assets"
+              "src/assets",
+              "src/public/favicon.ico"
             ],
               "styles": [
                 "node_modules/flatpickr/dist/flatpickr.min.css",

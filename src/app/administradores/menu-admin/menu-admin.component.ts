@@ -31,6 +31,7 @@ export class MenuAdminComponent implements OnInit {
 
   private updateNavItems() {
     this.navItems = [
+      { route: `/administradores/admin/${this.nombre}/eventos`, icon: 'assets/images/vector/temporadas.png', label: 'Eventos' },
       { route: `/administradores/admin/${this.nombre}/usuarios`, icon: 'assets/images/vector/usuarios.png', label: 'Usuarios' },
       { route: `/administradores/admin/${this.nombre}/ciudades`, icon: 'assets/images/vector/ciudades.png', label: 'Ciudades' },
       { route: `/administradores/admin/${this.nombre}/transacciones`, icon: 'assets/images/vector/transacciones.png', label: 'Transacciones' },
