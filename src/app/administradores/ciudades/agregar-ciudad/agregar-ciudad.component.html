@@ -16,7 +16,8 @@
 
     <form class="form-container">
       <div class="inputs">
-        <input type="text" id="nombre" name="nombre" [class.input-error]="formEnviado && !ciudad.nombre"  [(ngModel)]="ciudad.nombre" class="input-name" placeholder="Nombre de la ciudad" required>
+        <input type="text" id="nombre" name="nombre" [class.input-error]="formEnviado && !ciudad.nombre"  
+        [(ngModel)]="ciudad.nombre" class="input-name" placeholder="Nombre de la ciudad" required>
           <div *ngIf="formEnviado && !ciudad.nombre" class="error-message">
                 El nombre es obligatorio
           </div>

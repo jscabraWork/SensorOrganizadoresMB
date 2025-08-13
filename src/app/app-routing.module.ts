@@ -24,8 +24,6 @@ import { TarifasActivasInactivasComponent } from './administradores/eventos/tari
 import { AgregarTarifaComponent } from './administradores/eventos/tarifas/agregar-tarifa/agregar-tarifa.component';
 import { NumeroOrdenClienteComponent } from './administradores/ordenes/numero-orden-cliente/numero-orden-cliente.component';
 import { OrdenesComponent } from './administradores/ordenes/ordenes.component';
-import { PaginasComponent } from './administradores/paginas/paginas.component';
-import { CrearModificarPaginasComponent } from './administradores/paginas/crear-modificar-paginas/crear-modificar-paginas.component';
 import { TicketsComponent } from './administradores/eventos/dias/localidades/tickets/tickets.component';
 import { AgregarTicketsComponent } from './administradores/eventos/dias/localidades/tickets/agregar-tickets/agregar-tickets.component';
 import { TicketsActivosInactivosComponent } from './administradores/eventos/dias/localidades/tickets/tickets-activos-inactivos/tickets-activos-inactivos.component';
@@ -33,7 +31,6 @@ import { OrdenesClienteComponent } from './administradores/ordenes/ordenes-clien
 import { UsuariosComponent } from './administradores/usuarios/usuarios.component';
 import { AgregarModificarUsuarioComponent } from './administradores/usuarios/agregar-modificar-usuario/agregar-modificar-usuario.component';
 import { UsuariosActivosInactivosComponent } from './administradores/usuarios/usuarios-activos-inactivos/usuarios-activos-inactivos.component';
-import { RecursosComponent } from './administradores/paginas/crear-modificar-paginas/recursos/recursos.component';
 import { AgregarModificarTipoDocumentoComponent } from './administradores/usuarios/agregar-modificar-usuario/agregar-modificar-tipo-documento/agregar-modificar-tipo-documento.component';
 import { PromotoresComponent } from './administradores/promotores/promotores.component';
 import { PuntosFisicosComponent } from './administradores/puntos-fisicos/puntos-fisicos.component';
@@ -277,40 +274,8 @@ export const routes: Routes = [
             component: TransaccionesComponent
           },
 
-      //--------------------------------------------
-      //RUTAS DE PÁGINAS
-      {
-        path: 'paginas',
-        component: PaginasComponent
-      },
-      {
-        path: 'paginas/crear',
-        component: CrearModificarPaginasComponent,
 
-        children: [
-          {
-            path: ':paginaId',
-            component: CrearModificarPaginasComponent,
-          },
-          {
-            path: 'recursos',
-            component: RecursosComponent
-          },
-        ]
 
-      },
-      {
-        path: 'paginas/modificar/:paginaId',
-        component: CrearModificarPaginasComponent,
-        children: [
-          {
-            path: 'recursos',
-            component: RecursosComponent
-          },
-        ]
-      },
-
-    
 
       //--------------------------------------------
 
