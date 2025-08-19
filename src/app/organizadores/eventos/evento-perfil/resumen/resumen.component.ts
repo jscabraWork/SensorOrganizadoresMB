@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { ReporteDataService } from '../../../../service/data/reporte-data.service';
+import { BaseComponent } from '../../../../commons-ui/base.component';
 import { GraficaDona, ResumenEvento, GraficaLineas } from './resumen';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -40,15 +42,13 @@ Chart.register(
   templateUrl: './resumen.component.html',
   styleUrl: './resumen.component.scss'
 })
-export class ResumenComponent implements OnInit {
+export class ResumenComponent extends BaseComponent implements OnInit {
   
   idEvento: string = '';
   resumen: ResumenEvento | null = null;
   graficaCircular: GraficaDona[] = [];
   graficaLineas: GraficaLineas[] = [];
   evento: any = null;
-  loading: boolean = true;
-  error: string = '';
 
   // Filtros opcionales
   anioSeleccionado?: number;
@@ -68,23 +68,32 @@ export class ResumenComponent implements OnInit {
   };
 
   constructor(
-    private route: ActivatedRoute,
+    protected override dialog: MatDialog,
+    protected override route: ActivatedRoute,
     private reporteService: ReporteDataService
-  ) {}
+  ) {
+    super(dialog, route);
+    this.pathVariableName = 'idEvento';
+  }
 
-  ngOnInit() {
-    // Obtener el ID del evento desde la ruta padre
-    this.route.parent?.params.subscribe(params => {
-      this.idEvento = params['idEvento'];
-      if (this.idEvento) {
-        this.cargarResumen();
-      }
-    });
+  override ngOnInit() {
+    super.ngOnInit();
+  }
+
+  protected override onPathVariableChanged(value: string | null): void {
+    if (value) {
+      this.idEvento = value;
+    }
+  }
+
+  protected override  cargarDatos(): void {
+    if (this.idEvento) {
+      this.cargarResumen();
+    }
   }
 
   cargarResumen() {
-    this.loading = true;
-    this.error = '';
+    this.iniciarCarga();
     
     this.reporteService.getResumenEvento(this.idEvento, this.anioSeleccionado, this.mesSeleccionado)
       .subscribe({
@@ -98,12 +107,10 @@ export class ResumenComponent implements OnInit {
           this.actualizarGraficaCircular();
           this.actualizarGraficaLineas();
           
-          this.loading = false;
+          this.finalizarCarga();
         },
         error: (error) => {
-          console.error('Error al cargar resumen:', error);
-          this.error = 'Error al cargar los datos del resumen';
-          this.loading = false;
+          this.manejarError(error, 'Error al cargar los datos del resumen');
         }
       });
   }
@@ -112,7 +119,7 @@ export class ResumenComponent implements OnInit {
   actualizarFiltros(anio?: number, mes?: number) {
     this.anioSeleccionado = anio;
     this.mesSeleccionado = mes;
-    this.cargarResumen();
+    this.cargarDatos();
   }
 
   // Método para calcular el total recaudado para la gráfica circular

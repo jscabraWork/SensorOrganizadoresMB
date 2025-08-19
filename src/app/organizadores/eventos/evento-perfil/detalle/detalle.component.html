@@ -1,1 +1,170 @@
-<p>detalle works!</p>
+<div class="detalle-container">
+  <!-- Loading State -->
+  <div *ngIf="cargando" class="loading-container">
+    <div class="spinner-overlay">
+      <div class="spinner"></div>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !cargando" class="error-container">
+    <p class="error-message">{{ error }}</p>
+    <button class="button-primary" (click)="cargarDatos()">Reintentar</button>
+  </div>
+
+  <!-- Content -->
+  <div *ngIf="!cargando && !error && detalle" class="content-container">
+    
+    <!-- Filtros -->
+    <div class="filtros-container">
+      <h3>Filtros de Detalle</h3>
+      <div class="filtros-grid">
+        <div class="filtro-item">
+          <div class="autocomplete-container">
+            <input 
+              type="text" 
+              class="form-autocomplete"
+              [(ngModel)]="localidadTexto"
+              (input)="onLocalidadInput($event)"
+              (blur)="onLocalidadBlur()"
+              list="localidades-list"
+              placeholder="Buscar localidad o seleccionar todas...">
+            <datalist id="localidades-list">
+              <option value="Todas las localidades">Todas las localidades</option>
+              <option *ngFor="let localidad of opcionesLocalidades" [value]="localidad.label">
+                {{ localidad.label }}
+              </option>
+            </datalist>
+            <div class="autocomplete-icon">⌕</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla de Detalle -->
+    <div class="table-container">
+      <h3>Detalle de Ventas</h3>
+      
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="expand-column">Detalles</th>
+              <th>Tarifa</th>
+              <th>Localidad</th>
+              <th>Precio</th>
+              <th>Vendidos</th>
+              <th>Reservados</th>
+              <th>En Proceso</th>
+              <th>Total</th>
+              <th>Ocupación</th>
+              <th>Total Recaudado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let item of detalle; let i = index">
+              <tr class="main-row" [class.expanded]="isFilaExpandida(i)">
+                <td class="expand-column">
+                  <button 
+                    class="expand-button" 
+                    (click)="toggleFilaExpandida(i)"
+                    [class.active]="isFilaExpandida(i)">
+                    <span class="expand-icon">{{ isFilaExpandida(i) ? '−' : '+' }}</span>
+                  </button>
+                </td>
+                <td>{{ item.tarifa }}</td>
+                <td>{{ item.localidad }}</td>
+                <td>{{ item.precioTotal | currency:'COP':'symbol':'1.0-0' }}</td>
+                <td class="text-center">{{ item.vendidos }}</td>
+                <td class="text-center">{{ item.reservados }}</td>
+                <td class="text-center">{{ item.proceso }}</td>
+                <td class="text-center">{{ item.totalTickets }}</td>
+                <td class="text-center">{{ item.porcentajeOcupacion | number:'1.1-2' }}%</td>
+                <td class="text-right">{{ item.totalRecaudado | currency:'COP':'symbol':'1.0-0' }}</td>
+              </tr>
+              <tr *ngIf="isFilaExpandida(i)" class="expanded-row">
+                <td colspan="10" class="expanded-content">
+                  <div class="detalle-expandido">
+                    <div class="detalle-grid">
+                      <div class="detalle-section">
+                        <strong>Precios:</strong> Base {{ item.precio | currency:'COP':'symbol':'1.0-0' }} | Servicio {{ item.servicio | currency:'COP':'symbol':'1.0-0' }} | IVA {{ item.iva | currency:'COP':'symbol':'1.0-0' }}
+                      </div>
+                      <div class="detalle-section">
+                        <strong>Estados:</strong> Disponibles {{ item.disponibles }} | Utilizados {{ item.utilizados }} | En Proceso {{ item.proceso }}
+                      </div>
+                      <div class="detalle-section">
+                        <strong>Totales:</strong> Precio {{ item.totalPrecio | currency:'COP':'symbol':'1.0-0' }} | Servicio {{ item.totalServicio | currency:'COP':'symbol':'1.0-0' }} | IVA {{ item.totalIva | currency:'COP':'symbol':'1.0-0' }}
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+          <tfoot *ngIf="detalle.length > 0">
+            <tr class="totals-row">
+              <td colspan="4"><strong>TOTALES</strong></td>
+              <td class="text-center"><strong>{{ getTotalVendidos() }}</strong></td>
+              <td class="text-center"><strong>{{ getTotalReservados() }}</strong></td>
+              <td class="text-center"><strong>{{ getTotalEnProceso() }}</strong></td>
+              <td class="text-center"><strong>{{ getTotalTickets() }}</strong></td>
+              <td class="text-center"><strong>{{ getPromedioOcupacion() | number:'1.1-2' }}%</strong></td>
+              <td class="text-right"><strong>{{ getTotalRecaudado() | currency:'COP':'symbol':'1.0-0' }}</strong></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      
+      <div *ngIf="detalle.length === 0" class="no-data">
+        No hay datos disponibles para los filtros seleccionados
+      </div>
+    </div>
+
+    <!-- Cards de Resumen -->
+    <div *ngIf="resumen" class="resumen-container">
+      <h3>Resumen del Evento</h3>
+      <div class="resumen-grid">
+        
+        <!-- Card de Ventas -->
+        <div class="resumen-card ventas-card">
+          <h4>Ventas Generales</h4>
+          <div class="card-content">
+            <div class="stat-item primary">
+              <span class="label">Total Recaudado</span>
+              <span class="value">{{ resumen.totalRecaudado | currency:'COP':'symbol':'1.0-0' }}</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-compact">Asistentes: {{ resumen.asistentes | number }}</span>
+              <span class="stat-compact">Ocupación: {{ resumen.porcentajeOcupacion | number:'1.1-2' }}%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card de Comisiones y Retenciones -->
+        <div class="resumen-card comisiones-card">
+          <h4>Comisiones y Retenciones</h4>
+          <div class="card-content">
+            <div class="stat-compact-grid">
+              <span class="negative">Comisiones: -{{ resumen.totalComisiones | currency:'COP':'symbol':'1.0-0' }}</span>
+              <span class="negative">Retenciones: -{{ resumen.totalRetenciones | currency:'COP':'symbol':'1.0-0' }}</span>
+              <span>Retefuente: {{ resumen.retefuente | currency:'COP':'symbol':'1.0-0' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card de Transacciones -->
+        <div class="resumen-card transacciones-card">
+          <h4>Transacciones</h4>
+          <div class="card-content">
+            <div class="stat-compact-grid">
+              <span>Transacciones: {{ resumen.totalTransacciones | number }}</span>
+              <span>Compradores: {{ resumen.totalCompradores | number }}</span>
+              <span>Cortesías: {{ resumen.totalCortesias | number }}</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

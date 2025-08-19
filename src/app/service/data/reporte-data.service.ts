@@ -47,8 +47,30 @@ export class ReporteDataService {
     if (queryParams.length > 0) {
       params = '?' + queryParams.join('&');
     }
-    
     return this.http.get<any>(`${this.baseEndpoint}/resumen/${eventoId}${params}`);
+  }
+
+  getDetalleEvento(eventoId: string, tarifaId?: number, localidadId?: number, diaId?: number): Observable<any> {
+    let params = '';
+    const queryParams: string[] = [];
+    
+    if (tarifaId !== undefined && tarifaId !== null) {
+      queryParams.push(`tarifaId=${tarifaId}`);
+    }
+    
+    if (localidadId !== undefined && localidadId !== null) {
+      queryParams.push(`localidadId=${localidadId}`);
+    }
+    
+    if (diaId !== undefined && diaId !== null) {
+      queryParams.push(`diaId=${diaId}`);
+    }
+    
+    if (queryParams.length > 0) {
+      params = '?' + queryParams.join('&');
+    }
+    
+    return this.http.get<any>(`${this.baseEndpoint}/detalle-ventas/${eventoId}${params}`);
   }
 
 }

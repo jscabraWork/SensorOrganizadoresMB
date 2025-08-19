@@ -1,19 +1,19 @@
 <div class="resumen-container">
   <!-- Loading State -->
-  <div *ngIf="loading" class="loading-container">
+  <div *ngIf="cargando" class="loading-container">
     <div class="spinner-overlay">
       <div class="spinner"></div>
     </div>
   </div>
 
   <!-- Error State -->
-  <div *ngIf="error && !loading" class="error-container">
+  <div *ngIf="error && !cargando" class="error-container">
     <p class="error-message">{{ error }}</p>
-    <button class="button-primary" (click)="cargarResumen()">Reintentar</button>
+    <button class="button-primary" (click)="cargarDatos()">Reintentar</button>
   </div>
 
   <!-- Content -->
-  <div *ngIf="!loading && !error && resumen" class="content-container">
+  <div *ngIf="!cargando && !error && resumen" class="content-container">
     
     <!-- Resumen Cards -->
     <div class="resumen-cards">
