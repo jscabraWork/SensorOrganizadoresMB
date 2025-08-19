@@ -1,0 +1,60 @@
+<section>
+  <div class="title-container">
+    <div class="tittle">
+      <p>{{ isHistorial ? 'Historial de Eventos' : 'Todos mis eventos' }}</p>
+      <hr class="linea">
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="spinner-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <div *ngIf="!loading && eventos.length === 0" class="no-events">
+    <p>No hay {{ isHistorial ? 'eventos en el historial' : 'eventos activos' }}.</p>
+  </div>
+
+  <div class="eventos-container" *ngIf="!loading && eventos.length > 0">
+    <div class="evento-item" *ngFor="let evento of eventos">
+      <div class="evento-content">
+        <div class="evento-imagen">
+          <img 
+            [src]="getImagenPrincipal(evento) || 'assets/img/default-event.jpg'" 
+            [alt]="evento.nombre"
+            class="imagen-rectangular"
+          />
+        </div>
+        
+        <div class="evento-info">
+          <h3 class="evento-nombre">{{ evento.nombre }}</h3>
+          
+          <div class="evento-detalles">
+            <div class="detalle-item">
+              <span class="etiqueta">Fecha:</span>
+              <span class="valor">{{ formatFecha(evento.fechaApertura) }}</span>
+            </div>
+            
+            <div class="detalle-item">
+              <span class="etiqueta">Hora de apertura:</span>
+              <span class="valor">{{ formatHora(evento.fechaApertura) || 'Por confirmar' }}</span>
+            </div>
+            
+            <div class="detalle-item">
+              <span class="etiqueta">Ciudad:</span>
+              <span class="valor">{{ evento.venue?.ciudad?.nombre || 'No especificada' }}</span>
+            </div>
+          </div>
+          
+          <div class="evento-acciones">
+            <button 
+              class="button-primary"
+              (click)="verEvento(evento)"
+            >
+              Ver evento
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

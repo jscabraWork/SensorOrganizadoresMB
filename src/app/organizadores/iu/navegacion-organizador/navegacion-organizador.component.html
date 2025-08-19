@@ -1,0 +1,13 @@
+<div class="container-fluid-menu">
+  <div class="menu-pequeño-container">
+    <ul class="menu-pequeño" [ngClass]="{'d-none-menu': extender}">
+      <li *ngFor="let item of menuItems" 
+          [routerLink]="item.path" 
+          routerLinkActive="menu-mediano-lista-activo" 
+          (click)="toggleMenu()">
+        {{item.label}}
+      </li>
+    </ul>
+  </div>
+</div>
+<hr class="linea-menu">

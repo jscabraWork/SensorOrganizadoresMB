@@ -35,9 +35,6 @@ import { AgregarModificarTipoDocumentoComponent } from './administradores/usuari
 import { PromotoresComponent } from './administradores/promotores/promotores.component';
 import { PuntosFisicosComponent } from './administradores/puntos-fisicos/puntos-fisicos.component';
 import { GestionarCuponesComponent } from './administradores/eventos/tarifas/gestionar-cupones/gestionar-cupones.component';
-import { OrganizadoresComponent } from './organizadores/organizadores.component';
-import { HomeOrganizadorComponent } from './organizadores/home-organizador/home-organizador.component';
-import { RouteGuardOrganizadorService } from './service/route-guard-organizador.service';
 
 const localidadesChildren: Routes = [
   { path: '', redirectTo: 'activas', pathMatch: 'full' },
@@ -330,15 +327,7 @@ export const routes: Routes = [
     ],
   },
   {
-    path: 'organizadores/organizador/:nombre',
-    component: OrganizadoresComponent,
-    canActivate: [RouteGuardOrganizadorService],
-    children: [
-      {
-        path: '',
-        component: HomeOrganizadorComponent,
-        pathMatch: 'full'
-      }
-    ]
+    path: 'organizadores',
+    loadChildren: () => import('./organizadores/organizadores.module').then(m => m.OrganizadoresModule)
   }
 ] 

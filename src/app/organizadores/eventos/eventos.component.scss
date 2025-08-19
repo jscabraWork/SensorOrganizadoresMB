@@ -1,0 +1,119 @@
+@use '../../../styles/variables' as v;
+
+.no-events {
+  text-align: center;
+  padding: 2rem;
+  color: v.$color-base;
+  font-family: v.$font-primary;
+}
+
+.eventos-container {
+  max-width: 850px;
+  margin: 1.5rem auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: v.$spacer-2;
+}
+
+.evento-item {
+  background: v.$color-blanco;
+  border-radius: v.$border-radius * 2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.evento-content {
+  display: flex;
+  align-items: center;
+  padding: v.$spacer-3;
+  gap: v.$spacer-3;
+}
+
+.evento-imagen {
+  width: 200px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: v.$border-radius;
+  background: v.$color-gris;
+  
+  .imagen-rectangular {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    display: block;
+  }
+}
+
+.evento-info {
+  width: 100%;
+}
+
+.evento-nombre {
+  font-family: v.$font-secondary;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: v.$color-base;
+  margin: 0 0 v.$spacer-2 0;
+  line-height: 1.2;
+}
+
+.evento-detalles {
+  display: flex;
+  flex-direction: column;
+  gap: v.$spacer-1;
+  
+  .detalle-item {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    font-family: v.$font-primary;
+    
+    .etiqueta {
+      font-weight: 600;
+      color: v.$color-secundario;
+      margin-right: v.$spacer-1;
+      white-space: nowrap;
+    }
+    
+    .valor {
+      color: v.$color-base;
+      font-weight: 500;
+    }
+  }
+}
+
+.evento-acciones {
+  display: flex;
+  justify-content: end;
+  
+  .button-primary {
+    font-size: 13px;
+    padding: v.$spacer-2 v.$spacer-3;
+    border-radius: v.$border-radius;
+  }
+}
+
+
+@media (max-width: v.$mobile-breakpoint) {
+  .eventos-container {
+    margin: v.$spacer-2;
+    gap: v.$spacer-3;
+  }
+  
+  .evento-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: v.$spacer-2;
+    
+    .evento-imagen {
+      width: 100%;
+      height: 120px;
+    }
+  }
+}

@@ -1,0 +1,28 @@
+<div class="evento-perfil-container">
+  <!-- Banner Section -->
+  <div class="evento-banner" *ngIf="evento">
+    <div class="banner-overlay">
+      <div class="banner-content">
+        <h1 class="evento-nombre">{{ evento.nombre }}</h1>
+        <div class="evento-info">
+          <p class="venue-info">
+            <span class="venue-nombre">{{ evento.venue.nombre }}</span>
+            <span class="ciudad-nombre">{{ evento.venue.ciudad.nombre }}</span>
+          </p>
+          <p class="fecha-info">{{ evento.fechaApertura | date:'dd/MM/yyyy' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Component -->
+  <app-navegacion-organizador
+    [menuItems]="menuItems"
+    (onMenuItemClick)="onMenuItemClick()">
+  </app-navegacion-organizador>
+
+  <!-- Content Area -->
+  <div class="content-area">
+    <router-outlet></router-outlet>
+  </div>
+</div>

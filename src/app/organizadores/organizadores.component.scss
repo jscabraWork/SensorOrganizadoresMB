@@ -1,0 +1,40 @@
+@use '../../styles/variables' as v;
+
+.organizadores-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  
+  @media (min-width: #{v.$mobile-breakpoint + 1px}) {
+    flex-direction: row;
+  }
+}
+
+.main-content {
+  width: 100%;
+  flex: 1;
+  overflow-y: auto;
+  transition: margin-left v.$transition-duration ease;
+  
+  // Desktop: margin para sidebar y padding-top para top bar
+  @media (min-width: #{v.$mobile-breakpoint + 1px}) {
+    margin-left: v.$sidebar-width;
+    padding: 32px;
+    padding-top: #{v.$topbar-height + 32px};
+  }
+  
+  // Mobile: considerar altura del header
+  @media (max-width: v.$mobile-breakpoint) {
+    padding-top: #{v.$mobile-header-height + v.$spacer-3};
+    padding-left: v.$spacer-3;
+    padding-right: v.$spacer-3;
+    padding-bottom: v.$spacer-3;
+  }
+}
+
+// CSS puro: cuando sidebar tiene clase collapsed
+@media (min-width: #{v.$mobile-breakpoint + 1px}) {
+  .organizadores-layout:has(.sidebar.collapsed) .main-content {
+    margin-left: v.$sidebar-width-collapsed;
+  }
+}

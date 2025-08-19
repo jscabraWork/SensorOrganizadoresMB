@@ -1,0 +1,127 @@
+@use '../../../../styles/variables' as v;
+@use '../../../../styles/mixins' as m;
+
+
+.evento-banner {
+  height: 150px;
+  background-image: url('../../../../assets/images/img/banner.avif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: v.$spacer-4;
+
+  .banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 100%);
+    display: flex;
+    align-items: center;
+    padding: 0 v.$spacer-5;
+  }
+
+  .banner-content {
+    color: v.$color-blanco;
+    z-index: 2;
+
+    .evento-nombre {
+      font-family: v.$font-secondary;
+      font-size: 2rem;
+      font-weight: 800;
+      margin: 0 0 v.$spacer-3 0;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+      line-height: 1.2;
+    }
+
+    .evento-info {
+      display: flex;
+      flex-direction: column;
+      gap: v.$spacer-2;
+
+      .venue-info {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: v.$spacer-2;
+
+        .venue-nombre {
+          @include m.highlight;
+          background-color: v.$color-primario;
+          color: v.$color-negro;
+        }
+
+        .ciudad-nombre {
+          font-weight: 400;
+          opacity: 0.9;
+        }
+      }
+
+      .fecha-info {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 500;
+        opacity: 0.9;
+        font-family: v.$font-primary;
+      }
+    }
+  }
+}
+
+.content-area {
+  margin-top: 20px;
+  padding: 0 20px;
+}
+
+// Responsive design
+@include m.for-tablet-down {
+  .evento-banner {
+    height: 250px;
+    
+    .banner-content {
+      .evento-nombre {
+        font-size: 2rem;
+      }
+      
+      .evento-info {
+        .venue-info {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: v.$spacer-1;
+        }
+      }
+    }
+  }
+}
+
+@include m.for-mobile-down {
+  .evento-banner {
+    height: 200px;
+    
+    .banner-overlay {
+      padding: 0 v.$spacer-3;
+    }
+    
+    .banner-content {
+      .evento-nombre {
+        font-size: 1.5rem;
+      }
+      
+      .evento-info {
+        .venue-info {
+          font-size: 1rem;
+        }
+        
+        .fecha-info {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}
