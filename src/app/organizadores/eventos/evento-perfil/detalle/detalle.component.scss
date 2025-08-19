@@ -38,23 +38,9 @@
 }
 
 .filtros-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  align-items: end;
-}
-
-.filtro-item {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-
-  label {
-    font-weight: 600;
-    color: v.$color-negro;
-    font-size: 0.95rem;
-    margin-bottom: 4px;
-  }
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .autocomplete-container {
@@ -240,11 +226,6 @@
 @media (max-width: 768px) {
   .detalle-container {
     padding: 10px;
-  }
-
-  .filtros-grid {
-    grid-template-columns: 1fr;
-    gap: 15px;
   }
 
   .table-container h3 {
@@ -466,6 +447,10 @@
         color: v.$color-error;
       }
     }
+  }
+  
+  .negative {
+    color: v.$color-error;
   }
 }
 
