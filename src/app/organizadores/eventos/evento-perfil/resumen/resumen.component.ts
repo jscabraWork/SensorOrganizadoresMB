@@ -57,7 +57,7 @@ export class ResumenComponent implements OnInit {
   // Chart.js - Gráficas
   doughnutChartData: ChartData<'doughnut'> = {
     labels: [],
-    datasets: [{ data: [], backgroundColor: ['#FFD900', '#FFF44D', '#E6C300', '#D4B800'] }]
+    datasets: [{ data: [], backgroundColor: ['#FFD900', '#fedc91ff', '#5e5e5eff', '#D4B800'] }]
   };
   
   lineChartData: ChartData<'line'> = { labels: [], datasets: [] };
@@ -135,7 +135,7 @@ export class ResumenComponent implements OnInit {
       labels: this.graficaCircular.map(item => mapMetodo(item.metodo)),
       datasets: [{
         data: this.graficaCircular.map(item => item.totalRecaudado),
-        backgroundColor: ['#FFD900', '#FFF44D', '#E6C300', '#D4B800']
+        backgroundColor: ['#FFD900', '#757575ff', '#ffa703ff', '#D4B800']
       }]
     };
   }

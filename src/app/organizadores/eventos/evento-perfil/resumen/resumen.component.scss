@@ -362,3 +362,111 @@
     }
   }
 }
+
+// Estilos para filtros integrados
+.graficas-y-filtros-container {
+  @include m.card(1);
+  padding: v.$spacer-4;
+  margin-bottom: v.$spacer-4;
+}
+
+.filtros-integrados {
+  margin-bottom: v.$spacer-4;
+  
+  .filtros-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: v.$spacer-3;
+    padding-bottom: v.$spacer-3;
+    border-bottom: 2px solid v.$color-primario;
+    
+    h3 {
+      font-family: v.$font-secondary;
+      color: v.$color-base;
+      margin: 0;
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+    
+    .filtros-controls {
+      display: flex;
+      gap: v.$spacer-3;
+      align-items: center;
+      
+      .filtro-item {
+        display: flex;
+        align-items: center;
+        gap: v.$spacer-1;
+        
+        label {
+          font-family: v.$font-primary;
+          font-weight: 600;
+          color: v.$color-base;
+          font-size: 0.9rem;
+          white-space: nowrap;
+        }
+        
+        select {
+          padding: v.$spacer-1 v.$spacer-2;
+          border: 2px solid v.$color-gris-light;
+          border-radius: v.$border-radius;
+          background-color: v.$color-blanco;
+          color: v.$color-base;
+          font-family: v.$font-primary;
+          font-size: 0.9rem;
+          font-weight: 500;
+          min-width: 90px;
+          transition: all 0.3s ease;
+          
+          &:focus {
+            outline: none;
+            border-color: v.$color-primario;
+            box-shadow: 0 0 0 3px rgba(v.$color-primario, 0.2);
+          }
+          
+          &:hover {
+            border-color: v.$color-primario-light;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive para nuevos filtros integrados
+@media (max-width: 870px) {
+  .filtros-integrados {
+    .filtros-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: v.$spacer-2;
+      
+      .filtros-controls {
+        gap: v.$spacer-2;
+        flex-wrap: wrap;
+      }
+    }
+  }
+}
+
+@media (max-width: 520px) {
+  .filtros-integrados {
+    .filtros-header {
+      .filtros-controls {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        
+        .filtro-item {
+          justify-content: space-between;
+          
+          select {
+            min-width: 120px;
+          }
+        }
+      }
+    }
+  }
+}

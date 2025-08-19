@@ -48,6 +48,79 @@
       </div>
     </div>
 
+
+    <!-- Sección de Gráficas y Filtros -->
+    <div class="graficas-y-filtros-container">
+      
+      <!-- Filtros integrados -->
+      <div class="filtros-integrados">
+        <div class="filtros-header">
+          <h3>Análisis Visual</h3>
+          <div class="filtros-controls">
+            <div class="filtro-item">
+              <label>Año:</label>
+              <select [(ngModel)]="anioSeleccionado" (change)="actualizarFiltros(anioSeleccionado, mesSeleccionado)">
+                <option [value]="undefined">Todos</option>
+                <option [value]="2024">2024</option>
+                <option [value]="2025">2025</option>
+              </select>
+            </div>
+            
+            <div class="filtro-item">
+              <label>Mes:</label>
+              <select [(ngModel)]="mesSeleccionado" (change)="actualizarFiltros(anioSeleccionado, mesSeleccionado)">
+                <option [value]="undefined">Todos</option>
+                <option [value]="1">Enero</option>
+                <option [value]="2">Febrero</option>
+                <option [value]="3">Marzo</option>
+                <option [value]="4">Abril</option>
+                <option [value]="5">Mayo</option>
+                <option [value]="6">Junio</option>
+                <option [value]="7">Julio</option>
+                <option [value]="8">Agosto</option>
+                <option [value]="9">Septiembre</option>
+                <option [value]="10">Octubre</option>
+                <option [value]="11">Noviembre</option>
+                <option [value]="12">Diciembre</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gráficas -->
+      <div class="graficas-container">
+        
+        <!-- Gráfica Circular -->
+        <div class="grafica-section">
+          <h3>Recaudación por Método de Pago</h3>
+          <div class="chart-container" *ngIf="graficaCircular.length > 0">
+            <canvas baseChart
+                    [data]="doughnutChartData"
+                    type="doughnut"
+                    [options]="chartOptions.doughnut">
+            </canvas>
+          </div>
+          <p *ngIf="graficaCircular.length === 0" class="no-data">No hay datos disponibles</p>
+        </div>
+
+        <!-- Gráfica de Líneas -->
+        <div class="grafica-section">
+          <h3>Histórico de Ventas</h3>
+          <div class="chart-container" *ngIf="graficaLineas.length > 0">
+            <canvas baseChart
+                    [data]="lineChartData"
+                    type="line"
+                    [options]="chartOptions.line">
+            </canvas>
+          </div>
+          <p *ngIf="graficaLineas.length === 0" class="no-data">No hay datos disponibles</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
     <!-- Desglose Financiero -->
     <div class="desglose-financiero">
 
@@ -115,70 +188,4 @@
         </div>
       </div>
     </div>
-
-    <!-- Filtros -->
-    <div class="filtros-container">
-      <h3>Filtros de Análisis</h3>
-      <div class="filtros-form">
-        <div class="input-group">
-          <label>Año:</label>
-          <select [(ngModel)]="anioSeleccionado" (change)="actualizarFiltros(anioSeleccionado, mesSeleccionado)">
-            <option [value]="undefined">Todos los años</option>
-            <option [value]="2024">2024</option>
-            <option [value]="2025">2025</option>
-          </select>
-        </div>
-        
-        <div class="input-group">
-          <label>Mes:</label>
-          <select [(ngModel)]="mesSeleccionado" (change)="actualizarFiltros(anioSeleccionado, mesSeleccionado)">
-            <option [value]="undefined">Todos los meses</option>
-            <option [value]="1">Enero</option>
-            <option [value]="2">Febrero</option>
-            <option [value]="3">Marzo</option>
-            <option [value]="4">Abril</option>
-            <option [value]="5">Mayo</option>
-            <option [value]="6">Junio</option>
-            <option [value]="7">Julio</option>
-            <option [value]="8">Agosto</option>
-            <option [value]="9">Septiembre</option>
-            <option [value]="10">Octubre</option>
-            <option [value]="11">Noviembre</option>
-            <option [value]="12">Diciembre</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <!-- Gráficas -->
-    <div class="graficas-container">
-      
-      <!-- Gráfica Circular -->
-      <div class="grafica-section">
-        <h3>Recaudación por Método de Pago</h3>
-        <div class="chart-container" *ngIf="graficaCircular.length > 0">
-          <canvas baseChart
-                  [data]="doughnutChartData"
-                  type="doughnut"
-                  [options]="chartOptions.doughnut">
-          </canvas>
-        </div>
-        <p *ngIf="graficaCircular.length === 0" class="no-data">No hay datos disponibles</p>
-      </div>
-
-      <!-- Gráfica de Líneas -->
-      <div class="grafica-section">
-        <h3>Histórico de Ventas</h3>
-        <div class="chart-container" *ngIf="graficaLineas.length > 0">
-          <canvas baseChart
-                  [data]="lineChartData"
-                  type="line"
-                  [options]="chartOptions.line">
-          </canvas>
-        </div>
-        <p *ngIf="graficaLineas.length === 0" class="no-data">No hay datos disponibles</p>
-      </div>
-
-    </div>
-  </div>
 </div>
