@@ -1,1 +1,184 @@
-<p>resumen works!</p>
+<div class="resumen-container">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner-overlay">
+      <div class="spinner"></div>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <p class="error-message">{{ error }}</p>
+    <button class="button-primary" (click)="cargarResumen()">Reintentar</button>
+  </div>
+
+  <!-- Content -->
+  <div *ngIf="!loading && !error && resumen" class="content-container">
+    
+    <!-- Resumen Cards -->
+    <div class="resumen-cards">
+      <div class="card">
+        <h3>Total Recaudado</h3>
+        <p class="metric">{{ resumen.totalRecaudado | currency:'COP':'symbol':'1.0-0' }}</p>
+      </div>
+      
+      <div class="card">
+        <h3>Total Asistentes</h3>
+        <p class="metric">{{ resumen.asistentes }}</p>
+      </div>
+      
+      <div class="card">
+        <h3>Recaudado Hoy</h3>
+        <p class="metric">{{ resumen.totalRecaudadoHoy | currency:'COP':'symbol':'1.0-0' }}</p>
+      </div>
+
+      <div class="card">
+        <h3>Tickets Vendidos Hoy</h3>
+        <p class="metric">{{ resumen.ticketsVendidosHoy }}</p>
+      </div>
+
+      <div class="card">
+        <h3>Total Cortesías</h3>
+        <p class="metric">{{ resumen.totalCortesias }}</p>
+      </div>
+
+      <div class="card">
+        <h3>Ingresos</h3>
+        <p class="metric">{{ resumen.ingresos }}</p>
+      </div>
+    </div>
+
+    <!-- Desglose Financiero -->
+    <div class="desglose-financiero">
+
+      <div class="desglose-section">
+        <h3>Métodos de Pago</h3>
+        <div class="desglose-grid">
+          <div class="desglose-item">
+            <span class="label">Taquilla:</span>
+            <span class="value">{{ resumen.pagosTaquilla }} pagos ({{ resumen.asistentesTaquilla }} asistentes)</span>
+          </div>
+          <div class="desglose-item">
+            <span class="label">PSE:</span>
+            <span class="value">{{ resumen.pagosPse }} pagos ({{ resumen.asistentesPse }} asistentes)</span>
+          </div>
+          <div class="desglose-item">
+            <span class="label">Tarjeta:</span>
+            <span class="value">{{ resumen.pagosTc }} pagos ({{ resumen.asistentesTc }} asistentes)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="desglose-section">
+        <h3>Retenciones</h3>
+        <p class="section-description">Retefuente: 1.5% y ReteICA: 0.414% en pagos con tarjetas</p>
+        <div class="desglose-grid">
+          <div class="desglose-item">
+            <span class="label">Retefuente:</span>
+            <span class="value">{{ resumen.retefuente | currency:'COP':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="desglose-item">
+            <span class="label">ReteICA:</span>
+            <span class="value">{{ resumen.reteica | currency:'COP':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="desglose-item">
+            <span class="label">Parafiscal:</span>
+            <span class="value">{{ resumen.parafiscal | currency:'COP':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="desglose-item total-item">
+            <span class="label">Total Retenciones:</span>
+            <span class="value">{{ resumen.totalRetenciones | currency:'COP':'symbol':'1.0-0' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="desglose-section">
+        <h3>Comisiones</h3>
+        <p class="section-description">Comisión de ventas: 5% de las ventas más IVA</p>
+        <div class="desglose-grid">
+          <div class="desglose-item">
+            <span class="label">Comisión Ventas:</span>
+            <span class="value">{{ resumen.comisionAlltickets | currency:'COP':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="desglose-item">
+            <span class="label">Comisión Pasarela:</span>
+            <span class="value">{{ resumen.comisionPasarela | currency:'COP':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="desglose-item">
+            <span class="label">Comisión 3DS:</span>
+            <span class="value">{{ resumen.comision3ds | currency:'COP':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="desglose-item total-item">
+            <span class="label">Total Comisiones:</span>
+            <span class="value">{{ resumen.totalComisiones | currency:'COP':'symbol':'1.0-0' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="filtros-container">
+      <h3>Filtros de Análisis</h3>
+      <div class="filtros-form">
+        <div class="input-group">
+          <label>Año:</label>
+          <select [(ngModel)]="anioSeleccionado" (change)="actualizarFiltros(anioSeleccionado, mesSeleccionado)">
+            <option [value]="undefined">Todos los años</option>
+            <option [value]="2024">2024</option>
+            <option [value]="2025">2025</option>
+          </select>
+        </div>
+        
+        <div class="input-group">
+          <label>Mes:</label>
+          <select [(ngModel)]="mesSeleccionado" (change)="actualizarFiltros(anioSeleccionado, mesSeleccionado)">
+            <option [value]="undefined">Todos los meses</option>
+            <option [value]="1">Enero</option>
+            <option [value]="2">Febrero</option>
+            <option [value]="3">Marzo</option>
+            <option [value]="4">Abril</option>
+            <option [value]="5">Mayo</option>
+            <option [value]="6">Junio</option>
+            <option [value]="7">Julio</option>
+            <option [value]="8">Agosto</option>
+            <option [value]="9">Septiembre</option>
+            <option [value]="10">Octubre</option>
+            <option [value]="11">Noviembre</option>
+            <option [value]="12">Diciembre</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gráficas -->
+    <div class="graficas-container">
+      
+      <!-- Gráfica Circular -->
+      <div class="grafica-section">
+        <h3>Recaudación por Método de Pago</h3>
+        <div class="chart-container" *ngIf="graficaCircular.length > 0">
+          <canvas baseChart
+                  [data]="doughnutChartData"
+                  type="doughnut"
+                  [options]="chartOptions.doughnut">
+          </canvas>
+        </div>
+        <p *ngIf="graficaCircular.length === 0" class="no-data">No hay datos disponibles</p>
+      </div>
+
+      <!-- Gráfica de Líneas -->
+      <div class="grafica-section">
+        <h3>Histórico de Ventas</h3>
+        <div class="chart-container" *ngIf="graficaLineas.length > 0">
+          <canvas baseChart
+                  [data]="lineChartData"
+                  type="line"
+                  [options]="chartOptions.line">
+          </canvas>
+        </div>
+        <p *ngIf="graficaLineas.length === 0" class="no-data">No hay datos disponibles</p>
+      </div>
+
+    </div>
+  </div>
+</div>
