@@ -6,37 +6,26 @@
     </div>
   </div>
 
-  <!-- Error State -->
-  <div *ngIf="error && !cargando" class="error-container">
-    <p class="error-message">{{ error }}</p>
-    <button class="button-primary" (click)="cargarDatos()">Reintentar</button>
-  </div>
-
   <!-- Content -->
   <div *ngIf="!cargando && !error && detalle" class="content-container">
     
-    <!-- Filtros -->
-    <div class="filtros-container">
-      <h3>Filtros de Detalle</h3>
-      <div class="filtros-grid">
-        <div class="autocomplete-container">
-            <input 
-              type="text" 
-              class="form-autocomplete"
-              [(ngModel)]="localidadTexto"
-              (input)="onLocalidadInput($event)"
-              (blur)="onLocalidadBlur()"
-              list="localidades-list"
-              placeholder="Buscar localidad o seleccionar todas...">
-            <datalist id="localidades-list">
-              <option value="Todas las localidades">Todas las localidades</option>
-              <option *ngFor="let localidad of opcionesLocalidades" [value]="localidad.label">
-                {{ localidad.label }}
-              </option>
-            </datalist>
-            <div class="autocomplete-icon">⌕</div>
-        </div>
-      </div>
+    <!-- Título -->
+    <div class="page-header">
+      <h2 class="page-title">INFORMACIÓN DETALLADA</h2>
+      <div class="title-line"></div>
+    </div>
+    
+    <!-- Filtro Simple -->
+    <div class="filtro-simple">
+      <select 
+        class="form-select"
+        [(ngModel)]="localidadIdSeleccionada"
+        (change)="actualizarFiltros(localidadIdSeleccionada)">
+        <option [value]="undefined">Todas las localidades</option>
+        <option *ngFor="let localidad of opcionesLocalidades" [value]="localidad.value">
+          {{ localidad.label }}
+        </option>
+      </select>
     </div>
 
     <!-- Tabla de Detalle -->
@@ -84,15 +73,38 @@
                 <td colspan="10" class="expanded-content">
                   <div class="detalle-expandido">
                     <div class="detalle-grid">
-                      <div class="detalle-section">
-                        <strong>Precios:</strong> Base {{ item.precio | currency:'COP':'symbol':'1.0-0' }} | Servicio {{ item.servicio | currency:'COP':'symbol':'1.0-0' }} | IVA {{ item.iva | currency:'COP':'symbol':'1.0-0' }}
+                      <div class="detalle-item">
+                        <div class="detalle-label">Total Recaudado</div>
+                        <div class="detalle-value">{{ item.totalRecaudado | currency:'COP':'symbol':'1.0-0' }}</div>
                       </div>
-                      <div class="detalle-section">
-                        <strong>Estados:</strong> Disponibles {{ item.disponibles }} | Utilizados {{ item.utilizados }} | En Proceso {{ item.proceso }}
+                      
+                      <!-- Estados -->
+                      <div class="detalle-item">
+                        <div class="detalle-label">Disponibles</div>
+                        <div class="detalle-value">{{ item.disponibles }}</div>
                       </div>
-                      <div class="detalle-section">
-                        <strong>Totales:</strong> Precio {{ item.totalPrecio | currency:'COP':'symbol':'1.0-0' }} | Servicio {{ item.totalServicio | currency:'COP':'symbol':'1.0-0' }} | IVA {{ item.totalIva | currency:'COP':'symbol':'1.0-0' }}
+                      
+                      <div class="detalle-item">
+                        <div class="detalle-label">Vendidos</div>
+                        <div class="detalle-value">{{ item.vendidos }}</div>
                       </div>
+                      
+                      <div class="detalle-item">
+                        <div class="detalle-label">Reservados</div>
+                        <div class="detalle-value">{{ item.reservados }}</div>
+                      </div>
+                      
+                      <div class="detalle-item">
+                        <div class="detalle-label">En Proceso</div>
+                        <div class="detalle-value">{{ item.proceso }}</div>
+                      </div>
+                      
+                      <!-- Utilizados al final -->
+                      <div class="detalle-item">
+                        <div class="detalle-label">Utilizados</div>
+                        <div class="detalle-value">{{ item.utilizados }}</div>
+                      </div>
+                      
                     </div>
                   </div>
                 </td>
@@ -118,51 +130,104 @@
       </div>
     </div>
 
-    <!-- Cards de Resumen -->
+    <!-- Resumen con Submenu -->
     <div *ngIf="resumen" class="resumen-container">
-      <h3>Resumen del Evento</h3>
-      <div class="resumen-grid">
-        
-        <!-- Card de Ventas -->
-        <div class="resumen-card ventas-card">
-          <h4>Ventas Generales</h4>
-          <div class="card-content">
-            <div class="stat-item primary">
-              <span class="label">Total Recaudado</span>
-              <span class="value">{{ resumen.totalRecaudado | currency:'COP':'symbol':'1.0-0' }}</span>
-            </div>
-            <div class="stat-row">
-              <span class="stat-compact">Asistentes: {{ resumen.asistentes | number }}</span>
-              <span class="stat-compact">Ocupación: {{ resumen.porcentajeOcupacion | number:'1.1-2' }}%</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card de Comisiones y Retenciones -->
-        <div class="resumen-card comisiones-card">
-          <h4>Comisiones y Retenciones</h4>
-          <div class="card-content">
-            <div class="stat-compact-grid">
-              <span class="negative">Comisiones: -{{ resumen.totalComisiones | currency:'COP':'symbol':'1.0-0' }}</span>
-              <span class="negative">Retenciones: -{{ resumen.totalRetenciones | currency:'COP':'symbol':'1.0-0' }}</span>
-              <span>Retefuente: {{ resumen.retefuente | currency:'COP':'symbol':'1.0-0' }}</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card de Transacciones -->
-        <div class="resumen-card transacciones-card">
-          <h4>Transacciones</h4>
-          <div class="card-content">
-            <div class="stat-compact-grid">
-              <span>Transacciones: {{ resumen.totalTransacciones | number }}</span>
-              <span>Compradores: {{ resumen.totalCompradores | number }}</span>
-              <span>Cortesías: {{ resumen.totalCortesias | number }}</span>
-            </div>
-          </div>
-        </div>
-
+      
+      <!-- Submenu -->
+      <div class="resumen-submenu">
+        <button 
+          class="submenu-btn" 
+          [class.active]="vistaResumen === 'financiero'"
+          (click)="vistaResumen = 'financiero'">
+          Resumen Financiero
+        </button>
+        <button 
+          class="submenu-btn" 
+          [class.active]="vistaResumen === 'asistentes'"
+          (click)="vistaResumen = 'asistentes'">
+          Resumen Asistentes
+        </button>
       </div>
+
+      <!-- Resumen Financiero -->
+      <div *ngIf="vistaResumen === 'financiero'" class="resumen-content">
+        <div class="pills-container">
+          
+          <div class="pill-card">
+            <div class="pill-title">Recaudado</div>
+            <div class="pill-value">{{ resumen.totalRecaudado | currency:'COP':'symbol':'1.0-0' }}</div>
+          </div>
+
+          <div class="pill-card">
+            <div class="pill-title">Servicio Recaudado</div>
+            <div class="pill-value">{{ resumen.servicioRecaudado | currency:'COP':'symbol':'1.0-0' }}</div>
+          </div>
+
+          <div class="pill-card">
+            <div class="pill-title">Iva Recaudado</div>
+            <div class="pill-value">{{ resumen.ivaRecaudado | currency:'COP':'symbol':'1.0-0' }}</div>
+          </div>
+          
+          <div class="pill-card">
+            <div class="pill-title">Transacciones</div>
+            <div class="pill-value">{{ resumen.totalTransacciones | number }}</div>
+          </div>
+          
+          <div class="pill-card">
+            <div class="pill-title">Promedio Venta</div>
+            <div class="pill-value">{{ (resumen.totalRecaudado / resumen.totalTransacciones) | currency:'COP':'symbol':'1.0-0' }}</div>
+          </div>
+          
+          <div class="pill-card negative">
+            <div class="pill-title">Comisiones</div>
+            <div class="pill-value">-{{ resumen.totalComisiones | currency:'COP':'symbol':'1.0-0' }}</div>
+          </div>
+          
+          <div class="pill-card negative">
+            <div class="pill-title">Retenciones</div>
+            <div class="pill-value">-{{ resumen.totalRetenciones | currency:'COP':'symbol':'1.0-0' }}</div>
+          </div>
+        
+          <div class="pill-card highlight">
+            <div class="pill-title">Ganancia Neta</div>
+            <div class="pill-value">{{ (resumen.totalRecaudado - resumen.totalComisiones - resumen.totalRetenciones) | currency:'COP':'symbol':'1.0-0' }}</div>
+          </div>
+          
+        </div>
+      </div>
+
+      <!-- Resumen Asistentes -->
+      <div *ngIf="vistaResumen === 'asistentes'" class="resumen-content">
+        <div class="pills-container">
+          
+          <div class="pill-card">
+            <div class="pill-title">Compradores</div>
+            <div class="pill-value">{{ resumen.totalCompradores | number }}</div>
+          </div>
+          
+          <div class="pill-card">
+            <div class="pill-title">Cortesías</div>
+            <div class="pill-value">{{ resumen.totalCortesias | number }}</div>
+          </div>
+          
+          <div class="pill-card">
+            <div class="pill-title">Ingresados</div>
+            <div class="pill-value">{{ resumen.ingresos | number }}</div>
+          </div>
+          
+          <div class="pill-card">
+            <div class="pill-title">Porcentaje de Asistencia</div>
+            <div class="pill-value">{{ (resumen.ingresos / resumen.asistentes * 100) | number:'1.1-1' }}%</div>
+          </div>
+          
+          <div class="pill-card highlight">
+            <div class="pill-title">Total Asistentes</div>
+            <div class="pill-value">{{ resumen.asistentes | number }}</div>
+          </div>
+          
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

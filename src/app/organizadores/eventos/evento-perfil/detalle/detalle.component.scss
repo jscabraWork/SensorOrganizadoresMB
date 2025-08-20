@@ -6,85 +6,52 @@
   min-height: 100vh;
 }
 
-.filtros-container {
-  background: linear-gradient(145deg, v.$color-blanco 0%, v.$color-gris-muy-light 100%);
-  border-radius: 16px;
-  padding: 24px;
-  margin-bottom: 24px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(v.$color-primario, 0.2);
-  position: relative;
-  overflow: hidden;
+// Título de página
+.page-header {
+  margin-bottom: v.$spacer-4;
   
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, v.$color-primario, v.$color-primario-light, v.$color-primario);
-    background-size: 200% 100%;
-    animation: gradientShift 3s ease-in-out infinite;
-  }
-  
-  h3 {
-    margin: 0 0 20px 0;
-    color: v.$color-negro;
-    font-size: 1.4rem;
+  .page-title {
+    font-family: v.$font-primary;
+    font-size: 1.5rem;
     font-weight: 700;
-    position: relative;
+    color: v.$color-negro;
+    margin: 0 0 v.$spacer-2 0;
+    letter-spacing: 0.5px;
+  }
+  
+  .title-line {
+    width: 100%;
+    height: 3px;
+    background: v.$color-primario;
+    border-radius: 2px;
   }
 }
 
-.filtros-grid {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.autocomplete-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-
-  .form-autocomplete {
+// Filtro simple
+.filtro-simple {
+  margin-bottom: v.$spacer-4;
+  
+  .form-select {
     width: 100%;
-    padding: 12px 40px 12px 16px;
+    padding: v.$spacer-2;
     border: 2px solid v.$color-gris-light;
-    border-radius: 12px;
-    background: linear-gradient(145deg, v.$color-blanco 0%, v.$color-gris-muy-light 100%);
-    font-size: 0.95rem;
+    border-radius: v.$border-radius-xl;
+    background-color: v.$color-gris-muy-light;
+    font-family: v.$font-primary;
+    font-size: .9rem;
     font-weight: 500;
     color: v.$color-negro;
     transition: all 0.3s ease;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-
+    
     &:focus {
       outline: none;
       border-color: v.$color-primario;
-      box-shadow: 0 0 0 4px rgba(v.$color-primario, 0.15), inset 0 2px 4px rgba(0, 0, 0, 0.05);
-      transform: translateY(-1px);
+      box-shadow: 0 0 0 3px rgba(v.$color-primario, 0.2);
     }
-
-    &::placeholder {
-      color: v.$color-gris;
-      font-style: italic;
+    
+    &:hover {
+      border-color: v.$color-primario-light;
     }
-  }
-
-  .autocomplete-icon {
-    position: absolute;
-    right: 12px;
-    font-size: 1rem;
-    color: v.$color-gris;
-    pointer-events: none;
-    transition: all 0.3s ease;
-  }
-
-  &:hover .autocomplete-icon {
-    color: v.$color-primario;
-    transform: scale(1.1);
   }
 }
 
@@ -292,187 +259,129 @@
 
 // Estilos para contenido expandido
 .detalle-expandido {
-  padding: 16px 24px;
+  padding: 20px 24px;
   background: linear-gradient(135deg, v.$color-gris-muy-light 0%, v.$color-blanco 100%);
 }
 
 .detalle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px 24px;
+}
+
+.detalle-item {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-}
-
-.detalle-section {
-  padding: 8px 0;
-  font-size: 0.9rem;
-  color: v.$color-negro;
-  border-bottom: 1px solid rgba(v.$color-gris, 0.2);
-  
-  &:last-child {
-    border-bottom: none;
-  }
-  
-  strong {
-    color: v.$color-primario;
-    margin-right: 8px;
-  }
-}
-
-
-// Estilos para cards de resumen
-.resumen-container {
-  margin-top: 24px;
-  
-  h3 {
-    margin: 0 0 16px 0;
-    color: v.$color-negro;
-    font-size: 1.3rem;
+  gap: 4px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(v.$color-gris-light, 0.3);
+  width: 100%;
+  .detalle-label {
+    font-size: 0.85rem;
     font-weight: 700;
-  }
-}
-
-.resumen-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-}
-
-.resumen-card {
-  background: linear-gradient(145deg, v.$color-blanco 0%, v.$color-gris-muy-light 100%);
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(v.$color-primario, 0.2);
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, v.$color-primario, v.$color-primario-light, v.$color-primario);
-    background-size: 200% 100%;
-    animation: gradientShift 3s ease-in-out infinite;
-  }
-  
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    border-color: v.$color-primario;
-  }
-  
-  h4 {
-    margin: 0 0 12px 0;
     color: v.$color-negro;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  
+  .detalle-value {
     font-size: 1rem;
-    font-weight: 700;
-    padding-bottom: 8px;
-    border-bottom: 2px solid rgba(v.$color-primario, 0.3);
+    color: v.$color-negro-soft;
   }
+}
+
+
+// Resumen con submenu
+.resumen-container {
+  margin-top: v.$spacer-4;
+}
+
+.resumen-submenu {
+  display: flex;
+  gap: v.$spacer-2;
+  margin-bottom: v.$spacer-4;
   
-  .card-content {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .stat-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px 0;
+  .submenu-btn {
+    padding: v.$spacer-2 v.$spacer-4;
+    border: 2px solid v.$color-gris-light;
+    border-radius: v.$border-radius;
+    background-color: v.$color-blanco;
+    color: v.$color-gris-dark;
+    font-family: v.$font-primary;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
     
-    .label {
-      font-weight: 500;
-      color: v.$color-gris;
-      font-size: 0.85rem;
+    &:hover {
+      border-color: v.$color-primario;
+      color: v.$color-negro;
     }
     
-    .value {
+    &.active {
+      background-color: v.$color-primario;
+      border-color: v.$color-primario;
+      color: v.$color-negro;
+      font-weight: 700;
+    }
+  }
+}
+
+.resumen-content {
+  .pills-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: v.$spacer-3;
+  }
+  
+  .pill-card {
+    background-color: v.$color-gris-muy-light;
+    border-radius: 20px;
+    padding: v.$spacer-4 v.$spacer-3;
+    text-align: center;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .pill-title {
+      font-family: v.$font-primary;
+      font-size: 0.75rem;
       font-weight: 600;
       color: v.$color-negro;
-      font-size: 0.9rem;
-      
-      &.negative {
-        color: v.$color-error;
-      }
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.2px;
     }
     
-    &.primary .value {
-      color: v.$color-primario;
-      font-size: 1.1rem;
+    .pill-value {
+      font-family: v.$font-primary;
+      font-size: 1rem;
       font-weight: 700;
+      color: v.$color-negro-soft;
+      line-height: 1.1;
+    }
+    
+    &.negative {
+      .pill-value {
+        color: v.$color-error;
+      }
     }
     
     &.highlight {
-      background: linear-gradient(135deg, rgba(v.$color-primario, 0.1) 0%, rgba(v.$color-primario, 0.05) 100%);
-      border-radius: 6px;
-      padding: 8px;
-      margin: 0 -8px;
-      border: 1px solid rgba(v.$color-primario, 0.3);
+      background-color: v.$color-primario;
+      border: 2px solid v.$color-primario-dark;
       
-      .value {
+      .pill-title {
         color: v.$color-negro;
-        font-weight: 700;
       }
-    }
-  }
-  
-  .stat-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-  }
-  
-  .stat-compact {
-    font-size: 0.85rem;
-    color: v.$color-gris-dark;
-    font-weight: 500;
-  }
-  
-  .stat-compact-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    
-    span {
-      font-size: 0.85rem;
-      color: v.$color-negro;
       
-      &.negative {
-        color: v.$color-error;
+      .pill-value {
+        color: v.$color-negro;
+        font-size: 1.2rem;
       }
     }
   }
-  
-  .negative {
-    color: v.$color-error;
-  }
-}
-
-// Animación para gradientes
-@keyframes gradientShift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-// Estilos específicos para cada tipo de card
-.ventas-card {
-  border-left: 4px solid v.$color-success;
-}
-
-.comisiones-card {
-  border-left: 4px solid v.$color-error;
-}
-
-.transacciones-card {
-  border-left: 4px solid v.$color-negro-soft;
 }

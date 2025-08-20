@@ -22,12 +22,14 @@ export class DetalleComponent extends BaseComponent implements OnInit {
   resumen: ResumenEvento = null;
 
   localidadIdSeleccionada?: number;
-  localidadTexto: string = 'Todas las localidades';
   
   opcionesLocalidades: { value: number, label: string }[] = [];
   
   // Control de expansión de filas
   filasExpandidas: Set<number> = new Set();
+  
+  // Control de vista de resumen
+  vistaResumen: 'financiero' | 'asistentes' = 'financiero';
 
   constructor(
     protected override dialog: MatDialog,
@@ -57,12 +59,16 @@ export class DetalleComponent extends BaseComponent implements OnInit {
   cargarDetalle() {
     this.iniciarCarga();
     
+    // Solo pasar localidadId si tiene un valor válido
+    const localidadId = this.localidadIdSeleccionada && this.localidadIdSeleccionada > 0 
+      ? this.localidadIdSeleccionada 
+      : undefined;
+    
     this.reporteService.getDetalleEvento(
       this.idEvento,
-      null,
-      this.localidadIdSeleccionada, 
-      null,
-
+      undefined, // tarifaId
+      localidadId, // localidadId
+      undefined  // diaId
     ).subscribe({
       next: (response) => {
         this.evento = response.evento;
@@ -144,29 +150,4 @@ export class DetalleComponent extends BaseComponent implements OnInit {
     return this.filasExpandidas.has(index);
   }
 
-  // Métodos para el autocomplete de localidades
-  onLocalidadInput(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    this.localidadTexto = target.value;
-  }
-
-  onLocalidadBlur(): void {
-    // Buscar si el texto coincide con alguna localidad
-    const localidadEncontrada = this.opcionesLocalidades.find(
-      localidad => localidad.label.toLowerCase() === this.localidadTexto.toLowerCase()
-    );
-
-    if (localidadEncontrada) {
-      this.localidadIdSeleccionada = localidadEncontrada.value;
-    } else if (this.localidadTexto === 'Todas las localidades' || this.localidadTexto === '') {
-      this.localidadIdSeleccionada = undefined;
-      this.localidadTexto = 'Todas las localidades';
-    } else {
-      // Si no encuentra coincidencia, resetear a "Todas las localidades"
-      this.localidadIdSeleccionada = undefined;
-      this.localidadTexto = 'Todas las localidades';
-    }
-    
-    this.cargarDatos();
-  }
 }
