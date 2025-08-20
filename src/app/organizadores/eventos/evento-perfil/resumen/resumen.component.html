@@ -15,39 +15,163 @@
   <!-- Content -->
   <div *ngIf="!cargando && !error && resumen" class="content-container">
     
-    <!-- Resumen Cards -->
-    <div class="resumen-cards">
-      <div class="card">
-        <h3>Total Recaudado</h3>
-        <p class="metric">{{ resumen.totalRecaudado | currency:'COP':'symbol':'1.0-0' }}</p>
-      </div>
-      
-      <div class="card">
-        <h3>Total Asistentes</h3>
-        <p class="metric">{{ resumen.asistentes }}</p>
-      </div>
-      
-      <div class="card">
-        <h3>Recaudado Hoy</h3>
-        <p class="metric">{{ resumen.totalRecaudadoHoy | currency:'COP':'symbol':'1.0-0' }}</p>
-      </div>
-
-      <div class="card">
-        <h3>Tickets Vendidos Hoy</h3>
-        <p class="metric">{{ resumen.ticketsVendidosHoy }}</p>
+    <!-- Métricas Principales -->
+    <div class="metricas-principales">
+      <!-- Total Recaudado - Destacado -->
+      <div class="metrica-hero">
+        <div class="metrica-icon">
+          <img src="assets/images/reporte/estadistica.svg" alt="Total Recaudado">
+        </div>
+        <div class="metrica-content">
+          <h2>Total Recaudado</h2>
+          <p class="value-hero">{{ resumen.totalRecaudado | currency:'COP':'symbol':'1.0-0' }}</p>
+          <div class="metrica-subtitle">
+            <span class="highlight">Hoy: {{ resumen.totalRecaudadoHoy | currency:'COP':'symbol':'1.0-0' }}</span>
+          </div>
+        </div>
       </div>
 
-      <div class="card">
-        <h3>Total Cortesías</h3>
-        <p class="metric">{{ resumen.totalCortesias }}</p>
-      </div>
+      <!-- Métricas Secundarias -->
+      <div class="metricas-secundarias">
+        <!-- Comisión de Ventas -->
+        <div class="metrica-card comision">
+          <div class="metrica-header">
+            <img src="assets/images/reporte/comision.svg" alt="Comisión">
+            <h3>Comisión de Ventas</h3>
+          </div>
+          <p class="value-secondary">- {{ resumen.comisionAlltickets | currency:'COP':'symbol':'1.0-0' }}</p>
+          <span class="metrica-desc">5% + IVA</span>
+        </div>
 
-      <div class="card">
-        <h3>Ingresos</h3>
-        <p class="metric">{{ resumen.ingresos }}</p>
+        <!-- Total Asistentes -->
+        <div class="metrica-card asistentes">
+          <div class="metrica-header">
+            <img src="assets/images/reporte/ticket.svg" alt="Asistentes">
+            <h3>Total Asistentes</h3>
+          </div>
+          <p class="value-secondary">{{ resumen.asistentes }}</p>
+          <div class="sub-metric">
+            <span class="cortesias">Cortesías: {{ resumen.totalCortesias }}</span>
+          </div>
+        </div>
+
+        <!-- Tickets Vendidos Hoy -->
+        <div class="metrica-card hoy">
+          <div class="metrica-header">
+            <img src="assets/images/reporte/transaccion.svg" alt="Hoy">
+            <h3>Vendidos Hoy</h3>
+          </div>
+          <p class="value-secondary">{{ resumen.ticketsVendidosHoy }}</p>
+          <span class="metrica-desc">Tickets</span>
+        </div>
+
+        <!-- Ingresos Netos -->
+        <div class="metrica-card ingresos">
+          <div class="metrica-header">
+            <img src="assets/images/reporte/recaudado.svg" alt="Ingresos">
+            <h3>Ingresos Netos</h3>
+          </div>
+          <p class="value-secondary">{{ resumen.totalRecaudado -resumen.totalComisiones - resumen.totalRetenciones| currency:'COP':'symbol':'1.0-0' }}</p>
+          <span class="metrica-desc">Después de comisiones</span>
+        </div>
       </div>
     </div>
 
+    <!-- Cards de Información Detallada -->
+    <div class="cards-detalle">
+      <!-- Métodos de Pago -->
+      <div class="card-detalle metodos-pago">
+        <div class="card-detalle-header">
+          <img src="assets/images/reporte/metodo_pago.svg" alt="Métodos de Pago">
+          <h3>Métodos de Pago</h3>
+        </div>
+        <div class="card-detalle-content">
+          <div class="detalle-item">
+            <span class="label">Taquilla:</span>
+            <div class="value-group">
+              <span class="value">{{ resumen.pagosTaquilla }} pagos</span>
+              <span class="sub-value">({{ resumen.asistentesTaquilla }} asistentes)</span>
+            </div>
+          </div>
+          <div class="detalle-item">
+            <span class="label">PSE:</span>
+            <div class="value-group">
+              <span class="value">{{ resumen.pagosPse }} pagos</span>
+              <span class="sub-value">({{ resumen.asistentesPse }} asistentes)</span>
+            </div>
+          </div>
+          <div class="detalle-item">
+            <span class="label">Tarjeta:</span>
+            <div class="value-group">
+              <span class="value">{{ resumen.pagosTc }} pagos</span>
+              <span class="sub-value">({{ resumen.asistentesTc }} asistentes)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Impuestos y Retenciones -->
+      <div class="card-detalle impuestos">
+        <div class="card-detalle-header">
+          <img src="assets/images/reporte/impuesto.svg" alt="Impuestos">
+          <h3>Impuestos y Retenciones</h3>
+        </div>
+        <div class="card-detalle-content">
+          <div class="detalle-item">
+            <span class="label">Retefuente:</span>
+            <div class="value-group">
+              <span class="value">- {{ resumen.retefuente | currency:'COP':'symbol':'1.0-0' }}</span>
+              <span class="sub-value">1.5% en pagos con tarjeta</span>
+            </div>
+          </div>
+          <div class="detalle-item">
+            <span class="label">ReteICA:</span>
+            <div class="value-group">
+              <span class="value">- {{ resumen.reteica | currency:'COP':'symbol':'1.0-0' }}</span>
+              <span class="sub-value">0.414% en pagos con tarjeta</span>
+            </div>
+          </div>
+          <div class="detalle-item">
+            <span class="label">Parafiscal:</span>
+            <div class="value-group">
+              <span class="value">- {{ resumen.parafiscal | currency:'COP':'symbol':'1.0-0' }}</span>
+              <span class="sub-value">10% por tickets cuyo precio supere 3 UVT</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comisiones Pasarela -->
+      <div class="card-detalle comisiones-pasarela">
+        <div class="card-detalle-header">
+          <img src="assets/images/reporte/estadistica.svg" alt="Comisiones">
+          <h3>Comisiones Pasarela</h3>
+        </div>
+        <div class="card-detalle-content">
+          <div class="detalle-item">
+            <span class="label">Pasarela:</span>
+            <div class="value-group">
+              <span class="value">{{ resumen.comisionPasarela | currency:'COP':'symbol':'1.0-0' }}</span>
+              <span class="sub-value">Base</span>
+            </div>
+          </div>
+          <div class="detalle-item">
+            <span class="label">3DS:</span>
+            <div class="value-group">
+              <span class="value">{{ resumen.comision3ds | currency:'COP':'symbol':'1.0-0' }}</span>
+              <span class="sub-value">Seguridad</span>
+            </div>
+          </div>
+          <div class="detalle-item total-pasarela">
+            <span class="label">Total:</span>
+            <div class="value-group">
+              <span class="value">- {{ (resumen.comisionPasarela + resumen.comision3ds) | currency:'COP':'symbol':'1.0-0' }}</span>
+              <span class="sub-value">Pasarela</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Sección de Gráficas y Filtros -->
     <div class="graficas-y-filtros-container">
@@ -121,71 +245,4 @@
     </div>
   </div>
 
-    <!-- Desglose Financiero -->
-    <div class="desglose-financiero">
-
-      <div class="desglose-section">
-        <h3>Métodos de Pago</h3>
-        <div class="desglose-grid">
-          <div class="desglose-item">
-            <span class="label">Taquilla:</span>
-            <span class="value">{{ resumen.pagosTaquilla }} pagos ({{ resumen.asistentesTaquilla }} asistentes)</span>
-          </div>
-          <div class="desglose-item">
-            <span class="label">PSE:</span>
-            <span class="value">{{ resumen.pagosPse }} pagos ({{ resumen.asistentesPse }} asistentes)</span>
-          </div>
-          <div class="desglose-item">
-            <span class="label">Tarjeta:</span>
-            <span class="value">{{ resumen.pagosTc }} pagos ({{ resumen.asistentesTc }} asistentes)</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="desglose-section">
-        <h3>Retenciones</h3>
-        <p class="section-description">Retefuente: 1.5% y ReteICA: 0.414% en pagos con tarjetas</p>
-        <div class="desglose-grid">
-          <div class="desglose-item">
-            <span class="label">Retefuente:</span>
-            <span class="value">{{ resumen.retefuente | currency:'COP':'symbol':'1.0-0' }}</span>
-          </div>
-          <div class="desglose-item">
-            <span class="label">ReteICA:</span>
-            <span class="value">{{ resumen.reteica | currency:'COP':'symbol':'1.0-0' }}</span>
-          </div>
-          <div class="desglose-item">
-            <span class="label">Parafiscal:</span>
-            <span class="value">{{ resumen.parafiscal | currency:'COP':'symbol':'1.0-0' }}</span>
-          </div>
-          <div class="desglose-item total-item">
-            <span class="label">Total Retenciones:</span>
-            <span class="value">{{ resumen.totalRetenciones | currency:'COP':'symbol':'1.0-0' }}</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="desglose-section">
-        <h3>Comisiones</h3>
-        <p class="section-description">Comisión de ventas: 5% de las ventas más IVA</p>
-        <div class="desglose-grid">
-          <div class="desglose-item">
-            <span class="label">Comisión Ventas:</span>
-            <span class="value">{{ resumen.comisionAlltickets | currency:'COP':'symbol':'1.0-0' }}</span>
-          </div>
-          <div class="desglose-item">
-            <span class="label">Comisión Pasarela:</span>
-            <span class="value">{{ resumen.comisionPasarela | currency:'COP':'symbol':'1.0-0' }}</span>
-          </div>
-          <div class="desglose-item">
-            <span class="label">Comisión 3DS:</span>
-            <span class="value">{{ resumen.comision3ds | currency:'COP':'symbol':'1.0-0' }}</span>
-          </div>
-          <div class="desglose-item total-item">
-            <span class="label">Total Comisiones:</span>
-            <span class="value">{{ resumen.totalComisiones | currency:'COP':'symbol':'1.0-0' }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
 </div>

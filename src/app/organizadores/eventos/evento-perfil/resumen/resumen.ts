@@ -1,4 +1,4 @@
-export interface ResumenEvento {
+export class ResumenEvento {
   eventoId: number;
   nombre: string;
   asistentes: number;
@@ -27,6 +27,10 @@ export interface ResumenEvento {
   totalComisiones: number;
   totalRetenciones: number;
   porcentajeOcupacion: number;
+
+  getNeto(): number {
+    return this.totalRecaudado - this.totalComisiones - this.totalRetenciones;
+  }
 }
 
 

@@ -1,14 +1,51 @@
 @use '../../../../../styles/variables' as v;
 @use '../../../../../styles/mixins' as m;
 
+// Variables locales
+$icon-size-sm: 20px;
+$icon-size-md: 24px;
+$icon-size-lg: 36px;
+$icon-circle-size: 60px;
+
+// Mixin para headers de cards
+@mixin card-header($icon-size: $icon-size-md, $title-size: 1rem) {
+  display: flex;
+  align-items: center;
+  gap: v.$spacer-1;
+  margin-bottom: v.$spacer-2;
+  
+  img {
+    width: $icon-size;
+    height: $icon-size;
+    opacity: 0.8;
+  }
+  
+  h3 {
+    font-family: v.$font-secondary;
+    font-size: $title-size;
+    font-weight: 600;
+    color: v.$color-base;
+    margin: 0;
+  }
+}
+
+// Mixin para valores
+@mixin card-value($size: 1.6rem, $color: v.$color-negro) {
+  font-family: v.$font-primary;
+  font-size: $size;
+  font-weight: 700;
+  color: $color;
+  margin: 0 0 4px 0;
+  line-height: 1.2;
+}
+
+// Base styles
 .resumen-container {
   padding: v.$spacer-3;
 }
 
 .loading-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include m.flex-center;
   height: 300px;
 }
 
@@ -28,144 +65,205 @@
   margin: 0 auto;
 }
 
-// Cards de resumen
-.resumen-cards {
+// Métricas principales
+.metricas-principales {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: 1fr 2fr;
+  gap: v.$spacer-4;
+  margin-bottom: v.$spacer-4;
+  max-height: 250px;
+}
+
+.metrica-hero {
+  @include m.card(3);
+  padding: v.$spacer-3 v.$spacer-4;
+  background: linear-gradient(135deg, v.$color-primario 0%, v.$color-primario-light 100%);
+  color: v.$color-negro;
+  display: flex;
+  align-items: center;
   gap: v.$spacer-3;
-  margin-bottom: v.$spacer-4;
+  min-height: 150px;
+  border: 3px solid v.$color-primario-dark;
   
-  .card {
-    @include m.card(2);
-    padding: v.$spacer-4;
-    text-align: center;
+  .metrica-icon {
+    flex-shrink: 0;
+    width: $icon-circle-size;
+    height: $icon-circle-size;
+    background: rgba(v.$color-negro, 0.1);
+    border-radius: 50%;
+    @include m.flex-center;
     
-    h3 {
-      font-family: v.$font-secondary;
-      font-size: 1rem;
-      color: v.$color-gris;
-      margin: 0 0 v.$spacer-2 0;
-      font-weight: 500;
+    img {
+      width: $icon-size-lg;
+      height: $icon-size-lg;
+      filter: brightness(0) saturate(100%);
     }
+  }
+  
+  .metrica-content {
+    flex: 1;
     
-    .metric {
-      font-size: 2rem;
+    h2 {
+      font-family: v.$font-secondary;
+      font-size: 1.4rem;
       font-weight: 700;
-      color: v.$color-base;
-      margin: 0;
-      font-family: v.$font-primary;
-    }
-  }
-}
-
-// Desglose Financiero
-.desglose-financiero {
-  margin-bottom: v.$spacer-4;
-  
-  .desglose-section {
-    @include m.card(1);
-    padding: v.$spacer-4;
-    margin-bottom: v.$spacer-3;
-    
-    h3 {
-      font-family: v.$font-secondary;
-      color: v.$color-base;
       margin: 0 0 v.$spacer-1 0;
-      font-size: 1.1rem;
-      border-bottom: 2px solid v.$color-primario;
-      padding-bottom: v.$spacer-1;
+      text-shadow: 1px 1px 2px rgba(v.$color-negro, 0.1);
     }
     
-    .section-description {
-      font-size: 0.8rem;
-      color: v.$color-gris;
-      font-family: v.$font-primary;
-      margin: 0 0 v.$spacer-3 0;
-      font-style: italic;
+    .value-hero {
+      @include card-value(2.4rem, v.$color-negro);
+      font-weight: 800;
+      margin-bottom: v.$spacer-1;
+      text-shadow: 2px 2px 4px rgba(v.$color-negro, 0.2);
     }
     
-    .desglose-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: v.$spacer-2;
-      
-      .desglose-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: v.$spacer-2;
-        background-color: v.$color-gris-muy-light;
-        border-radius: v.$border-radius;
-        border-left: 3px solid v.$color-primario;
-        
-        .label {
-          font-weight: 600;
-          color: v.$color-base;
-          font-family: v.$font-primary;
-        }
-        
-        .value {
-          font-weight: 700;
-          color: v.$color-negro;
-          font-family: v.$font-primary;
-          text-align: right;
-        }
-      }
-      
-      .total-item {
-        background-color: v.$color-primario;
-        border-left: 3px solid v.$color-primario-dark;
-        
-        .label, .value {
-          color: v.$color-negro;
-          font-weight: 700;
-        }
-      }
+    .highlight {
+      background: rgba(v.$color-negro, 0.15);
+      color: v.$color-negro;
+      padding: 4px v.$spacer-1;
+      border-radius: v.$border-radius;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-block;
     }
   }
 }
 
-// Filtros
-.filtros-container {
-  @include m.card(1);
-  padding: v.$spacer-4;
-  margin-bottom: v.$spacer-4;
+.metricas-secundarias {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: v.$spacer-3;
   
-  h3 {
-    font-family: v.$font-secondary;
-    color: v.$color-base;
-    margin: 0 0 v.$spacer-3 0;
-    font-size: 1.2rem;
-  }
-  
-  .filtros-form {
-    display: flex;
-    gap: v.$spacer-4;
-    flex-wrap: wrap;
+  .metrica-card {
+    @include m.card(2);
+    padding: v.$spacer-3;
+    transition: all 0.3s ease;
+    border-left: 4px solid v.$color-negro-soft;
     
-    .input-group {
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+    
+    .metrica-header {
+      @include card-header($icon-size-md, 0.9rem);
+    }
+    
+    .value-secondary {
+      @include card-value(1.6rem);
+    }
+    
+    .metrica-desc {
+      font-size: 0.75rem;
+      color: v.$color-gris;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .cortesias {
+      background: rgba(v.$color-primario, 0.1);
+      color: v.$color-negro;
+      padding: 4px v.$spacer-1;
+      border-radius: v.$border-radius;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-block;
+      margin-top: v.$spacer-1;
+    }
+    
+    &.comision {
+      border-left-color: v.$color-error;
+    }
+  }
+}
+
+// Cards de detalle
+.cards-detalle {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: v.$spacer-3;
+  margin-bottom: v.$spacer-3;
+  
+  .card-detalle {
+    @include m.card(1);
+    padding: v.$spacer-2 v.$spacer-3;
+    transition: all 0.3s ease;
+    border-left: 3px solid v.$color-negro-soft;
+    
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+    
+    .card-detalle-header {
+      @include card-header($icon-size-sm, 0.9rem);
+      padding-bottom: v.$spacer-1;
+      border-bottom: 1px solid rgba(v.$color-gris-light, 0.3);
+    }
+    
+    .detalle-item {
       display: flex;
-      flex-direction: column;
-      gap: v.$spacer-1;
-      min-width: 150px;
+      justify-content: space-between;
+      align-items: center;
+      padding: v.$spacer-1 0;
+      border-bottom: 1px solid rgba(v.$color-gris-light, 0.15);
       
-      label {
+      &:last-child {
+        border-bottom: none;
+      }
+      
+      .label {
         font-family: v.$font-primary;
         font-weight: 600;
         color: v.$color-base;
         font-size: 0.9rem;
+        min-width: 65px;
       }
       
-      select {
-        @include m.form-input;
-        padding: v.$spacer-2;
-        font-size: 0.9rem;
+      .value-group {
+        text-align: right;
+        
+        .value {
+          @include card-value(0.95rem);
+          display: block;
+        }
+        
+        .sub-value {
+          display: block;
+          font-size: 0.7rem;
+          color: v.$color-gris;
+          font-weight: 500;
+          margin-top: 1px;
+        }
+      }
+      
+      &.total-pasarela {
+        background: rgba(v.$color-gris-muy-light, 0.8);
+        padding: v.$spacer-1;
+        margin: v.$spacer-1 -#{v.$spacer-1} 0;
+        border-radius: v.$border-radius;
+        border-bottom: none;
+        
+        .label, .value {
+          font-weight: 700;
+          color: v.$color-negro;
+        }
+      }
+    }
+    
+    &.impuestos, &.comisiones-pasarela {
+      border-left-color: v.$color-error;
+      
+      .value {
+        color: v.$color-error;
       }
     }
   }
 }
 
-// Gr�ficas
+// Gráficas
 .graficas-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -186,7 +284,6 @@
   }
 }
 
-// Contenedores de gráficas Chart.js
 .chart-container {
   position: relative;
   height: 300px;
@@ -206,164 +303,7 @@
   margin: 0;
 }
 
-// Gr�fica circular (progress bars)
-.grafica-circular {
-  .metodo-item {
-    margin-bottom: v.$spacer-3;
-    
-    .metodo-info {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: v.$spacer-1;
-      
-      .metodo-nombre {
-        font-weight: 600;
-        color: v.$color-base;
-        text-transform: capitalize;
-      }
-      
-      .metodo-valor {
-        font-weight: 700;
-        color: v.$color-primario;
-        font-family: v.$font-primary;
-      }
-    }
-    
-    .progress-bar {
-      height: 8px;
-      background-color: v.$color-gris-muy-light;
-      border-radius: 4px;
-      overflow: hidden;
-      
-      .progress-fill {
-        height: 100%;
-        background: linear-gradient(90deg, v.$color-primario, v.$color-primario-light);
-        transition: width 0.3s ease;
-      }
-    }
-  }
-}
-
-// Gr�fica de l�neas (lista)
-.grafica-lineas {
-  .periodo-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: v.$spacer-2;
-    border-bottom: 1px solid v.$color-gris-muy-light;
-    
-    &:last-child {
-      border-bottom: none;
-    }
-    
-    .periodo-info {
-      display: flex;
-      gap: v.$spacer-3;
-      align-items: center;
-      width: 100%;
-      
-      .periodo-nombre {
-        font-weight: 600;
-        color: v.$color-base;
-        min-width: 100px;
-      }
-      
-      .periodo-recaudado {
-        font-weight: 700;
-        color: v.$color-primario;
-        font-family: v.$font-primary;
-        flex: 1;
-      }
-      
-      .periodo-asistentes {
-        color: v.$color-gris;
-        font-size: 0.9rem;
-        min-width: 100px;
-        text-align: right;
-      }
-    }
-  }
-}
-
-// Responsive
-@include m.for-tablet-down {
-  .resumen-cards {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: v.$spacer-2;
-  }
-  
-  .desglose-financiero {
-    .desglose-section {
-      .desglose-grid {
-        grid-template-columns: 1fr;
-        
-        .desglose-item {
-          padding: v.$spacer-1 v.$spacer-2;
-          
-          .label, .value {
-            font-size: 0.9rem;
-          }
-          
-          &.total-item {
-            background-color: v.$color-primario;
-            border-left: 3px solid v.$color-primario-dark;
-            
-            .label, .value {
-              color: v.$color-negro;
-              font-weight: 700;
-            }
-          }
-        }
-      }
-    }
-  }
-  
-  .filtros-form {
-    flex-direction: column;
-    gap: v.$spacer-2;
-  }
-  
-  .graficas-container {
-    grid-template-columns: 1fr;
-    gap: v.$spacer-3;
-  }
-}
-
-@include m.for-mobile-down {
-  .resumen-container {
-    padding: v.$spacer-2;
-  }
-  
-  .resumen-cards {
-    grid-template-columns: 1fr;
-    
-    .card {
-      padding: v.$spacer-3;
-      
-      .metric {
-        font-size: 1.5rem;
-      }
-    }
-  }
-  
-  .grafica-lineas {
-    .periodo-item {
-      .periodo-info {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: v.$spacer-1;
-        
-        .periodo-asistentes {
-          text-align: left;
-        }
-      }
-    }
-  }
-}
-
-// Estilos para filtros integrados
+// Filtros integrados
 .graficas-y-filtros-container {
   @include m.card(1);
   padding: v.$spacer-4;
@@ -435,38 +375,175 @@
   }
 }
 
-// Responsive para nuevos filtros integrados
-@media (max-width: 870px) {
-  .filtros-integrados {
-    .filtros-header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: v.$spacer-2;
+// Responsive
+@include m.for-tablet-down {
+  .metricas-principales {
+    grid-template-columns: 1fr;
+    max-height: none;
+    gap: v.$spacer-3;
+  }
+  
+  .metrica-hero {
+    min-height: 180px;
+    padding: v.$spacer-4;
+    
+    .metrica-icon {
+      width: 50px;
+      height: 50px;
       
-      .filtros-controls {
-        gap: v.$spacer-2;
-        flex-wrap: wrap;
+      img {
+        width: 30px;
+        height: 30px;
       }
+    }
+    
+    .metrica-content {
+      h2 { font-size: 1.5rem; }
+      .value-hero { font-size: 2.5rem; }
+    }
+  }
+  
+  .metricas-secundarias {
+    grid-template-columns: 1fr 1fr;
+    gap: v.$spacer-2;
+    
+    .metrica-card {
+      padding: v.$spacer-3;
+      .value-secondary { font-size: 1.6rem; }
+    }
+  }
+  
+  .cards-detalle {
+    grid-template-columns: 1fr;
+    gap: v.$spacer-2;
+    
+    .card-detalle {
+      padding: v.$spacer-2;
+      
+      .card-detalle-header {
+        margin-bottom: v.$spacer-2;
+        padding-bottom: v.$spacer-1;
+        
+        img { width: 18px; height: 18px; }
+        h3 { font-size: 0.85rem; }
+      }
+      
+      .detalle-item {
+        padding: 4px 0;
+        
+        .label { font-size: 0.8rem; min-width: 60px; }
+        .value { font-size: 0.85rem; }
+        .sub-value { font-size: 0.65rem; }
+      }
+    }
+  }
+  
+  .graficas-container {
+    grid-template-columns: 1fr;
+    gap: v.$spacer-3;
+  }
+  
+  .filtros-integrados .filtros-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: v.$spacer-2;
+    
+    .filtros-controls {
+      gap: v.$spacer-2;
+      flex-wrap: wrap;
     }
   }
 }
 
-@media (max-width: 520px) {
-  .filtros-integrados {
-    .filtros-header {
-      .filtros-controls {
-        flex-direction: column;
-        align-items: stretch;
-        width: 100%;
+@include m.for-mobile-down {
+  .resumen-container {
+    padding: v.$spacer-2;
+  }
+  
+  .metricas-principales {
+    gap: v.$spacer-2;
+  }
+  
+  .metrica-hero {
+    flex-direction: column;
+    text-align: center;
+    min-height: 160px;
+    padding: v.$spacer-3;
+    
+    .metrica-icon {
+      width: 40px;
+      height: 40px;
+      
+      img { width: 24px; height: 24px; }
+    }
+    
+    .metrica-content {
+      h2 { font-size: 1.3rem; }
+      .value-hero { font-size: 2rem; }
+    }
+  }
+  
+  .metricas-secundarias {
+    grid-template-columns: 1fr;
+    
+    .metrica-card {
+      padding: v.$spacer-2;
+      
+      .metrica-header {
+        h3 { font-size: 0.9rem; }
+        img { width: 20px; height: 20px; }
+      }
+      
+      .value-secondary { font-size: 1.4rem; }
+    }
+  }
+  
+  .cards-detalle {
+    gap: v.$spacer-1;
+    
+    .card-detalle {
+      padding: v.$spacer-1 v.$spacer-2;
+      
+      .card-detalle-header {
+        margin-bottom: v.$spacer-1;
+        padding-bottom: 4px;
         
-        .filtro-item {
-          justify-content: space-between;
+        img { width: 16px; height: 16px; }
+        h3 { font-size: 0.8rem; }
+      }
+      
+      .detalle-item {
+        padding: 3px 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+        
+        .label { font-size: 0.75rem; min-width: auto; }
+        .value-group {
+          text-align: left;
+          width: 100%;
           
-          select {
-            min-width: 120px;
-          }
+          .value { font-size: 0.8rem; }
+          .sub-value { font-size: 0.65rem; }
+        }
+        
+        &.total-pasarela {
+          margin: 4px 0 0;
+          padding: 4px;
         }
       }
+    }
+  }
+  
+  .filtros-integrados .filtros-header .filtros-controls {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    
+    .filtro-item {
+      justify-content: space-between;
+      
+      select { min-width: 120px; }
     }
   }
 }
