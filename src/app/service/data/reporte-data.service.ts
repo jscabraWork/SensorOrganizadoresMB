@@ -73,4 +73,38 @@ export class ReporteDataService {
     return this.http.get<any>(`${this.baseEndpoint}/detalle-ventas/${eventoId}${params}`);
   }
 
+  // Obtiene el historial de transacciones de un evento con filtros
+  getHistorialTransaccionesEvento(
+    eventoId: number,
+    status: number,
+    page: number,
+    size: number,
+    fechaInicio?: string,
+    fechaFin?: string,
+    tipo?: number
+  ): Observable<any> {
+    let params = '';
+    const queryParams: string[] = [];
+
+    queryParams.push(`status=${status}`);
+    queryParams.push(`page=${page}`);
+    queryParams.push(`size=${size}`);
+
+    if (fechaInicio) {
+      queryParams.push(`fechaInicio=${encodeURIComponent(fechaInicio)}`);
+    }
+    if (fechaFin) {
+      queryParams.push(`fechaFin=${encodeURIComponent(fechaFin)}`);
+    }
+    if (tipo !== undefined && tipo !== null) {
+      queryParams.push(`tipo=${tipo}`);
+    }
+
+    if (queryParams.length > 0) {
+      params = '?' + queryParams.join('&');
+    }
+
+    return this.http.get<any>(`${this.baseEndpoint}/historial-transacciones/${eventoId}${params}`);
+  }
+
 }
