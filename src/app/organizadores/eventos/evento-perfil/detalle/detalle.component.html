@@ -114,12 +114,12 @@
           <tfoot *ngIf="detalle.length > 0">
             <tr class="totals-row">
               <td colspan="4"><strong>TOTALES</strong></td>
-              <td class="text-center"><strong>{{ getTotalVendidos() }}</strong></td>
-              <td class="text-center"><strong>{{ getTotalReservados() }}</strong></td>
-              <td class="text-center"><strong>{{ getTotalEnProceso() }}</strong></td>
-              <td class="text-center"><strong>{{ getTotalTickets() }}</strong></td>
-              <td class="text-center"><strong>{{ getPromedioOcupacion() | number:'1.1-2' }}%</strong></td>
-              <td class="text-right"><strong>{{ getTotalRecaudado() | currency:'COP':'symbol':'1.0-0' }}</strong></td>
+              <td class="text-center"><strong>{{ getTotalVendidos }}</strong></td>
+              <td class="text-center"><strong>{{ getTotalReservados }}</strong></td>
+              <td class="text-center"><strong>{{ getTotalEnProceso }}</strong></td>
+              <td class="text-center"><strong>{{ getTotalTickets }}</strong></td>
+              <td class="text-center"><strong>{{ getPromedioOcupacion | number:'1.1-2' }}%</strong></td>
+              <td class="text-right"><strong>{{ getTotalRecaudado | currency:'COP':'symbol':'1.0-0' }}</strong></td>
             </tr>
           </tfoot>
         </table>

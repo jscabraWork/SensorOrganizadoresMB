@@ -31,6 +31,6 @@ export interface Historial {
 
 
 export interface HistorialDTO {
-  venta: Historial[];
+  venta: Historial;
   tickets: Ticket[];
 }

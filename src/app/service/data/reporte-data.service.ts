@@ -107,4 +107,11 @@ export class ReporteDataService {
     return this.http.get<any>(`${this.baseEndpoint}/historial-transacciones/${eventoId}${params}`);
   }
 
+  // Descarga archivo Excel del historial de transacciones por estado
+  descargarExcelHistorialTransacciones(eventoId: number, status: number): Observable<Blob> {
+    return this.http.get(`${this.baseEndpoint}/historial-excel/${eventoId}/excel?status=${status}`, {
+      responseType: 'blob'
+    });
+  }
+
 }

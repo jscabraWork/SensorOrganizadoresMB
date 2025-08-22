@@ -1,0 +1,78 @@
+<div class="paginacion-container" *ngIf="config.totalPages > 0">
+  <!-- Información de registros -->
+  <div class="paginacion-info">
+    <span class="info-text">
+      Mostrando {{ getStartIndex() }} - {{ getEndIndex() }} de {{ config.totalElements }} registros
+    </span>
+  </div>
+
+  <!-- Controles de paginación -->
+  <div class="paginacion-controls">
+    <!-- Selector de tamaño de página -->
+    <div class="page-size-selector" *ngIf="showPageSizeSelector">
+      <label for="pageSize">Mostrar:</label>
+      <select 
+        id="pageSize" 
+        [value]="config.pageSize" 
+        (change)="onPageSizeChange($event)"
+        class="form-select-sm">
+        <option *ngFor="let size of pageSizeOptions" [value]="size">
+          {{ size }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Botones de navegación -->
+    <div class="page-navigation">
+      <!-- Primer página -->
+      <button 
+        type="button"
+        class="page-btn page-btn-nav"
+        [disabled]="config.currentPage === 0"
+        (click)="onPageChange(0)"
+        title="Primera página">
+        &laquo;
+      </button>
+
+      <!-- Página anterior -->
+      <button 
+        type="button"
+        class="page-btn page-btn-nav"
+        [disabled]="config.currentPage === 0"
+        (click)="onPageChange(config.currentPage - 1)"
+        title="Página anterior">
+        &#8249;
+      </button>
+
+      <!-- Páginas numeradas -->
+      <button 
+        *ngFor="let page of getVisiblePages()"
+        type="button"
+        class="page-btn page-btn-number"
+        [class.active]="page === config.currentPage"
+        (click)="onPageChange(page)">
+        {{ page + 1 }}
+      </button>
+
+      <!-- Página siguiente -->
+      <button 
+        type="button"
+        class="page-btn page-btn-nav"
+        [disabled]="config.currentPage === config.totalPages - 1"
+        (click)="onPageChange(config.currentPage + 1)"
+        title="Página siguiente">
+        &#8250;
+      </button>
+
+      <!-- Última página -->
+      <button 
+        type="button"
+        class="page-btn page-btn-nav"
+        [disabled]="config.currentPage === config.totalPages - 1"
+        (click)="onPageChange(config.totalPages - 1)"
+        title="Última página">
+        &raquo;
+      </button>
+    </div>
+  </div>
+</div>

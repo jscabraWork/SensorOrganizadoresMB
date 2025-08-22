@@ -1,0 +1,12 @@
+<div class="estado-submenu">
+  <div class="submenu-buttons">
+    <button 
+      *ngFor="let opcion of opciones"
+      type="button"
+      class="submenu-btn"
+      [class.active]="estadoSeleccionado === opcion.value"
+      (click)="onCambiarEstado(opcion.value)">
+      {{ opcion.label }}
+    </button>
+  </div>
+</div>

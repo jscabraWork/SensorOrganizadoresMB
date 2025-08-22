@@ -1,0 +1,187 @@
+@use '../../../styles/variables' as v;
+@use '../../../styles/mixins' as m;
+
+.paginacion-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: v.$spacer-3;
+  padding: v.$spacer-3 v.$spacer-4;
+}
+
+.paginacion-info {
+  .info-text {
+    font-family: v.$font-primary;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: v.$color-negro-soft;
+    letter-spacing: 0.3px;
+  }
+}
+
+.paginacion-controls {
+  display: flex;
+  align-items: center;
+  gap: v.$spacer-4;
+  flex-wrap: wrap;
+}
+
+.page-size-selector {
+  display: flex;
+  align-items: center;
+  gap: v.$spacer-1;
+  
+  label {
+    font-family: v.$font-primary;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: v.$color-negro;
+    white-space: nowrap;
+  }
+  
+  .form-select-sm {
+    padding: v.$spacer-1 v.$spacer-2;
+    border: 2px solid v.$color-gris-light;
+    border-radius: v.$border-radius;
+    background-color: v.$color-blanco;
+    color: v.$color-negro;
+    font-family: v.$font-primary;
+    font-size: 0.85rem;
+    font-weight: 500;
+    min-width: 60px;
+    transition: all 0.3s ease;
+    
+    &:focus {
+      outline: none;
+      border-color: v.$color-primario;
+      box-shadow: 0 0 0 3px rgba(v.$color-primario, 0.2);
+    }
+    
+    &:hover {
+      border-color: v.$color-primario-light;
+    }
+  }
+}
+
+.page-navigation {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.page-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  border: 2px solid v.$color-gris-light;
+  background: v.$color-gris-muy-light;
+  color: v.$color-negro-soft;
+  font-family: v.$font-primary;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+  
+  &:hover:not(:disabled) {
+    background: v.$color-primario;
+    border-color: v.$color-primario;
+    color: v.$color-negro;
+  }
+  
+  &:disabled {
+    background: v.$color-gris-light;
+    border-color: v.$color-gris-light;
+    color: v.$color-gris;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+  
+  &.active {
+    background: v.$color-negro;
+    border-color: v.$color-primario;
+    color: v.$color-primario;
+    font-weight: 700;
+    
+    &:hover {
+      background: v.$color-negro-soft;
+    }
+  }
+}
+
+.page-btn-nav {
+  border-radius: v.$border-radius;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.page-btn-number {
+  border-radius: 50%;
+  font-size: 0.85rem;
+}
+
+// Responsive design
+@include m.for-tablet-down {
+  .paginacion-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: v.$spacer-2;
+    padding: v.$spacer-2 v.$spacer-3;
+  }
+  
+  .paginacion-info {
+    text-align: center;
+    
+    .info-text {
+      font-size: 0.85rem;
+    }
+  }
+  
+  .paginacion-controls {
+    justify-content: center;
+    gap: v.$spacer-3;
+  }
+  
+  .page-btn {
+    min-width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
+  }
+}
+
+@include m.for-mobile-down {
+  .paginacion-container {
+    padding: v.$spacer-2;
+    gap: v.$spacer-1;
+  }
+  
+  .paginacion-controls {
+    flex-direction: column;
+    gap: v.$spacer-2;
+  }
+  
+  .page-navigation {
+    gap: 2px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .page-btn {
+    min-width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+  
+  .page-size-selector {
+    justify-content: center;
+    
+    .form-select-sm {
+      min-width: 50px;
+      padding: 4px v.$spacer-1;
+      font-size: 0.8rem;
+    }
+  }
+}

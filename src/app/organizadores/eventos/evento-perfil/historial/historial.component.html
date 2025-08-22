@@ -1,1 +1,191 @@
-<p>historial works!</p>
+  <!-- Header de página -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="title-section">
+        <h1 class="page-title">Historial de Transacciones</h1>
+        <div class="title-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submenu de Estados -->
+  <app-estado-submenu
+    [opciones]="opcionesEstado"
+    [estadoSeleccionado]="statusSeleccionado"
+    (cambioEstado)="onCambioEstado($event)">
+  </app-estado-submenu>
+
+  <!-- Filtros -->
+  <div class="filtros-container">
+    <div class="filtros-grid">
+      <!-- Tipo -->
+      <div class="filtro-item">
+        <label for="tipo">Tipo:</label>
+        <select 
+          id="tipo"
+          [(ngModel)]="tipoSeleccionado" 
+          (change)="actualizarFiltros()"
+          class="form-select">
+          <option *ngFor="let opcion of opcionesTipo" [value]="opcion.value">
+            {{ opcion.label }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Fecha inicio -->
+      <div class="filtro-item">
+        <label for="fechaInicio">Fecha inicio:</label>
+        <input 
+          id="fechaInicio"
+          type="datetime-local"
+          [(ngModel)]="fechaInicio"
+          (change)="actualizarFiltros()"
+          class="form-input">
+      </div>
+
+      <!-- Fecha fin -->
+      <div class="filtro-item">
+        <label for="fechaFin">Fecha fin:</label>
+        <input 
+          id="fechaFin"
+          type="datetime-local"
+          [(ngModel)]="fechaFin"
+          (change)="actualizarFiltros()"
+          class="form-input">
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón Excel y Paginación Superior -->
+  <div *ngIf="!error && historial && historial.length > 0" class="controles-superiores">
+    <button 
+      type="button" 
+      class="btn-excel"
+      (click)="descargarExcel()"
+      [disabled]="cargando"
+      title="Descargar Excel">
+      <img src="assets/images/reporte/xls.svg" alt="Excel" class="excel-icon">
+      <span class="btn-text">Descargar excel</span>
+    </button>
+    
+    <app-paginacion 
+      [config]="paginacionConfig"
+      [showPageSizeSelector]="true"
+      [pageSizeOptions]="[10, 25, 50, 100]"
+      (pageChange)="onPaginacionChange($event)">
+    </app-paginacion>
+  </div>
+
+  <!-- Tabla de historial -->
+  <div *ngIf="!error">
+    <h3 class="titulo-seccion">
+      Historial de Transacciones
+    </h3>
+    
+    <app-tabla-organizadores
+      [datos]="historial"
+      [columnas]="columnasTabla"
+      [expandible]="true"
+      [plantillaExpandida]="plantillaExpandida"
+      [cargando]="cargando"
+      [sinDatosMensaje]="'No se encontraron transacciones con los filtros seleccionados.'"
+      (filaExpandida)="onFilaExpandida($event)">
+    </app-tabla-organizadores>
+
+    <!-- Template para contenido expandido -->
+    <ng-template #plantillaExpandida let-item let-index="index">
+      <div class="detalle-expandido">
+        <!-- Información adicional de la venta -->
+        <div class="detalle-grid">
+          <div class="detalle-item">
+            <span class="detalle-label">Email</span>
+            <span class="detalle-value">{{ item.venta.correo || 'N/A' }}</span>
+          </div>
+          <div class="detalle-item">
+            <span class="detalle-label">Teléfono</span>
+            <span class="detalle-value">{{ item.venta.telefono || 'N/A' }}</span>
+          </div>
+          <div class="detalle-item">
+            <span class="detalle-label">Documento</span>
+            <span class="detalle-value">{{ item.venta.documento || 'N/A' }}</span>
+          </div>
+          <div class="detalle-item">
+            <span class="detalle-label">Día</span>
+            <span class="detalle-value">{{ item.venta.dia }}</span>
+          </div>
+          <div class="detalle-item">
+            <span class="detalle-label">Monto Base</span>
+            <span class="detalle-value">{{ formatearMoneda(item.venta.monto) }}</span>
+          </div>
+          <div class="detalle-item">
+            <span class="detalle-label">Precio Total</span>
+            <span class="detalle-value">{{ formatearMoneda(item.venta.precioTotal) }}</span>
+          </div>
+          <div class="detalle-item" *ngIf="item.venta.promotor">
+            <span class="detalle-label">Promotor</span>
+            <span class="detalle-value">{{ item.venta.promotor }} ({{ item.venta.promotorNumeroDocumento }})</span>
+          </div>
+          <div class="detalle-item" *ngIf="item.venta.precioParcialPagado">
+            <span class="detalle-label">Parcial Pagado</span>
+            <span class="detalle-value">{{ formatearMoneda(item.venta.precioParcialPagado) }}</span>
+          </div>
+        </div>
+
+        <!-- Subtabla de tickets -->
+        <div class="tickets-section" *ngIf="item.tickets && item.tickets.length > 0">
+          <h4 class="tickets-title">Tickets Asociados ({{ item.tickets.length }})</h4>
+          <div class="tickets-table-responsive">
+            <table class="tickets-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Estado</th>
+                  <th>Número</th>
+                  <th>Precio</th>
+                  <th>Servicio</th>
+                  <th>IVA</th>
+                  <th>Precio Total</th>
+                  <th>Tarifa</th>
+                  <th>Localidad</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ticket of item.tickets">
+                  <td>{{ ticket.id }}</td>
+                  <td>{{ getTicketEstadoTexto(ticket.estado) }}</td>
+                  <td>{{ ticket.numero || 'No numerado' }}</td>
+                  <td class="text-right">{{ formatearMoneda(ticket.tarifa?.precio || 0) }}</td>
+                  <td class="text-right">{{ formatearMoneda(ticket.tarifa?.servicio || 0) }}</td>
+                  <td class="text-right">{{ formatearMoneda(ticket.tarifa?.iva || 0) }}</td>
+                  <td class="text-right">{{ formatearMoneda((ticket.tarifa?.precio || 0) + (ticket.tarifa?.servicio || 0) + (ticket.tarifa?.iva || 0)) }}</td>
+                  <td>{{ ticket.tarifa?.nombre || 'No asignada' }}</td>
+                  <td>{{ item.venta.localidad}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Mensaje cuando no hay tickets -->
+        <div class="no-tickets" *ngIf="!item.tickets || item.tickets.length === 0">
+          <p>Esta orden no tiene tickets asociados.</p>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Paginación Inferior -->
+    <app-paginacion *ngIf="!error && historial && historial.length > 0"
+      [config]="paginacionConfig"
+      [showPageSizeSelector]="true"
+      [pageSizeOptions]="[10, 25, 50, 100]"
+      (pageChange)="onPaginacionChange($event)">
+    </app-paginacion>
+
+  <!-- Estado de error -->
+  <div class="error-container" *ngIf="error">
+    <div class="error-message">{{ error }}</div>
+    <button type="button" class="btn-retry" (click)="cargarDatos()">
+      Reintentar
+    </button>
+  </div>

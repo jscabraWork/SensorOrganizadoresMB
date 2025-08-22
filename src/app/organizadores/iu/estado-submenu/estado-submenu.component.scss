@@ -1,0 +1,81 @@
+@use '../../../styles/variables' as v;
+
+.estado-submenu {
+  margin-bottom: v.$spacer-4;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  
+  .submenu-buttons {
+    display: flex;
+    gap: v.$spacer-2;
+    padding: v.$spacer-3;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.submenu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: v.$spacer-2 v.$spacer-4;
+  border: 2px solid v.$color-gris-light;
+  border-radius: 10px;
+  background: v.$color-blanco;
+  color: v.$color-negro-soft;
+  font-family: v.$font-primary;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 140px;
+  letter-spacing: 0.3px;
+  
+  &:hover {
+    border-color: v.$color-primario;
+    color: v.$color-negro;
+  }
+  
+  &.active {
+    background: v.$color-primario;
+    border-color: v.$color-primario;
+    color: v.$color-negro;
+    font-weight: 700;
+    
+    &:hover {
+      background: v.$color-primario-light;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .estado-submenu {
+    .submenu-buttons {
+      flex-direction: column;
+      gap: v.$spacer-1;
+      padding: v.$spacer-2;
+    }
+    
+    .submenu-btn {
+      min-width: 180px;
+      padding: v.$spacer-2;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .estado-submenu {
+    .submenu-buttons {
+      padding: v.$spacer-1;
+    }
+    
+    .submenu-btn {
+      min-width: 160px;
+      padding: v.$spacer-1 v.$spacer-2;
+      font-size: 0.85rem;
+    }
+  }
+}

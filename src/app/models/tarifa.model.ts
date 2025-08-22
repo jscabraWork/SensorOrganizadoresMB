@@ -8,5 +8,5 @@ export class Tarifa {
     servicio: number
     iva: number
     estado: number
-    localidad: Localidad
+    localidad?: Localidad
 }

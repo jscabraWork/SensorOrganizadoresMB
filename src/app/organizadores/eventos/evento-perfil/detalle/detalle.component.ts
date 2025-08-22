@@ -40,10 +40,6 @@ export class DetalleComponent extends BaseComponent implements OnInit {
     this.pathVariableName = 'idEvento';
   }
 
-  override ngOnInit() {
-    super.ngOnInit();
-  }
-
   protected override onPathVariableChanged(value: string | null): void {
     if (value) {
       this.idEvento = value;
@@ -111,27 +107,27 @@ export class DetalleComponent extends BaseComponent implements OnInit {
   }
 
   // Métodos para calcular totales
-  getTotalVendidos(): number {
+  get getTotalVendidos(): number {
     return this.detalle.reduce((total, item) => total + item.vendidos, 0);
   }
 
-  getTotalReservados(): number {
+  get getTotalReservados(): number {
     return this.detalle.reduce((total, item) => total + item.reservados, 0);
   }
 
-  getTotalEnProceso(): number {
+  get getTotalEnProceso(): number {
     return this.detalle.reduce((total, item) => total + item.proceso, 0);
   }
 
-  getTotalTickets(): number {
+  get getTotalTickets(): number {
     return this.detalle.reduce((total, item) => total + item.totalTickets, 0);
   }
 
-  getTotalRecaudado(): number {
+  get getTotalRecaudado(): number {
     return this.detalle.reduce((total, item) => total + item.totalRecaudado, 0);
   }
 
-  getPromedioOcupacion(): number {
+  get getPromedioOcupacion(): number {
     if (this.detalle.length === 0) return 0;
     const totalOcupacion = this.detalle.reduce((total, item) => total + item.porcentajeOcupacion, 0);
     return totalOcupacion / this.detalle.length;

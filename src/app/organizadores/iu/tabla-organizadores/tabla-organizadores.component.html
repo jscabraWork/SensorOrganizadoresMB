@@ -1,0 +1,79 @@
+<div class="table-container">
+  <div class="table-responsive">
+    <!-- Loader mientras carga -->
+    <div class="table-loader" *ngIf="cargando">
+      <app-loader-puntos></app-loader-puntos>
+      <p class="loader-text">Cargando...</p>
+    </div>
+
+    <!-- Tabla con datos -->
+    <table class="table" *ngIf="!cargando && datos && datos.length > 0">
+      <thead>
+        <tr>
+          <th class="expand-column" *ngIf="expandible"></th>
+          <th 
+            *ngFor="let columna of columnas" 
+            [class]="obtenerClaseAlineacion(columna.alineacion)"
+            [style.width]="columna.ancho">
+            {{ columna.label }}
+          </th>
+          <th *ngIf="accion" class="acciones-column">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let item of datos; let i = index">
+          <!-- Fila principal -->
+          <tr class="main-row" [class.expanded]="isFilaExpandida(i)">
+            <td class="expand-column" *ngIf="expandible">
+              <button 
+                type="button"
+                class="expand-button"
+                [class.active]="isFilaExpandida(i)"
+                (click)="toggleFilaExpandida(i, item)"
+                title="Ver detalles">
+                <span class="expand-icon">{{ isFilaExpandida(i) ? '-' : '+' }}</span>
+              </button>
+            </td>
+            <td 
+              *ngFor="let columna of columnas" 
+              [class]="obtenerClaseAlineacion(columna.alineacion)">
+              <ng-container [ngSwitch]="columna.tipo">
+                <span *ngSwitchCase="'custom'">
+                  <ng-content [select]="'[slot=' + columna.key + ']'"></ng-content>
+                </span>
+                <span *ngSwitchDefault>
+                  {{ formatearValor(obtenerValorCelda(item, columna), columna.tipo) }}
+                </span>
+              </ng-container>
+            </td>
+            <td *ngIf="accion" class="acciones-column">
+              <button 
+                *ngIf="deberiaMostrarAccion(item)"
+                type="button"
+                class="btn-accion"
+                [class]="accion.clase"
+                (click)="onAccionClick(item)">
+                <img *ngIf="accion.icono" [src]="accion.icono" [alt]="accion.texto" class="accion-icon">
+                <span>{{ accion.texto }}</span>
+              </button>
+            </td>
+          </tr>
+
+          <!-- Fila expandida -->
+          <tr class="expanded-row" *ngIf="expandible && isFilaExpandida(i)">
+            <td [colspan]="obtenerColspan()" class="expanded-content">
+              <ng-container 
+                *ngTemplateOutlet="plantillaExpandida; context: { $implicit: item, index: i }">
+              </ng-container>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+
+    <!-- Sin datos -->
+    <div class="no-data" *ngIf="!cargando && (!datos || datos.length === 0)">
+      <p>{{ sinDatosMensaje }}</p>
+    </div>
+  </div>
+</div>

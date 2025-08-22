@@ -20,7 +20,7 @@ export class Ticket {
   cliente: Cliente | null;
   ingresos: Ingreso[] | []; 
   seguro: Seguro | null;
-  tarifa: Tarifa | null;
+  tarifa?: Tarifa;
   localidad: Localidad | null;
   personasPorTicket: number
   }
