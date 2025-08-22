@@ -9,10 +9,11 @@ import { TituloComponent } from '../../../iu/titulo/titulo.component';
 import { ErrorComponent } from '../../../iu/error/error.component';
 import { TablaOrganizadoresComponent, ColumnaTabla } from '../../../iu/tabla-organizadores/tabla-organizadores.component';
 import { EstadoSubmenuComponent, OpcionEstado } from '../../../iu/estado-submenu/estado-submenu.component';
+import { EstadisticasCardsComponent, EstadisticaCard } from '../../../iu/estadisticas-cards/estadisticas-cards.component';
 
 @Component({
   selector: 'app-alcancias',
-  imports: [CommonModule, TituloComponent, ErrorComponent, TablaOrganizadoresComponent, EstadoSubmenuComponent],
+  imports: [CommonModule, TituloComponent, ErrorComponent, TablaOrganizadoresComponent, EstadoSubmenuComponent, EstadisticasCardsComponent],
   templateUrl: './alcancias.component.html',
   styleUrl: './alcancias.component.scss'
 })
@@ -60,6 +61,31 @@ export class AlcanciasComponent extends BaseComponent implements OnInit {
       ...alcancia,
       estadoTexto: this.getEstado(alcancia.estado)
     }));
+  }
+
+  // Getter para estadísticas formateadas
+  get estadisticasFormateadas(): EstadisticaCard[] {
+    return [
+      { titulo: 'Total Alcancías', valor: this.estadisticas.totalAlcancias },
+      { titulo: 'Activas', valor: this.estadisticas.totalActivas },
+      { titulo: 'Pagadas', valor: this.estadisticas.totalPagadas },
+      { titulo: 'Devueltas', valor: this.estadisticas.totalDevueltas },
+      { 
+        titulo: 'Total Recaudado', 
+        valor: new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(this.estadisticas.totalRecaudado),
+        tipo: 'highlight' 
+      },
+      { 
+        titulo: 'Total por Pagar', 
+        valor: new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(this.estadisticas.totalPorPagar),
+        tipo: 'negative' 
+      },
+      { 
+        titulo: 'Porcentaje Pagado', 
+        valor: `${this.estadisticas.porcentajePagadoGeneral}%`,
+        tipo: 'primary' 
+      }
+    ];
   }
 
   constructor(

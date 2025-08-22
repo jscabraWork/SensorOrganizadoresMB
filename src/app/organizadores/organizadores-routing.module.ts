@@ -12,6 +12,8 @@ import { AlcanciasComponent } from './eventos/evento-perfil/alcancias/alcancias.
 import { TaquillasComponent } from './eventos/evento-perfil/taquillas/taquillas.component';
 import { IngresosComponent } from './eventos/evento-perfil/ingresos/ingresos.component';
 import { PromotoresComponent } from './eventos/evento-perfil/promotores/promotores.component';
+import { DetallePromotoresComponent } from './eventos/evento-perfil/promotores/detalle-promotores/detalle-promotores.component';
+import { DetalleTaquillasComponent } from './eventos/evento-perfil/taquillas/detalle-taquillas/detalle-taquillas.component';
 
 const routes: Routes = [
   {
@@ -54,8 +56,16 @@ const routes: Routes = [
             component: PromotoresComponent
           },
           {
+            path: 'promotores/:idPromotor',
+            component: DetallePromotoresComponent
+          },
+          {
             path: 'taquilla',
             component: TaquillasComponent
+          },
+          {
+            path: 'taquilla/:idTaquilla',
+            component: DetalleTaquillasComponent
           },
           {
             path: 'ingresos',

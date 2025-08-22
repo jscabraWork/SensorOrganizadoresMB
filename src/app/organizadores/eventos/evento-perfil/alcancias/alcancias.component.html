@@ -24,47 +24,11 @@
     </app-tabla-organizadores>
 
 
-     <!-- Estadísticas Generales -->
-  <div class="estadisticas-container" *ngIf="!cargando">
-    <div class="estadisticas-grid">
-      
-      <div class="estadistica-card">
-        <div class="estadistica-titulo">Total Alcancías</div>
-        <div class="estadistica-valor">{{ estadisticas.totalAlcancias }}</div>
-      </div>
-
-      <div class="estadistica-card">
-        <div class="estadistica-titulo">Activas</div>
-        <div class="estadistica-valor">{{ estadisticas.totalActivas }}</div>
-      </div>
-
-      <div class="estadistica-card">
-        <div class="estadistica-titulo">Pagadas</div>
-        <div class="estadistica-valor">{{ estadisticas.totalPagadas }}</div>
-      </div>
-
-      <div class="estadistica-card">
-        <div class="estadistica-titulo">Devueltas</div>
-        <div class="estadistica-valor">{{ estadisticas.totalDevueltas }}</div>
-      </div>
-
-      <div class="estadistica-card highlight">
-        <div class="estadistica-titulo">Total Recaudado</div>
-        <div class="estadistica-valor">{{ estadisticas.totalRecaudado | currency:'COP':'symbol':'1.0-0' }}</div>
-      </div>
-
-      <div class="estadistica-card negative">
-        <div class="estadistica-titulo">Total por Pagar</div>
-        <div class="estadistica-valor">{{ estadisticas.totalPorPagar | currency:'COP':'symbol':'1.0-0' }}</div>
-      </div>
-
-      <div class="estadistica-card primary">
-        <div class="estadistica-titulo">Porcentaje Pagado</div>
-        <div class="estadistica-valor">{{ estadisticas.porcentajePagadoGeneral }}%</div>
-      </div>
-
-    </div>
-  </div>
+  <!-- Estadísticas Generales -->
+  <app-estadisticas-cards 
+    [estadisticas]="estadisticasFormateadas"
+    [cargando]="cargando">
+  </app-estadisticas-cards>
 
   </div>
 

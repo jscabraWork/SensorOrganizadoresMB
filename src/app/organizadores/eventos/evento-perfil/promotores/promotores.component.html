@@ -1,1 +1,45 @@
-<p>promotores works!</p>
+<div class="promotores-container">
+
+  <!-- Título -->
+  <app-titulo titulo="PROMOTORES"></app-titulo>
+
+  <!-- Filtro de búsqueda -->
+  <div class="filtro-container">
+    <input 
+      type="text"
+      class="filtro-input"
+      placeholder="Buscar por nombre o documento..."
+      [(ngModel)]="filtroTexto"
+      (input)="onFiltroChange()">
+  </div>
+
+  <!-- Tabla de Promotores -->
+  <div *ngIf="!error">
+    <app-tabla-organizadores
+      [datos]="promotores"
+      [columnas]="columnasTabla"
+      [accion]="accionTabla"
+      [expandible]="true"
+      [datosExpandidos]="obtenerDatosExpandidos"
+      [cargando]="cargando"
+      [sinDatosMensaje]="'No se encontraron promotores para este evento.'"
+      [titulo]="'Promotores'"
+      [subtitulo]="evento?.nombre"
+      (accionClick)="onAccionClick($event)">
+    </app-tabla-organizadores>
+
+    <!-- Estadísticas de Promotores -->
+    <app-estadisticas-cards 
+      [estadisticas]="estadisticasPromotores"
+      [cargando]="cargando">
+    </app-estadisticas-cards>
+  </div>
+
+  <!-- Estado de error -->
+  <app-error 
+    *ngIf="error"
+    [mensaje]="error"
+    (reintentar)="cargarDatos()">
+  </app-error>
+  
+</div>

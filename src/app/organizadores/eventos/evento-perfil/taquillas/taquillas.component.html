@@ -1,1 +1,45 @@
-<p>taquillas works!</p>
+<div class="taquillas-container">
+
+  <!-- Título -->
+  <app-titulo titulo="TAQUILLAS"></app-titulo>
+
+  <!-- Filtro de búsqueda -->
+  <div class="filtro-container">
+    <input 
+      type="text"
+      class="filtro-input"
+      placeholder="Buscar por nombre o documento..."
+      [(ngModel)]="filtroTexto"
+      (input)="onFiltroChange()">
+  </div>
+
+  <!-- Tabla de Taquillas -->
+  <div *ngIf="!error">
+    <app-tabla-organizadores
+      [datos]="taquillas"
+      [columnas]="columnasTabla"
+      [accion]="accionTabla"
+      [expandible]="true"
+      [datosExpandidos]="obtenerDatosExpandidos"
+      [cargando]="cargando"
+      [sinDatosMensaje]="'No se encontraron taquillas para este evento.'"
+      [titulo]="'Taquillas'"
+      [subtitulo]="evento?.nombre"
+      (accionClick)="onAccionClick($event)">
+    </app-tabla-organizadores>
+
+    <!-- Estadísticas de Taquillas -->
+    <app-estadisticas-cards 
+      [estadisticas]="estadisticasTaquillas"
+      [cargando]="cargando">
+    </app-estadisticas-cards>
+  </div>
+
+  <!-- Estado de error -->
+  <app-error 
+    *ngIf="error"
+    [mensaje]="error"
+    (reintentar)="cargarDatos()">
+  </app-error>
+  
+</div>

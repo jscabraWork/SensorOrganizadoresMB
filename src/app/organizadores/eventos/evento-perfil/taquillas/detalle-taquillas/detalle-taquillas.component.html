@@ -1,1 +1,59 @@
-<p>detalle-taquillas works!</p>
+<div class="detalle-taquillas-container">
+
+  <!-- Encabezado con botón volver -->
+  <div class="header-container">
+    <button type="button" class="btn-volver" (click)="volver()">
+      ← Volver a Taquillas
+    </button>
+    
+    <app-titulo 
+      [titulo]="'VENTAS DE LA TAQUILLA'">
+    </app-titulo>
+  </div>
+
+  <!-- Información de la Taquilla -->
+  <div class="info-taquilla" *ngIf="taquilla && !cargando">
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="info-label">Documento:</span>
+        <span class="info-value">{{ taquilla.documento }}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Nombre:</span>
+        <span class="info-value">{{ taquilla.nombre }}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">USUARIO:</span>
+        <span class="info-value">{{ taquilla.correo }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla de Tickets -->
+  <div *ngIf="!error">
+    <app-tabla-organizadores
+      [datos]="tickets"
+      [columnas]="columnasTabla"
+      [expandible]="true"
+      [datosExpandidos]="obtenerDatosExpandidos"
+      [cargando]="cargando"
+      [sinDatosMensaje]="'Esta taquilla no tiene tickets vendidos.'"
+      [titulo]="'Tickets Vendidos'"
+      [subtitulo]="'Total: ' + tickets.length + ' tickets'">
+    </app-tabla-organizadores>
+
+    <!-- Estadísticas de la Taquilla -->
+    <app-estadisticas-cards 
+      [estadisticas]="estadisticasTaquilla"
+      [cargando]="cargando">
+    </app-estadisticas-cards>
+  </div>
+
+  <!-- Estado de error -->
+  <app-error 
+    *ngIf="error"
+    [mensaje]="error"
+    (reintentar)="cargarDatos()">
+  </app-error>
+  
+</div>

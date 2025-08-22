@@ -1,0 +1,91 @@
+@use '../../../../../../styles/variables' as v;
+
+.detalle-promotores-container {
+  padding: 20px;
+  max-width: 100%;
+  min-height: 100vh;
+}
+
+// Header con botón volver
+.header-container {
+  margin-bottom: v.$spacer-4;
+}
+
+.btn-volver {
+  display: inline-flex;
+  align-items: center;
+  gap: v.$spacer-1;
+  padding: v.$spacer-2 v.$spacer-3;
+  margin-bottom: v.$spacer-3;
+  border: 2px solid v.$color-gris-light;
+  border-radius: v.$border-radius;
+  background: v.$color-blanco;
+  color: v.$color-negro-soft;
+  font-family: v.$font-primary;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  
+  &:hover {
+    background: v.$color-primario;
+    border-color: v.$color-primario;
+    color: v.$color-negro;
+  }
+}
+
+// Información del promotor
+.info-promotor {
+  background: v.$color-gris-muy-light;
+  border-radius: v.$border-radius-xl;
+  padding: v.$spacer-4;
+  margin-bottom: v.$spacer-4;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: v.$spacer-3;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: v.$spacer-1;
+  
+  .info-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: v.$color-negro-soft;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  
+  .info-value {
+    font-size: 1rem;
+    font-weight: 500;
+    color: v.$color-negro;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .detalle-promotores-container {
+    padding: 10px;
+  }
+  
+  .info-promotor {
+    padding: v.$spacer-3;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: v.$spacer-2;
+  }
+  
+  .btn-volver {
+    padding: v.$spacer-1 v.$spacer-2;
+    font-size: 0.85rem;
+  }
+}

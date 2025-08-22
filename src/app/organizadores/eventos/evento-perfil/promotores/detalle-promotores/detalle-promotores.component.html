@@ -1,1 +1,59 @@
-<p>detalle-promotores works!</p>
+<div class="detalle-promotores-container">
+
+  <!-- Encabezado con botón volver -->
+  <div class="header-container">
+    <button type="button" class="btn-volver" (click)="volver()">
+      ← Volver a Promotores
+    </button>
+    
+    <app-titulo 
+      [titulo]="'VENTAS DEL PROMOTOR'">
+    </app-titulo>
+  </div>
+
+  <!-- Información del Promotor -->
+  <div class="info-promotor" *ngIf="promotor && !cargando">
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="info-label">Documento:</span>
+        <span class="info-value">{{ promotor.documento }}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Nombre:</span>
+        <span class="info-value">{{ promotor.nombre }}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">USUARIO:</span>
+        <span class="info-value">{{ promotor.correo }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla de Tickets -->
+  <div *ngIf="!error">
+    <app-tabla-organizadores
+      [datos]="tickets"
+      [columnas]="columnasTabla"
+      [expandible]="true"
+      [datosExpandidos]="obtenerDatosExpandidos"
+      [cargando]="cargando"
+      [sinDatosMensaje]="'Este promotor no tiene tickets vendidos.'"
+      [titulo]="'Tickets Vendidos'"
+      [subtitulo]="'Total: ' + tickets.length + ' tickets'">
+    </app-tabla-organizadores>
+
+    <!-- Estadísticas del Promotor -->
+    <app-estadisticas-cards 
+      [estadisticas]="estadisticasPromotor"
+      [cargando]="cargando">
+    </app-estadisticas-cards>
+  </div>
+
+  <!-- Estado de error -->
+  <app-error 
+    *ngIf="error"
+    [mensaje]="error"
+    (reintentar)="cargarDatos()">
+  </app-error>
+  
+</div>

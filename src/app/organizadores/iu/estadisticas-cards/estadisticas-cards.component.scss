@@ -1,0 +1,63 @@
+@use '../../../../styles/variables' as v;
+
+.estadisticas-container {
+  margin-top: v.$spacer-4;
+}
+
+.estadisticas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: v.$spacer-2;
+}
+
+.estadistica-card {
+  background-color: v.$color-gris-muy-light;
+  border-radius: v.$border-radius-xl;
+  padding: v.$spacer-2;
+  text-align: center;
+  
+  .estadistica-titulo {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: v.$color-negro-soft;
+    margin-bottom: v.$spacer-1;
+    text-transform: uppercase;
+  }
+  
+  .estadistica-valor {
+    font-size: 1rem;
+    font-weight: 700;
+    color: v.$color-negro;
+  }
+  
+  &.highlight {
+    background-color: v.$color-success;
+    
+    .estadistica-titulo, .estadistica-valor {
+      color: v.$color-blanco;
+    }
+  }
+  
+  &.negative {
+    background-color: v.$color-error;
+    
+    .estadistica-titulo, .estadistica-valor {
+      color: v.$color-blanco;
+    }
+  }
+  
+  &.primary {
+    background-color: v.$color-primario;
+    
+    .estadistica-titulo, .estadistica-valor {
+      color: v.$color-negro;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .estadisticas-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+}

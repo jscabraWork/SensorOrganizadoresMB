@@ -1,0 +1,11 @@
+<div class="estadisticas-container" *ngIf="!cargando">
+  <div class="estadisticas-grid">
+    <div 
+      *ngFor="let estadistica of estadisticas" 
+      class="estadistica-card"
+      [class]="estadistica.tipo || 'default'">
+      <div class="estadistica-titulo">{{ estadistica.titulo }}</div>
+      <div class="estadistica-valor">{{ estadistica.valor }}</div>
+    </div>
+  </div>
+</div>
