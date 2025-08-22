@@ -5,15 +5,17 @@ import { BaseComponent } from '../../../../commons-ui/base.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { ReporteDataService } from '../../../../service/data/reporte-data.service';
-import { Historial, HistorialDTO } from './historial.model';
+import { Historial, HistorialDTO } from '../../../../models/reporte/historial.model';
 import { TablaOrganizadoresComponent, ColumnaTabla } from '../../../iu/tabla-organizadores/tabla-organizadores.component';
 import { EstadoSubmenuComponent, OpcionEstado } from '../../../iu/estado-submenu/estado-submenu.component';
 import { PaginacionComponent, PaginacionConfig, PaginacionEvent } from '../../../iu/paginacion/paginacion.component';
+import { TituloComponent } from '../../../iu/titulo/titulo.component';
+import { ErrorComponent } from '../../../iu/error/error.component';
 
 
 @Component({
   selector: 'app-historial',
-  imports: [CommonModule, FormsModule, PaginacionComponent, EstadoSubmenuComponent, TablaOrganizadoresComponent],
+  imports: [CommonModule, FormsModule, PaginacionComponent, EstadoSubmenuComponent, TablaOrganizadoresComponent, TituloComponent, ErrorComponent],
   templateUrl: './historial.component.html',
   styleUrl: './historial.component.scss'
 })
@@ -203,6 +205,24 @@ export class HistorialComponent extends BaseComponent implements OnInit {
       case 3: return 'En Proceso';
       default: return 'No Disponible';
     }
+  }
+
+  // Función para obtener datos expandidos
+  obtenerDatosExpandidos = (item: HistorialDTO) => {
+    return {
+      'Email': item.venta.correo || 'N/A',
+      'Teléfono': item.venta.telefono || 'N/A', 
+      'Documento': item.venta.documento || 'N/A',
+      'Localidad': item.venta.localidad,
+      'Etapa': item.venta.tarifa,
+      'Valor': this.formatearMoneda(item.venta.valorOrden),
+      ...(item.venta.promotor && {
+        'Promotor': `${item.venta.promotor} (${item.venta.promotorNumeroDocumento})`
+      }),
+      ...(item.venta.precioParcialPagado && {
+        'Parcial Pagado': this.formatearMoneda(item.venta.precioParcialPagado)
+      })
+    };
   }
 
 

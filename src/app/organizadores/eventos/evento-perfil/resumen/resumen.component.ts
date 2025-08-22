@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ReporteDataService } from '../../../../service/data/reporte-data.service';
 import { BaseComponent } from '../../../../commons-ui/base.component';
-import { GraficaDona, ResumenEvento, GraficaLineas } from './resumen';
+import { GraficaDona, ResumenEvento, GraficaLineas } from '../../../../models/reporte/resumen';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BaseChartDirective } from 'ng2-charts';

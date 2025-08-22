@@ -1,0 +1,140 @@
+@use '../../../../styles/variables' as v;
+
+.error-container {
+  padding: v.$spacer-4;
+  border-radius: v.$border-radius-xl;
+  text-align: center;
+  margin: v.$spacer-4 0;
+  
+  .error-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: v.$spacer-3;
+  }
+  
+  .error-icon {
+    font-size: 3rem;
+    margin-bottom: v.$spacer-2;
+  }
+  
+  .error-message {
+    font-family: v.$font-primary;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: v.$spacer-3;
+    max-width: 500px;
+    line-height: 1.5;
+  }
+  
+  .btn-retry {
+    padding: v.$spacer-2 v.$spacer-4;
+    border: none;
+    border-radius: v.$border-radius;
+    font-family: v.$font-primary;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+    
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+  }
+  
+  // Tipos de error
+  &.error-error {
+    background: rgba(v.$color-error, 0.1);
+    border: 2px solid rgba(v.$color-error, 0.3);
+    
+    .error-message {
+      color: v.$color-error;
+    }
+    
+    .btn-retry {
+      background: v.$color-error;
+      color: v.$color-blanco;
+      
+      &:hover {
+        background: darken(v.$color-error, 10%);
+      }
+    }
+  }
+  
+  &.error-warning {
+    background: rgba(v.$color-warning, 0.1);
+    border: 2px solid rgba(v.$color-warning, 0.3);
+    
+    .error-message {
+      color: darken(v.$color-warning, 30%);
+    }
+    
+    .btn-retry {
+      background: v.$color-warning;
+      color: v.$color-negro;
+      
+      &:hover {
+        background: darken(v.$color-warning, 10%);
+      }
+    }
+  }
+  
+  &.error-info {
+    background: rgba(v.$color-primario, 0.1);
+    border: 2px solid rgba(v.$color-primario, 0.3);
+    
+    .error-message {
+      color: v.$color-negro;
+    }
+    
+    .btn-retry {
+      background: v.$color-primario;
+      color: v.$color-negro;
+      
+      &:hover {
+        background: v.$color-primario-light;
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .error-container {
+    padding: v.$spacer-3;
+    
+    .error-icon {
+      font-size: 2.5rem;
+    }
+    
+    .error-message {
+      font-size: 1rem;
+    }
+    
+    .btn-retry {
+      padding: v.$spacer-2;
+      font-size: 0.85rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .error-container {
+    padding: v.$spacer-2;
+    
+    .error-icon {
+      font-size: 2rem;
+    }
+    
+    .error-message {
+      font-size: 0.9rem;
+    }
+    
+    .btn-retry {
+      width: 100%;
+      padding: v.$spacer-2;
+    }
+  }
+}

@@ -5,12 +5,15 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { BaseComponent } from '../../../../commons-ui/base.component';
 import { ReporteDataService } from '../../../../service/data/reporte-data.service';
-import { DetalleEvento } from './detalle';
-import { ResumenEvento } from '../resumen/resumen';
+import { DetalleEvento } from '../../../../models/reporte/detalle';
+import { ResumenEvento } from '../../../../models/reporte/resumen';
+import { TituloComponent } from '../../../iu/titulo/titulo.component';
+import { ErrorComponent } from '../../../iu/error/error.component';
+import { TablaOrganizadoresComponent, ColumnaTabla } from '../../../iu/tabla-organizadores/tabla-organizadores.component';
 
 @Component({
   selector: 'app-detalle',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TituloComponent, ErrorComponent, TablaOrganizadoresComponent],
   templateUrl: './detalle.component.html',
   styleUrl: './detalle.component.scss'
 })
@@ -30,6 +33,40 @@ export class DetalleComponent extends BaseComponent implements OnInit {
   
   // Control de vista de resumen
   vistaResumen: 'financiero' | 'asistentes' = 'financiero';
+
+  // Configuración de columnas para la tabla
+  columnasTabla: ColumnaTabla[] = [
+    { key: 'tarifa', label: 'Tarifa', tipo: 'texto' },
+    { key: 'localidad', label: 'Localidad', tipo: 'texto' },
+    { key: 'precio', label: 'Precio', tipo: 'moneda', alineacion: 'right' },
+    { key: 'servicio', label: 'Servicio', tipo: 'moneda', alineacion: 'right' },
+    { key: 'iva', label: 'IVA', tipo: 'moneda', alineacion: 'right' },
+    { key: 'precioTotal', label: 'Precio Total', tipo: 'moneda', alineacion: 'right' },
+    { key: 'vendidos', label: 'Vendidos', tipo: 'texto', alineacion: 'center' },
+    { key: 'reservados', label: 'Reservados', tipo: 'texto', alineacion: 'center' },
+    { key: 'proceso', label: 'En Proceso', tipo: 'texto', alineacion: 'center' },
+    { key: 'totalTickets', label: 'Total', tipo: 'texto', alineacion: 'center' },
+    { key: 'porcentajeOcupacion', label: 'Ocupación', tipo: 'porcentaje', alineacion: 'center' },
+    { key: 'totalRecaudado', label: 'Total Recaudado', tipo: 'moneda', alineacion: 'right' }
+  ];
+
+  // Totales para el pie de tabla
+  get totalesTabla() {
+    if (!this.detalle?.length) return {};
+    
+    return {
+      'vendidos': this.getTotalVendidos,
+      'reservados': this.getTotalReservados,
+      'proceso': this.getTotalEnProceso,
+      'totalTickets': this.getTotalTickets,
+      'porcentajeOcupacion': `${this.getPromedioOcupacion.toFixed(2)}%`,
+      'totalRecaudado': new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0
+      }).format(this.getTotalRecaudado)
+    };
+  }
 
   constructor(
     protected override dialog: MatDialog,
@@ -144,6 +181,27 @@ export class DetalleComponent extends BaseComponent implements OnInit {
 
   isFilaExpandida(index: number): boolean {
     return this.filasExpandidas.has(index);
+  }
+
+  // Método para obtener datos expandidos para la tabla
+  obtenerDatosExpandidos = (item: DetalleEvento) => {
+    return {
+      'Total Recaudado': item.totalRecaudado,
+      'Disponibles': item.disponibles,
+      'Vendidos': item.vendidos,
+      'Reservados': item.reservados,
+      'En Proceso': item.proceso,
+      'Utilizados': item.utilizados
+    };
+  };
+
+  // Método para manejar fila expandida de la tabla
+  onFilaExpandida(event: { item: any, index: number, expandido: boolean }): void {
+    if (event.expandido) {
+      this.filasExpandidas.add(event.index);
+    } else {
+      this.filasExpandidas.delete(event.index);
+    }
   }
 
 }

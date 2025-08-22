@@ -1,4 +1,10 @@
 <div class="table-container">
+  <!-- Título de la tabla -->
+  <h3 *ngIf="titulo" class="tabla-titulo">
+    {{ titulo }}
+    <span class="tabla-subtitulo" *ngIf="subtitulo">({{ subtitulo }})</span>
+  </h3>
+  
   <div class="table-responsive">
     <!-- Loader mientras carga -->
     <div class="table-loader" *ngIf="cargando">
@@ -61,14 +67,52 @@
 
           <!-- Fila expandida -->
           <tr class="expanded-row" *ngIf="expandible && isFilaExpandida(i)">
-            <td [colspan]="obtenerColspan()" class="expanded-content">
-              <ng-container 
-                *ngTemplateOutlet="plantillaExpandida; context: { $implicit: item, index: i }">
+            <td [attr.colspan]="obtenerColspan()" class="expanded-content">
+              <ng-container *ngIf="plantillaExpandida; else defaultExpanded">
+                <ng-container 
+                  *ngTemplateOutlet="plantillaExpandida; context: { $implicit: item, index: i }">
+                </ng-container>
               </ng-container>
+              
+              <!-- Template por defecto para contenido expandido -->
+              <ng-template #defaultExpanded>
+                <div class="detalle-expandido">
+                  <!-- Información adicional -->
+                  <div class="detalle-grid" *ngIf="datosExpandidos">
+                    <ng-container *ngFor="let dato of datosExpandidos(item) | keyvalue">
+                      <div class="detalle-item">
+                        <span class="detalle-label">{{ dato.key }}</span>
+                        <span class="detalle-value">{{ dato.value || 'N/A' }}</span>
+                      </div>
+                    </ng-container>
+                  </div>
+
+                  <!-- Subtabla -->
+                  <div *ngIf="plantillaSubtabla">
+                    <ng-container 
+                      *ngTemplateOutlet="plantillaSubtabla; context: { $implicit: item, index: i }">
+                    </ng-container>
+                  </div>
+                </div>
+              </ng-template>
             </td>
           </tr>
         </ng-container>
       </tbody>
+      
+      <!-- Pie de tabla (totales) -->
+      <tfoot *ngIf="mostrarPieTabla && pieTabla">
+        <tr class="pie-tabla">
+          <td *ngIf="expandible" class="expand-column"></td>
+          <td 
+            *ngFor="let columna of columnas; let first = first" 
+            [class]="obtenerClaseAlineacion(columna.alineacion)">
+            <strong *ngIf="first">TOTALES</strong>
+            <strong *ngIf="!first && pieTabla[columna.key]">{{ pieTabla[columna.key] }}</strong>
+          </td>
+          <td *ngIf="accion" class="acciones-column"></td>
+        </tr>
+      </tfoot>
     </table>
 
     <!-- Sin datos -->

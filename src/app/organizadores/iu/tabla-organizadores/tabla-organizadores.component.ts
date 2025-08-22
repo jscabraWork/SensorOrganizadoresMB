@@ -1,10 +1,11 @@
 import { Component, Input, Output, EventEmitter, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LoaderPuntosComponent } from '../loader-puntos/loader-puntos.component';
 
 export interface ColumnaTabla {
   key: string;
   label: string;
-  tipo?: 'texto' | 'moneda' | 'fecha' | 'custom';
+  tipo?: 'texto' | 'moneda' | 'fecha' | 'custom' | 'porcentaje';
   alineacion?: 'left' | 'center' | 'right';
   ancho?: string;
 }
@@ -18,7 +19,7 @@ export interface AccionTabla {
 
 @Component({
   selector: 'app-tabla-organizadores',
-  imports: [CommonModule],
+  imports: [CommonModule, LoaderPuntosComponent],
   templateUrl: './tabla-organizadores.component.html',
   styleUrl: './tabla-organizadores.component.scss'
 })
@@ -30,6 +31,12 @@ export class TablaOrganizadoresComponent {
   @Input() plantillaExpandida?: TemplateRef<any>;
   @Input() cargando: boolean = false;
   @Input() sinDatosMensaje: string = 'No se encontraron registros';
+  @Input() titulo?: string;
+  @Input() subtitulo?: string;
+  @Input() datosExpandidos?: (item: any) => any;
+  @Input() plantillaSubtabla?: TemplateRef<any>;
+  @Input() mostrarPieTabla: boolean = false;
+  @Input() pieTabla?: { [key: string]: any };
 
   @Output() accionClick = new EventEmitter<any>();
   @Output() filaExpandida = new EventEmitter<{ item: any, index: number, expandido: boolean }>();
@@ -76,7 +83,7 @@ export class TablaOrganizadoresComponent {
   }
 
   formatearValor(valor: any, tipo?: string): string {
-    if (valor === null || valor === undefined) return '';
+    if (valor === null || valor === undefined || valor === '') return 'N/A';
     
     switch (tipo) {
       case 'moneda':
@@ -96,11 +103,15 @@ export class TablaOrganizadoresComponent {
             minute: '2-digit'
           });
         } catch {
-          return valor;
+          return valor?.toString() || 'N/A';
         }
       
+      case 'porcentaje':
+        const numero = parseFloat(valor);
+        return isNaN(numero) ? 'N/A' : `${numero.toFixed(2)}%`;
+      
       default:
-        return valor;
+        return valor?.toString() || 'N/A';
     }
   }
 

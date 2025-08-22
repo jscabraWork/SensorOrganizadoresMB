@@ -1,19 +1,10 @@
 <div class="detalle-container">
-  <!-- Loading State -->
-  <div *ngIf="cargando" class="loading-container">
-    <div class="spinner-overlay">
-      <div class="spinner"></div>
-    </div>
-  </div>
 
   <!-- Content -->
-  <div *ngIf="!cargando && !error && detalle" class="content-container">
+  <div *ngIf="!error" class="content-container">
     
     <!-- Título -->
-    <div class="page-header">
-      <h2 class="page-title">INFORMACIÓN DETALLADA</h2>
-      <div class="title-line"></div>
-    </div>
+    <app-titulo titulo="INFORMACIÓN DETALLADA"></app-titulo>
     
     <!-- Filtro Simple -->
     <div class="filtro-simple">
@@ -29,106 +20,18 @@
     </div>
 
     <!-- Tabla de Detalle -->
-    <div class="table-container">
-      <h3>Detalle de Ventas</h3>
-      
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th class="expand-column">Detalles</th>
-              <th>Tarifa</th>
-              <th>Localidad</th>
-              <th>Precio</th>
-              <th>Vendidos</th>
-              <th>Reservados</th>
-              <th>En Proceso</th>
-              <th>Total</th>
-              <th>Ocupación</th>
-              <th>Total Recaudado</th>
-            </tr>
-          </thead>
-          <tbody>
-            <ng-container *ngFor="let item of detalle; let i = index">
-              <tr class="main-row" [class.expanded]="isFilaExpandida(i)">
-                <td class="expand-column">
-                  <button 
-                    class="expand-button" 
-                    (click)="toggleFilaExpandida(i)"
-                    [class.active]="isFilaExpandida(i)">
-                    <span class="expand-icon">{{ isFilaExpandida(i) ? '−' : '+' }}</span>
-                  </button>
-                </td>
-                <td>{{ item.tarifa }}</td>
-                <td>{{ item.localidad }}</td>
-                <td>{{ item.precioTotal | currency:'COP':'symbol':'1.0-0' }}</td>
-                <td class="text-center">{{ item.vendidos }}</td>
-                <td class="text-center">{{ item.reservados }}</td>
-                <td class="text-center">{{ item.proceso }}</td>
-                <td class="text-center">{{ item.totalTickets }}</td>
-                <td class="text-center">{{ item.porcentajeOcupacion | number:'1.1-2' }}%</td>
-                <td class="text-right">{{ item.totalRecaudado | currency:'COP':'symbol':'1.0-0' }}</td>
-              </tr>
-              <tr *ngIf="isFilaExpandida(i)" class="expanded-row">
-                <td colspan="10" class="expanded-content">
-                  <div class="detalle-expandido">
-                    <div class="detalle-grid">
-                      <div class="detalle-item">
-                        <div class="detalle-label">Total Recaudado</div>
-                        <div class="detalle-value">{{ item.totalRecaudado | currency:'COP':'symbol':'1.0-0' }}</div>
-                      </div>
-                      
-                      <!-- Estados -->
-                      <div class="detalle-item">
-                        <div class="detalle-label">Disponibles</div>
-                        <div class="detalle-value">{{ item.disponibles }}</div>
-                      </div>
-                      
-                      <div class="detalle-item">
-                        <div class="detalle-label">Vendidos</div>
-                        <div class="detalle-value">{{ item.vendidos }}</div>
-                      </div>
-                      
-                      <div class="detalle-item">
-                        <div class="detalle-label">Reservados</div>
-                        <div class="detalle-value">{{ item.reservados }}</div>
-                      </div>
-                      
-                      <div class="detalle-item">
-                        <div class="detalle-label">En Proceso</div>
-                        <div class="detalle-value">{{ item.proceso }}</div>
-                      </div>
-                      
-                      <!-- Utilizados al final -->
-                      <div class="detalle-item">
-                        <div class="detalle-label">Utilizados</div>
-                        <div class="detalle-value">{{ item.utilizados }}</div>
-                      </div>
-                      
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </ng-container>
-          </tbody>
-          <tfoot *ngIf="detalle.length > 0">
-            <tr class="totals-row">
-              <td colspan="4"><strong>TOTALES</strong></td>
-              <td class="text-center"><strong>{{ getTotalVendidos }}</strong></td>
-              <td class="text-center"><strong>{{ getTotalReservados }}</strong></td>
-              <td class="text-center"><strong>{{ getTotalEnProceso }}</strong></td>
-              <td class="text-center"><strong>{{ getTotalTickets }}</strong></td>
-              <td class="text-center"><strong>{{ getPromedioOcupacion | number:'1.1-2' }}%</strong></td>
-              <td class="text-right"><strong>{{ getTotalRecaudado | currency:'COP':'symbol':'1.0-0' }}</strong></td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-      
-      <div *ngIf="detalle.length === 0" class="no-data">
-        No hay datos disponibles para los filtros seleccionados
-      </div>
-    </div>
+    <app-tabla-organizadores
+      [datos]="detalle"
+      [columnas]="columnasTabla"
+      [expandible]="true"
+      [datosExpandidos]="obtenerDatosExpandidos"
+      [cargando]="cargando"
+      [sinDatosMensaje]="'No hay datos disponibles para los filtros seleccionados'"
+      [titulo]="'Detalle de Ventas'"
+      [mostrarPieTabla]="detalle.length > 0"
+      [pieTabla]="totalesTabla"
+      (filaExpandida)="onFilaExpandida($event)">
+    </app-tabla-organizadores>
 
     <!-- Resumen con Submenu -->
     <div *ngIf="resumen" class="resumen-container">
@@ -230,4 +133,11 @@
 
     </div>
   </div>
+
+  <!-- Estado de error -->
+  <app-error 
+    *ngIf="error"
+    [mensaje]="error"
+    (reintentar)="cargarDatos()">
+  </app-error>
 </div>

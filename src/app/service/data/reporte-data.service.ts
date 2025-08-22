@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { API_URL_REPORTE } from '../../app.constants';
+import { API_URL_PROMOTORES, API_URL_PUNTOS_FISICOS, API_URL_REPORTE } from '../../app.constants';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Evento } from '../../models/evento.model';
@@ -12,6 +12,11 @@ export class ReporteDataService {
   baseEndpoint: string = API_URL_REPORTE + '/organizadores';
 
   endpointEventos: string = API_URL_REPORTE + '/eventos';
+
+  endpointPromotores: string = API_URL_PROMOTORES + '/reporte';
+
+  endpointTaquilla: string = API_URL_PUNTOS_FISICOS + '/reporte';
+
 
   constructor(private http: HttpClient) { }
 
@@ -113,5 +118,38 @@ export class ReporteDataService {
       responseType: 'blob'
     });
   }
+
+  // Obtiene las alcancias por evento y estado
+  getAlcanciasByEventoAndEstado(eventoId: number, estado?: number): Observable<any> {
+    let params = '';
+    if (estado !== undefined && estado !== null) {
+      params = `?estado=${estado}`;
+    }
+    return this.http.get<any>(`${this.baseEndpoint}/alcancias/${eventoId}${params}`);
+  }
+
+  // Obtiene las ventas de todos los promotores del evento
+  getVentasPromotorByEventoId(eventoId: number): Observable<any> {
+    return this.http.get<any>(`${this.endpointPromotores}/${eventoId}`);
+  }
+
+  // Obtiene las ventas por evento y promotor
+  getVentasByEventoIdAndPromotor(eventoId: number, numeroDocumento: string): Observable<any> {
+    return this.http.get<any>(`${this.endpointPromotores}/${eventoId}/promotor/${numeroDocumento}`);
+  }
+
+  // Obtiene las ventas de todos los puntos físicos (taquilla) del evento
+  getVentasTaquillaByEventoId(eventoId: number): Observable<any> {
+    return this.http.get<any>(`${this.endpointTaquilla}/${eventoId}`);
+  }
+
+  // Obtiene las ventas por evento y punto físico (taquilla)
+  getVentasByEventoIdAndTaquilla(eventoId: number, numeroDocumento: string): Observable<any> {
+    return this.http.get<any>(`${this.endpointTaquilla}/${eventoId}/taquilla/${numeroDocumento}`);
+  }
+
+
+
+  
 
 }

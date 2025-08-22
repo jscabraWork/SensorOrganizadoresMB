@@ -1,4 +1,4 @@
-import { Ticket } from "../../../../models/ticket.model";
+import { Ticket } from "../ticket.model";
 
 export interface Historial {
   ordenId: number;

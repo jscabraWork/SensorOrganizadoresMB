@@ -1,0 +1,13 @@
+<div class="error-container" [ngClass]="getClaseTipo()">
+  <div class="error-content">
+    <div class="error-icon">{{ icono }}</div>
+    <div class="error-message">{{ mensaje }}</div>
+    <button 
+      *ngIf="mostrarBotonReintentar"
+      type="button" 
+      class="btn-retry" 
+      (click)="onReintentar()">
+      {{ textoBoton }}
+    </button>
+  </div>
+</div>

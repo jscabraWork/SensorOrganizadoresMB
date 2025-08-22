@@ -1,40 +1,5 @@
 @use '../../../../../styles/variables' as v;
 
-// Título de página
-.page-header {
-  margin-bottom: v.$spacer-4;
-  
-  .header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: v.$spacer-4;
-    flex-wrap: wrap;
-  }
-  
-  .title-section {
-    flex: 1;
-    
-    .page-title {
-      font-family: v.$font-primary;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: v.$color-negro;
-      margin: 0 0 v.$spacer-2 0;
-      letter-spacing: 0.5px;
-    }
-    
-    .title-line {
-      width: 100%;
-      height: 3px;
-      background: v.$color-primario;
-      border-radius: 2px;
-    }
-  }
-  .actions-section {
-    flex-shrink: 0;
-  }
-}
 
 // Botón de Excel
 .btn-excel {
@@ -138,62 +103,6 @@
   }
 }
 
-// Título de sección
-.titulo-seccion {
-  margin: 0 0 v.$spacer-4 0;
-  padding: 24px;
-  background: v.$color-negro;
-  color: v.$color-primario;
-  font-size: 1.4rem;
-  font-weight: 700;
-  border-radius: 20px 20px 0 0;
-  position: relative;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: v.$color-primario;
-    border-radius: 20px 20px 0 0;
-  }
-}
-
-// Estilos para contenido expandido
-.detalle-expandido {
-  padding: 20px 24px;
-  background: v.$color-gris-muy-light;
-}
-
-.detalle-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px 24px;
-}
-
-.detalle-item {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(v.$color-gris-light, 0.3);
-  
-  .detalle-label {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: v.$color-negro;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-  }
-  
-  .detalle-value {
-    font-size: 1rem;
-    color: v.$color-negro-soft;
-  }
-}
-
 // Estilos para la sección de tickets
 .tickets-section {
   margin-top: v.$spacer-4;
@@ -265,33 +174,6 @@
   }
 }
 
-.error-container {
-  padding: 20px;
-  text-align: center;
-  
-  .error-message {
-    color: v.$color-error;
-    margin-bottom: 15px;
-    font-size: 1.1rem;
-  }
-  
-  .btn-retry {
-    padding: v.$spacer-2 v.$spacer-4;
-    background: v.$color-primario;
-    color: v.$color-negro;
-    border: none;
-    border-radius: v.$border-radius;
-    font-family: v.$font-primary;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    
-    &:hover {
-      background: v.$color-primario-dark;
-      transform: translateY(-1px);
-    }
-  }
-}
 
 // Responsive design
 @media (max-width: 768px) {
@@ -301,34 +183,8 @@
     gap: v.$spacer-2;
   }
 
-  .page-header {
-    .header-content {
-      flex-direction: column;
-      align-items: stretch;
-      gap: v.$spacer-3;
-    }
-    
-    .actions-section {
-      align-self: center;
-    }
-    
-    .btn-excel {
-      padding: v.$spacer-2;
-      font-size: 0.85rem;
-      
-      .excel-icon {
-        width: 18px;
-        height: 18px;
-      }
-    }
-  }
 
   .filtros-grid {
-    grid-template-columns: 1fr;
-    gap: v.$spacer-2;
-  }
-  
-  .detalle-grid {
     grid-template-columns: 1fr;
     gap: v.$spacer-2;
   }
@@ -354,22 +210,6 @@
     gap: v.$spacer-1;
   }
 
-  .page-header {
-    .btn-excel {
-      padding: v.$spacer-1 v.$spacer-2;
-      font-size: 0.8rem;
-      gap: 6px;
-      
-      .excel-icon {
-        width: 16px;
-        height: 16px;
-      }
-      
-      .btn-text {
-        font-size: 0.8rem;
-      }
-    }
-  }
   
   .filtros-container {
     padding: v.$spacer-2;

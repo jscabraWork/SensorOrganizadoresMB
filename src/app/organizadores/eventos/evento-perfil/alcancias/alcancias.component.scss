@@ -1,0 +1,105 @@
+@use '../../../../../styles/variables' as v;
+
+.alcancias-container {
+  padding: 20px;
+  max-width: 100%;
+  min-height: 100vh;
+}
+
+// Estadísticas
+.estadisticas-container {
+  margin-top: v.$spacer-4;
+}
+
+.estadisticas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: v.$spacer-2;
+}
+
+.estadistica-card {
+  background-color: v.$color-gris-muy-light;
+  border-radius: v.$border-radius-xl;
+  padding: v.$spacer-2;
+  text-align: center;
+  
+  .estadistica-titulo {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: v.$color-negro-soft;
+    margin-bottom: v.$spacer-1;
+    text-transform: uppercase;
+  }
+  
+  .estadistica-valor {
+    font-size: 1rem;
+    font-weight: 700;
+    color: v.$color-negro;
+  }
+  
+  &.highlight {
+    background-color: v.$color-success;
+    
+    .estadistica-titulo, .estadistica-valor {
+      color: v.$color-blanco;
+    }
+  }
+  
+  &.negative {
+    background-color: v.$color-error;
+    
+    .estadistica-titulo, .estadistica-valor {
+      color: v.$color-blanco;
+    }
+  }
+  
+  &.primary {
+    background-color: v.$color-primario;
+    
+    .estadistica-titulo, .estadistica-valor {
+      color: v.$color-negro;
+    }
+  }
+}
+
+// Estilos para badges de estado
+.estado-badge {
+  display: inline-block;
+  padding: v.$spacer-1 v.$spacer-2;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  
+  &.estado-pagada {
+    background-color: v.$color-success;
+    color: v.$color-blanco;
+  }
+  
+  &.estado-activa {
+    background-color: v.$color-primario;
+    color: v.$color-negro;
+  }
+  
+  &.estado-devuelta {
+    background-color: v.$color-error;
+    color: v.$color-blanco;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .alcancias-container {
+    padding: 10px;
+  }
+  
+  .estadisticas-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+  
+  .estado-badge {
+    font-size: 0.7rem;
+    padding: 2px v.$spacer-1;
+  }
+}
