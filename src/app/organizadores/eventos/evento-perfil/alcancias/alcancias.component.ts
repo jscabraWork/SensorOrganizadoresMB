@@ -46,6 +46,7 @@ export class AlcanciasComponent extends BaseComponent implements OnInit {
     { key: 'creationDate', label: 'Fecha Apertura', tipo: 'fecha' },
     { key: 'estadoTexto', label: 'Estado' },
     { key: 'localidad', label: 'Localidad' },
+    { key: 'tickets.length', label: 'Cantidad' },
     { key: 'precioTotal', label: 'Precio Total', tipo: 'moneda', alineacion: 'right' },
     { key: 'precioParcialPagado', label: 'Parcial Pagado', tipo: 'moneda', alineacion: 'right' },
     { key: 'porcentajePagado', label: 'Porcentaje Pagado', tipo: 'porcentaje', alineacion: 'center' },
