@@ -1,4 +1,132 @@
-<div class="home-organizador">
-  <h1>Dashboard del Organizador</h1>
-  <p>Bienvenido al panel de control para organizadores.</p>
-</div>
+<section class="home-organizador">
+  <!-- Loading spinner -->
+  <div *ngIf="cargando" class="spinner-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Header con título -->
+  <div class="title-container">
+    <div class="tittle">
+      <p>BIENVENIDO {{ nombreOrganizador.toUpperCase() }}</p>
+      <hr class="linea">
+    </div>
+  </div>
+
+  <!-- Filtros de fecha -->
+  <div class="filtros-container">
+    <div class="filtros-row">
+      <div class="inputs">
+        <label class="label">Fecha Inicio:</label>
+        <input 
+          type="date" 
+          class="input" 
+          [(ngModel)]="fechaInicio"
+          placeholder="Fecha inicio"
+        />
+      </div>
+      
+      <div class="inputs">
+        <label class="label">Fecha Fin:</label>
+        <input 
+          type="date" 
+          class="input" 
+          [(ngModel)]="fechaFin"
+          placeholder="Fecha fin"
+        />
+      </div>
+      
+      <div class="btn-container">
+        <button class="button-primary" (click)="aplicarFiltros()">Aplicar</button>
+        <button class="button-secondary" (click)="limpiarFiltros()">Limpiar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="dashboard-content" *ngIf="!cargando">
+    
+    <!-- Pills de Datos Financieros Arriba -->
+    <div class="estadisticas-section">
+      <app-estadisticas-cards 
+        [estadisticas]="estadisticasPills" 
+        [cargando]="cargando">
+      </app-estadisticas-cards>
+    </div>
+
+    <!-- Cards Principales Abajo -->
+    <div class="cards-section">
+      <div class="cards-grid">
+        
+        <!-- Card Recaudación - Ancho Completo -->
+        <div class="estadistica-card recaudacion-card">
+          <h4 class="card-title">RECAUDACIÓN POR EVENTOS</h4>
+          <div class="card-content">
+            <div class="total-section">
+              <div class="total-valor">{{ formatearMoneda(resumenData?.dineroTotalRecaudado || 0) }}</div>
+              <div class="total-label">Total Recaudado</div>
+            </div>
+            <div class="detalles-section">
+              <div class="detalle-item">
+                <span class="label">Máximo Recaudado:</span>
+                <span class="value">{{ formatearMoneda(resumenData?.maximoRecaudadoEvento || 0) }}</span>
+              </div>
+              <div class="detalle-item">
+                <span class="label">Mínimo Recaudado:</span>
+                <span class="value">{{ formatearMoneda(resumenData?.minimoRecaudadoEvento || 0) }}</span>
+              </div>
+              <div class="detalle-item">
+                <span class="label">Promedio Recaudado:</span>
+                <span class="value">{{ formatearMoneda(resumenData?.promedioDineroRecaudado || 0) }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Eventos Próximos -->
+        <div class="eventos-card">
+          <h4 class="card-title">PRÓXIMOS EVENTOS</h4>
+          <div *ngIf="eventosProximos.length === 0" class="no-events">
+            Sin eventos próximos
+          </div>
+          <div class="eventos-compactos" *ngIf="eventosProximos.length > 0">
+            <div class="evento-item" *ngFor="let evento of eventosProximos.slice(0, 4)">
+              <div class="evento-imagen-mini">
+                <img [src]="getImagenPrincipal(evento) || 'assets/img/default-event.jpg'" [alt]="evento.nombre">
+              </div>
+              <div class="evento-info-mini">
+                <div class="evento-nombre">{{ evento.nombre }}</div>
+                <div class="evento-fecha">{{ formatFecha(evento.fechaApertura) }}</div>
+                <button class="btn-ver-mini" (click)="verEvento(evento)">Ver</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Card Asistentes - Debajo de Eventos -->
+        <div class="estadistica-card asistentes-card">
+          <h4 class="card-title">ASISTENTES POR EVENTOS</h4>
+          <div class="card-content">
+            <div class="total-section">
+              <div class="total-valor">{{ resumenData?.totalAsistentes || 0 | number }}</div>
+              <div class="total-label">Total Asistentes</div>
+            </div>
+            <div class="detalles-section">
+              <div class="detalle-item">
+                <span class="label">Máximo de Asistentes:</span>
+                <span class="value">{{ resumenData?.maximoAsistentesEvento || 0 | number }}</span>
+              </div>
+              <div class="detalle-item">
+                <span class="label">Mínimo de Asistentes:</span>
+                <span class="value">{{ resumenData?.minimoAsistentesEvento || 0 | number }}</span>
+              </div>
+              <div class="detalle-item">
+                <span class="label">Promedio de Asistentes:</span>
+                <span class="value">{{ resumenData?.promedioAsistentes || 0 | number }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

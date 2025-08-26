@@ -1,0 +1,243 @@
+@use '../../../styles/variables' as v;
+@use '../../../styles/mixins' as m;
+
+.home-organizador {
+  padding: v.$spacer-2;
+  
+  .filtros-container {
+    background-color: v.$color-gris-muy-light;
+    border-radius: v.$border-radius;
+    padding: v.$spacer-2;
+    margin-bottom: v.$spacer-3;
+    
+    .filtros-row {
+      display: flex;
+      align-items: end;
+      gap: v.$spacer-2;
+      flex-wrap: wrap;
+      
+      @include m.for-mobile-down {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  }
+
+  .dashboard-content {
+    .estadisticas-section {
+      margin-bottom: v.$spacer-4;
+    }
+    
+    // Cards principales abajo
+    .cards-section {
+      .cards-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: auto auto;
+        gap: v.$spacer-3;
+        grid-template-areas: 
+          "recaudacion eventos"
+          "asistentes eventos";
+        
+        @include m.for-tablet-down {
+          grid-template-columns: 1fr;
+          grid-template-areas: 
+            "recaudacion"
+            "asistentes"
+            "eventos";
+        }
+        
+        .recaudacion-card {
+          grid-area: recaudacion;
+        }
+        
+        .eventos-card {
+          grid-area: eventos;
+          height: auto; // Permite que se extienda a la altura total
+          background: none !important;
+          box-shadow: none !important;
+          border: none !important;
+        }
+        
+        .asistentes-card {
+          grid-area: asistentes;
+        }
+      }
+
+      .estadistica-card, .eventos-card {
+        @include m.card(1);
+        padding: v.$spacer-3;
+        height: 240px;
+        display: flex;
+        flex-direction: column;
+        
+        .card-title {
+          font-family: v.$font-secondary;
+          font-size: 0.9rem;
+          font-weight: 700;
+          color: v.$color-base;
+          margin: 0 0 v.$spacer-3;
+          text-align: center;
+          border-bottom: 1px solid v.$color-gris-light;
+          padding-bottom: v.$spacer-2;
+        }
+
+        .card-content {
+          display: flex;
+          flex: 1;
+          gap: v.$spacer-3;
+          
+          .total-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: v.$color-gris-muy-light;
+            border-radius: v.$border-radius;
+            padding: v.$spacer-2;
+            border: 2px solid v.$color-primario;
+            
+            .total-valor {
+              font-family: v.$font-secondary;
+              font-size: 1.4rem;
+              font-weight: 800;
+              color: v.$color-base;
+              margin-bottom: v.$spacer-1;
+              text-align: center;
+              line-height: 1.1;
+            }
+            
+            .total-label {
+              font-size: 0.8rem;
+              font-weight: 600;
+              color: v.$color-base;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+            }
+          }
+          
+          .detalles-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            
+            .detalle-item {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: v.$spacer-1 0;
+              border-bottom: 1px solid v.$color-gris-muy-light;
+              
+              &:last-child {
+                border-bottom: none;
+              }
+              
+              .label {
+                font-size: .9rem;
+                font-weight: 500;
+                color: v.$color-gris;
+              }
+              
+              .value {
+                font-size: .9rem;
+                font-weight: 600;
+                color: v.$color-base;
+                text-align: right;
+              }
+            }
+          }
+        }
+      }
+
+      .eventos-card {
+        .no-events {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: v.$color-gris;
+          font-size: 0.9rem;
+          font-style: italic;
+        }
+        
+        .eventos-compactos {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: v.$spacer-2;
+          overflow-y: auto;
+          
+          .evento-item {
+            display: flex;
+            gap: v.$spacer-2;
+            padding: v.$spacer-2;
+            border-radius: v.$border-radius;
+            background-color: v.$color-gris-muy-light;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+            
+            &:hover {
+              background-color: v.$color-gris-light;
+              border-color: v.$color-primario;
+            }
+            
+            .evento-imagen-mini {
+              width: 80px;
+              height: 60px;
+              border-radius: v.$border-radius;
+              overflow: hidden;
+              flex-shrink: 0;
+              
+              img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+              }
+            }
+            
+            .evento-info-mini {
+              flex: 1;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              min-width: 0;
+              
+              .evento-nombre {
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: v.$color-base;
+                @include m.text-truncate;
+                margin-bottom: 4px;
+              }
+              
+              .evento-fecha {
+                font-size: 0.7rem;
+                color: v.$color-gris;
+                margin-bottom: 6px;
+              }
+              
+              .btn-ver-mini {
+                font-size: 0.7rem;
+                background-color: v.$color-primario;
+                color: v.$color-negro;
+                border: none;
+                padding: 4px 8px;
+                border-radius: v.$border-radius;
+                cursor: pointer;
+                font-weight: 600;
+                align-self: flex-start;
+                transition: all 0.2s ease;
+                
+                &:hover {
+                  background-color: v.$color-primario-dark;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

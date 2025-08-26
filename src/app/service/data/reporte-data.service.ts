@@ -36,6 +36,28 @@ export class ReporteDataService {
     return this.http.get<Evento>(`${this.endpointEventos}/${eventoId}`);
   }
 
+  getReseumenGeneralOrganizador(
+    numeroDocumento: string,
+    fechaInicio?: string,
+    fechaFin?: string,
+  ): Observable<any> {
+    let params = '';
+    const queryParams: string[] = [];
+
+    if (fechaInicio) {
+      queryParams.push(`fechaInicio=${encodeURIComponent(fechaInicio)}`);
+    }
+    if (fechaFin) {
+      queryParams.push(`fechaFin=${encodeURIComponent(fechaFin)}`);
+    }
+
+    if (queryParams.length > 0) {
+      params = '?' + queryParams.join('&');
+    }
+
+    return this.http.get<any>(`${this.baseEndpoint}/resumen-organizador/${numeroDocumento}`);
+  }
+
   //Obtiene el resumen completo del evento con gráficas
   getResumenEvento(eventoId: string, anio?: number, mes?: number): Observable<any> {
     let params = '';
@@ -147,8 +169,6 @@ export class ReporteDataService {
   getVentasByEventoIdAndTaquilla(eventoId: number, numeroDocumento: string): Observable<any> {
     return this.http.get<any>(`${this.endpointTaquilla}/${eventoId}/taquilla/${numeroDocumento}`);
   }
-
-
 
   
 
