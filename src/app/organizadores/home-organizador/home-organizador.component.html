@@ -95,7 +95,9 @@
               </div>
               <div class="evento-info-mini">
                 <div class="evento-nombre">{{ evento.nombre }}</div>
-                <div class="evento-fecha">{{ formatFecha(evento.fechaApertura) }}</div>
+                <div class="evento-data">Fecha: {{ formatFecha(evento.fechaApertura) }}</div>
+                <div class="evento-data">Ciudad: {{ evento.venue.ciudad.nombre }}</div>
+                <div class="evento-data">Lugar: {{ evento.venue.nombre }}</div>
                 <button class="btn-ver-mini" (click)="verEvento(evento)">Ver</button>
               </div>
             </div>

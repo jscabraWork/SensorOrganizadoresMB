@@ -184,8 +184,8 @@
             }
             
             .evento-imagen-mini {
-              width: 80px;
-              height: 60px;
+              width: 100px;
+              height: 80px;
               border-radius: v.$border-radius;
               overflow: hidden;
               flex-shrink: 0;
@@ -212,23 +212,24 @@
                 margin-bottom: 4px;
               }
               
-              .evento-fecha {
+              .evento-data {
                 font-size: 0.7rem;
-                color: v.$color-gris;
+                color: v.$color-gris-dark;
                 margin-bottom: 6px;
               }
               
               .btn-ver-mini {
-                font-size: 0.7rem;
+                font-size: 0.9rem;
                 background-color: v.$color-primario;
                 color: v.$color-negro;
                 border: none;
-                padding: 4px 8px;
+                padding: 6px 16px;
                 border-radius: v.$border-radius;
                 cursor: pointer;
                 font-weight: 600;
                 align-self: flex-start;
                 transition: all 0.2s ease;
+                align-self: flex-end;
                 
                 &:hover {
                   background-color: v.$color-primario-dark;
