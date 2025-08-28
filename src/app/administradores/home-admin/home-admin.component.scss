@@ -1,0 +1,407 @@
+@use '../../../styles/variables' as v;
+@use '../../../styles/mixins' as m;
+
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: v.$spacer-4;
+  
+  @include m.for-tablet-down {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: v.$spacer-3;
+  }
+  
+  .page-title {
+    color: v.$color-base;
+    font-family: v.$font-primary;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+  }
+}
+
+.filtros-container {
+  display: flex;
+  gap: v.$spacer-3;
+  flex-wrap: wrap;
+  
+  @include m.for-tablet-down {
+    width: 100%;
+    justify-content: flex-start;
+    gap: v.$spacer-2;
+  }
+  
+  .filtro-item {
+    display: flex;
+    flex-direction: column;
+    gap: v.$spacer-2;
+    
+    label {
+      font-size: 0.875rem;
+      color: v.$color-gris;
+      font-weight: 500;
+    }
+    
+    select {
+      padding: v.$spacer-1 v.$spacer-3;
+      border: 1px solid v.$color-gris-light;
+      border-radius: v.$border-radius;
+      font-size: 0.875rem;
+      color: v.$color-base;
+      background: v.$color-blanco;
+      min-width: 120px;
+      
+      @include m.for-tablet-down {
+        min-width: 110px;
+      }
+      
+      &:focus {
+        outline: none;
+        border-color: v.$color-primario;
+        box-shadow: 0 0 0 2px rgba(255, 217, 0, 0.2);
+      }
+      
+      &:disabled {
+        background: v.$color-gris-muy-light;
+        color: v.$color-gris;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+.pills-section {
+  margin-bottom: v.$spacer-4;
+}
+
+// Resumen Compacto
+.resumen-compacto {
+  margin-bottom: v.$spacer-4;
+}
+
+.total-principal {
+  text-align: center;
+  padding: v.$spacer-3;
+  background: v.$color-gris-muy-light;
+  border-radius: v.$border-radius;
+  margin-bottom: v.$spacer-3;
+  
+  h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: v.$color-negro;
+  }
+  
+  span {
+    font-size: 0.875rem;
+    color: v.$color-gris;
+  }
+}
+
+.grid-compacto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: v.$spacer-2;
+  
+  @include m.for-tablet-down {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .item {
+    background: v.$color-blanco;
+    border: 1px solid v.$color-gris-light;
+    border-radius: v.$border-radius;
+    padding: v.$spacer-2;
+    text-align: center;
+    
+    .label {
+      display: block;
+      font-size: 0.75rem;
+      color: v.$color-gris;
+      margin-bottom: 2px;
+    }
+    
+    .value {
+      display: block;
+      font-size: 1rem;
+      font-weight: 600;
+      color: v.$color-base;
+    }
+    
+    &.total {
+      background: rgba(255, 217, 0, 0.1);
+      border-color: v.$color-primario;
+      
+      .value {
+        color: v.$color-negro;
+      }
+    }
+  }
+}
+
+// Información Detallada Compacta
+.info-detallada-compacta {
+  margin-bottom: v.$spacer-4;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: v.$spacer-3;
+  
+  @include m.for-tablet-down {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grupo-compacto {
+  background: v.$color-blanco;
+  border: 1px solid v.$color-gris-light;
+  border-radius: v.$border-radius;
+  overflow: hidden;
+  
+  h3 {
+    margin: 0;
+    padding: v.$spacer-2 v.$spacer-3;
+    background: v.$color-gris-muy-light;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: v.$color-base;
+    border-bottom: 1px solid v.$color-gris-light;
+  }
+}
+
+.lista-compacta {
+  padding: v.$spacer-2;
+}
+
+.item-linea {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: v.$spacer-1 0;
+  border-bottom: 1px solid rgba(192, 192, 192, 0.3);
+  
+  &:last-child:not(.total-linea) {
+    border-bottom: none;
+  }
+  
+  .label {
+    font-size: 0.75rem;
+    color: v.$color-gris;
+    font-weight: 500;
+  }
+  
+  .valor {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: v.$color-base;
+    
+    &.negativo {
+      color: v.$color-error;
+    }
+  }
+  
+  &.total-linea {
+    border-top: 1px solid v.$color-gris-light;
+    border-bottom: none;
+    margin-top: v.$spacer-1;
+    padding-top: v.$spacer-2;
+    background: rgba(255, 217, 0, 0.05);
+    margin-left: -#{v.$spacer-2};
+    margin-right: -#{v.$spacer-2};
+    padding-left: v.$spacer-2;
+    padding-right: v.$spacer-2;
+    
+    .label {
+      font-weight: 600;
+      color: v.$color-base;
+    }
+    
+    .valor {
+      font-weight: 700;
+      
+      &.negativo {
+        color: v.$color-error;
+      }
+    }
+  }
+}
+
+// Charts Section
+.charts-section {
+  margin-bottom: v.$spacer-5;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: v.$spacer-4;
+  
+  @include m.for-tablet-down {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chart-card {
+  background: v.$color-blanco;
+  border: 1px solid v.$color-gris-light;
+  border-radius: v.$border-radius;
+  overflow: hidden;
+  
+  .chart-header {
+    background: v.$color-gris-muy-light;
+    padding: v.$spacer-3;
+    border-bottom: 1px solid v.$color-gris-light;
+    
+    h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 600;
+      color: v.$color-base;
+    }
+    
+    .chart-subtitle {
+      margin: v.$spacer-1 0 0 0;
+      font-size: 0.75rem;
+      color: v.$color-gris;
+      font-weight: 500;
+    }
+  }
+  
+  .chart-container {
+    padding: v.$spacer-3;
+    height: 300px;
+    position: relative;
+  }
+}
+
+.table-section {
+  h3 {
+    color: v.$color-base;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  &.compact h3 {
+    font-size: 1rem;
+    margin-bottom: v.$spacer-2;
+  }
+}
+
+.table-container {
+  overflow-x: auto;
+  border: 1px solid v.$color-gris-light;
+  border-radius: v.$border-radius;
+}
+
+.localities-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  
+  &.compact {
+    font-size: 0.8rem;
+  }
+  
+  thead {
+    background: v.$color-gris-muy-light;
+    
+    th {
+      padding: v.$spacer-2;
+      text-align: left;
+      font-weight: 600;
+      color: v.$color-base;
+      border-bottom: 1px solid v.$color-gris-light;
+      white-space: nowrap;
+      
+      &.center {
+        text-align: center;
+      }
+      
+      .compact & {
+        padding: v.$spacer-1 v.$spacer-2;
+      }
+    }
+  }
+  
+  tbody {
+    tr {
+      &:nth-child(even) {
+        background: v.$color-gris-muy-light;
+      }
+      
+      &:hover {
+        background: rgba(255, 217, 0, 0.1);
+      }
+    }
+    
+    td {
+      padding: v.$spacer-2;
+      border-bottom: 1px solid v.$color-gris-light;
+      
+      .compact & {
+        padding: v.$spacer-1 v.$spacer-2;
+      }
+      
+      &.center {
+        text-align: center;
+      }
+      
+      &.locality-name {
+        font-weight: 600;
+        color: v.$color-base;
+        max-width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      
+      &.event-name {
+        color: v.$color-gris;
+        max-width: 120px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 0.75rem;
+      }
+      
+      &.sold {
+        color: v.$color-success;
+        font-weight: 600;
+      }
+      
+      &.percentage {
+        .percentage-badge {
+          display: inline-block;
+          padding: 2px 6px;
+          border-radius: 12px;
+          font-size: 0.7rem;
+          font-weight: 600;
+          background: v.$color-gris-light;
+          color: v.$color-base;
+        }
+        
+        &.low .percentage-badge {
+          background: rgba(220, 53, 69, 0.1);
+          color: v.$color-error;
+        }
+        
+        &.medium .percentage-badge {
+          background: rgba(255, 193, 7, 0.2);
+          color: v.$color-warning;
+        }
+        
+        &.high .percentage-badge {
+          background: rgba(40, 167, 69, 0.1);
+          color: v.$color-success;
+        }
+      }
+    }
+  }
+}
+
+.table-container.compact {
+  font-size: 0.8rem;
+}

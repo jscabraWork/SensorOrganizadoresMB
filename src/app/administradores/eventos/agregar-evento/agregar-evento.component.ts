@@ -165,16 +165,7 @@ export class AgregarEventoComponent {
     return new Promise((resolve, reject) => {
       this.organizadorService.getOrganizadores().subscribe({
         next: (organizadores: Organizador[]) => {
-          this.organizadores = organizadores;
-
-          if (this.modoEdicion && this.evento.organizadores && this.evento.organizadores.length > 0) {
-            this.organizadoresEvento = this.evento.organizadores.map(orgEvento => {
-              const orgEncontrado = this.organizadores.find(o => o.numeroDocumento === orgEvento.numeroDocumento);
-              return orgEncontrado ? orgEncontrado : orgEvento;
-            });
-
-            this.evento.organizadores = [...this.organizadoresEvento];
-          }
+          this.organizadores = organizadores;        
           this.loading = false;
           resolve();
         },
@@ -206,8 +197,7 @@ export class AgregarEventoComponent {
   }
 
   quitarLista(index: number): void {
-    this.organizadoresEvento.splice(index, 1);
-    this.evento.organizadores = [...this.organizadoresEvento];
+    this.evento.organizadores.splice(index, 1);
   }
 
   cargarTipos(): Promise<void> {

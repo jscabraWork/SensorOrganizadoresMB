@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { HardcodedAutheticationService } from '../service/hardcoded-authetication.service';
 import { AuthService } from '../service/security/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-logout',
-  imports: [],
+  standalone: true,
+  imports: [RouterModule],
   templateUrl: './logout.component.html',
   styleUrl: './logout.component.scss'
 })
@@ -20,7 +21,6 @@ export class LogoutComponent implements OnInit {
   ngOnInit(): void {
     this.autentication.logout();
     this.auth.logout();
-    this.router.navigate(['/logout']);
   }
 
 }

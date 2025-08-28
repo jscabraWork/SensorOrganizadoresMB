@@ -1,1 +1,259 @@
-<p>home-admin works!</p>
+<div class="admin-home-container">
+  <!-- Loading State -->
+  <div *ngIf="cargando" class="loading-container">
+    <div class="spinner-overlay">
+      <div class="spinner"></div>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !cargando" class="error-container">
+    <p class="error-message">{{ error }}</p>
+    <button class="button-primary" (click)="cargarDatos()">Reintentar</button>
+  </div>
+
+  <!-- Content -->
+  <div *ngIf="!cargando && !error" class="content-container">
+    
+    <!-- Header with Title and Filters -->
+    <div class="header-section">
+      <h1 class="page-title">Panel Administrativo</h1>
+      
+      <div class="filtros-container">
+        <div class="filtro-item">
+          <label>Evento:</label>
+          <select [(ngModel)]="eventoSeleccionado" (change)="actualizarFiltros()">
+            <option [value]="undefined">Todos los eventos</option>
+            <option [value]="evento.id" *ngFor="let evento of eventos">{{ evento.nombre }}</option>
+          </select>
+        </div>
+        
+        <div class="filtro-item">
+          <label>Año:</label>
+          <select [(ngModel)]="anioSeleccionado" (change)="actualizarFiltros()">
+            <option [value]="undefined">Todos</option>
+            <option [value]="anio" *ngFor="let anio of getAnios()">{{ anio }}</option>
+          </select>
+        </div>
+        
+        <div class="filtro-item">
+          <label>Mes:</label>
+          <select [(ngModel)]="mesSeleccionado" (change)="actualizarFiltros()">
+            <option [value]="undefined">Todos</option>
+            <option [value]="mes.valor" *ngFor="let mes of getMeses()">{{ mes.nombre }}</option>
+          </select>
+        </div>
+        
+        <div class="filtro-item">
+          <label>Día:</label>
+          <select [(ngModel)]="diaSeleccionado" (change)="actualizarFiltros()" [disabled]="!mesSeleccionado">
+            <option [value]="undefined">Todos</option>
+            <option [value]="dia" *ngFor="let dia of getDiasDelMes()">{{ dia }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resumen Compacto -->
+    <div class="resumen-compacto" *ngIf="resumen">
+      <!-- Total Principal -->
+      <div class="total-principal">
+        <h2>{{ resumen.totalRecaudado | currency:'COP':'symbol':'1.0-0' }}</h2>
+        <span>Total Recaudado • Hoy: {{ resumen.totalRecaudadoHoy | currency:'COP':'symbol':'1.0-0' }}</span>
+      </div>
+
+      <!-- Grid Compacto -->
+      <div class="grid-compacto">
+        <div class="item">
+          <span class="label">Asistentes</span>
+          <span class="value">{{ resumen.totalAsistentes }}</span>
+        </div>
+        <div class="item">
+          <span class="label">Transacciones</span>
+          <span class="value">{{ resumen.totalTransacciones }}</span>
+        </div>
+        <div class="item">
+          <span class="label">Compradores</span>
+          <span class="value">{{ resumen.totalCompradores }}</span>
+        </div>
+        <div class="item">
+          <span class="label">Cortesías</span>
+          <span class="value">{{ resumen.totalCortesias }}</span>
+        </div>
+        <div class="item">
+          <span class="label">Taquilla</span>
+          <span class="value">{{ resumen.totalPagosTaquilla }}</span>
+        </div>
+        <div class="item">
+          <span class="label">PSE</span>
+          <span class="value">{{ resumen.totalPagosPse }}</span>
+        </div>
+        <div class="item">
+          <span class="label">Tarjeta</span>
+          <span class="value">{{ resumen.totalPagosTc }}</span>
+        </div>
+        <div class="item total">
+          <span class="label">Ingresos Netos</span>
+          <span class="value">{{ (resumen.totalRecaudado - resumen.totalComisionAlltickets - resumen.totalRetefuente - resumen.totalReteica - resumen.totalParafiscal - resumen.totalComisionPasarela - resumen.totalComision3ds) | currency:'COP':'symbol':'1.0-0' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Información Detallada Compacta -->
+    <div class="info-detallada-compacta" *ngIf="resumen">
+      
+      <!-- Desglose Financiero -->
+      <div class="grupo-compacto">
+        <h3>Desglose Financiero</h3>
+        <div class="lista-compacta">
+          <div class="item-linea">
+            <span class="label">Precio Base:</span>
+            <span class="valor">{{ resumen.totalPrecioRecaudado | currency:'COP':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="item-linea">
+            <span class="label">Servicios:</span>
+            <span class="valor">{{ resumen.totalServicioRecaudado | currency:'COP':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="item-linea">
+            <span class="label">IVA:</span>
+            <span class="valor">{{ resumen.totalIvaRecaudado | currency:'COP':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="item-linea total-linea">
+            <span class="label">Total Recaudado:</span>
+            <span class="valor">{{ resumen.totalRecaudado | currency:'COP':'symbol':'1.0-0' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Deducciones -->
+      <div class="grupo-compacto">
+        <h3>Deducciones</h3>
+        <div class="lista-compacta">
+          <div class="item-linea">
+            <span class="label">Comisión de Ventas:</span>
+            <span class="valor negativo">{{ resumen.totalComisionAlltickets | currency:'COP':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="item-linea">
+            <span class="label">Comisión Pasarela:</span>
+            <span class="valor negativo">{{ resumen.totalComisionPasarela | currency:'COP':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="item-linea">
+            <span class="label">Comisión 3DS:</span>
+            <span class="valor negativo">{{ resumen.totalComision3ds | currency:'COP':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="item-linea">
+            <span class="label">Retefuente:</span>
+            <span class="valor negativo">{{ resumen.totalRetefuente | currency:'COP':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="item-linea">
+            <span class="label">ReteICA:</span>
+            <span class="valor negativo">{{ resumen.totalReteica | currency:'COP':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="item-linea">
+            <span class="label">Parafiscal:</span>
+            <span class="valor negativo">{{ resumen.totalParafiscal | currency:'COP':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="item-linea total-linea">
+            <span class="label">Total Deducciones:</span>
+            <span class="valor negativo">{{ (resumen.totalComisionAlltickets + resumen.totalComisionPasarela + resumen.totalComision3ds + resumen.totalRetefuente + resumen.totalReteica + resumen.totalParafiscal) | currency:'COP':'symbol':'1.0-0' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Métodos de Pago -->
+      <div class="grupo-compacto">
+        <h3>Métodos de Pago</h3>
+        <div class="lista-compacta">
+          <div class="item-linea">
+            <span class="label">Taquilla:</span>
+            <span class="valor">{{ resumen.totalPagosTaquilla }} pagos ({{ resumen.totalAsistentesTaquilla }} asistentes)</span>
+          </div>
+          <div class="item-linea">
+            <span class="label">PSE:</span>
+            <span class="valor">{{ resumen.totalPagosPse }} pagos ({{ resumen.totalAsistentesPse }} asistentes)</span>
+          </div>
+          <div class="item-linea">
+            <span class="label">Tarjeta:</span>
+            <span class="valor">{{ resumen.totalPagosTc }} pagos ({{ resumen.totalAsistentesTc }} asistentes)</span>
+          </div>
+          <div class="item-linea total-linea">
+            <span class="label">Total Pagos:</span>
+            <span class="valor">{{ (resumen.totalPagosTaquilla + resumen.totalPagosPse + resumen.totalPagosTc) }} pagos</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-section" *ngIf="graficaCircular.length > 0 || graficaLineas.length > 0">
+      
+      <!-- Charts Grid -->
+      <div class="charts-grid">
+        
+        <!-- Doughnut Chart -->
+        <div class="chart-card" *ngIf="graficaCircular.length > 0">
+          <div class="chart-header">
+            <h3>Métodos de Pago</h3>
+            <p class="chart-subtitle">Total: {{ getTotalRecaudadoTRX() | currency:'COP':'symbol':'1.0-0' }}</p>
+          </div>
+          <div class="chart-container">
+            <canvas baseChart 
+              [data]="doughnutChartData" 
+              [options]="chartOptions.doughnut" 
+              type="doughnut">
+            </canvas>
+          </div>
+        </div>
+
+        <!-- Line Chart -->
+        <div class="chart-card" *ngIf="graficaLineas.length > 0">
+          <div class="chart-header">
+            <h3>Evolución de Ventas</h3>
+            <p class="chart-subtitle">Recaudado vs Asistentes</p>
+          </div>
+          <div class="chart-container">
+            <canvas baseChart 
+              [data]="lineChartData" 
+              [options]="chartOptions.line" 
+              type="line">
+            </canvas>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- Localities Table (Compact) -->
+    <div class="table-section compact" *ngIf="localidades.length > 0">
+      <h3>Localidades por Acabar</h3>
+      <div class="table-container compact">
+        <table class="localities-table compact">
+          <thead>
+            <tr>
+              <th>Localidad</th>
+              <th>Evento</th>
+              <th class="center">Total</th>
+              <th class="center">Vendidos</th>
+              <th class="center">% Vendido</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let localidad of localidades">
+              <td class="locality-name">{{ localidad.nombre }}</td>
+              <td class="event-name">{{ localidad.evento }}</td>
+              <td class="center">{{ localidad.totalTickets }}</td>
+              <td class="center sold">{{ localidad.ticketsVendidos }}</td>
+              <td class="center percentage" [class.low]="localidad.porcentajeVendido < 30" 
+                                          [class.medium]="localidad.porcentajeVendido >= 30 && localidad.porcentajeVendido < 70"
+                                          [class.high]="localidad.porcentajeVendido >= 70">
+                <span class="percentage-badge">{{ localidad.porcentajeVendido }}%</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>

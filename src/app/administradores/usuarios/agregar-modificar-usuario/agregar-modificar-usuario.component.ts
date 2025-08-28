@@ -13,6 +13,7 @@ import { MensajeComponent } from '../../../mensaje/mensaje.component';
 import { Observable } from 'rxjs';
 import { StorageService } from '../../../service/data/storage.service';
 import { HardcodedAutheticationService } from '../../../service/hardcoded-authetication.service';
+import { Md5 } from 'ts-md5';
 
 @Component({
   selector: 'app-agregar-modificar-usuario',
@@ -32,6 +33,7 @@ export class AgregarModificarUsuarioComponent {
   loading = false
   modoEdicion = false
   nombre: string
+  contrasenaBackup:string = "";
   rolAgregar: Role | null = null
   tiposDocumento: TipoDocumento[] = []
   roles: Role[] = []
@@ -113,6 +115,8 @@ export class AgregarModificarUsuarioComponent {
           roles: []
         };
 
+        this.contrasenaBackup = this.usuario.contrasena;
+
         if (response.tipoDocumento) {
           const tipoDocEncontrado = this.tiposDocumento.find(
             t => t.id === response.tipoDocumento.id
@@ -155,6 +159,12 @@ export class AgregarModificarUsuarioComponent {
       ...rol,
       nombre: rol.nombre.startsWith('ROLE_') ? rol.nombre : `ROLE_${rol.nombre}`
     }));
+
+    if(this.contrasenaBackup!= this.usuario.contrasena){
+        var md5 = new Md5()
+        var contra = this.usuario.contrasena;
+        this.usuario.contrasena = md5.appendStr(contra).end().toString();
+      }
 
     this.loading = true;
 

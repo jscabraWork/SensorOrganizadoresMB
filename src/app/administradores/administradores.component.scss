@@ -33,7 +33,7 @@
 
 // CSS puro: cuando sidebar tiene clase collapsed
 @media (min-width: #{v.$mobile-breakpoint + 1px}) {
-  .promotores-layout:has(.sidebar.collapsed) .main-content {
+  .admin-layout:has(.sidebar.collapsed) .main-content {
     margin-left: v.$sidebar-width-collapsed;
     padding-top: #{v.$topbar-height + 32px};
   }

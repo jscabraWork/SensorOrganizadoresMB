@@ -1,3 +1,4 @@
+import { Dia } from './../../models/dia.model';
 import { Injectable } from '@angular/core';
 import { API_URL_PROMOTORES, API_URL_PUNTOS_FISICOS, API_URL_REPORTE } from '../../app.constants';
 import { HttpClient } from '@angular/common/http';
@@ -17,6 +18,7 @@ export class ReporteDataService {
 
   endpointTaquilla: string = API_URL_PUNTOS_FISICOS + '/reporte';
 
+  endpointAdmin: string = API_URL_REPORTE + '/admin';
 
   constructor(private http: HttpClient) { }
 
@@ -170,6 +172,31 @@ export class ReporteDataService {
     return this.http.get<any>(`${this.endpointTaquilla}/${eventoId}/taquilla/${numeroDocumento}`);
   }
 
-  
+
+  getResumenAdmin(eventoId?: string, anio?: number, mes?: number, dia?: number): Observable<any> {
+    let params = '';
+    const queryParams: string[] = [];
+
+    if (eventoId !== undefined) {
+      queryParams.push(`pEventoId=${eventoId}`);
+    }
+    
+    if (anio !== undefined) {
+      queryParams.push(`pAnio=${anio}`);
+    }
+    
+    if (mes !== undefined && mes !== -1) {
+      queryParams.push(`pMes=${mes}`);
+    }
+
+    if (dia !== undefined && dia !== -1) {
+      queryParams.push(`pDia=${dia}`);
+    }
+
+    if (queryParams.length > 0) {
+      params = '?' + queryParams.join('&');
+    }
+    return this.http.get<any>(`${this.endpointAdmin}/resumen${params}`);
+  }
 
 }

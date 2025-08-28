@@ -24,6 +24,7 @@
         <tr class="header-tr">
           <th class="">ID</th>
           <th class="">Nombre</th>
+          <th class="">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -57,7 +58,7 @@
                       <td class="d-none-687">{{ venue?.nombre }}</td>
                       <td class="d-none-687">
                         <div class="btn-ver">
-                          <button>Ver</button>
+                          <button (click)="editarVenue(venue)">Editar</button>
                         </div>
                       </td>
                     </tr>

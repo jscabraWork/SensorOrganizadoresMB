@@ -161,7 +161,7 @@
           <div *ngIf="modoEdicion" class="inputs lista-organizadores">
             <label class="label-orga">Organizadores del Evento</label>
               <div class="lista-orgas">
-                <p *ngFor="let organizador of organizadores; let i = index">
+                <p *ngFor="let organizador of evento.organizadores; let i = index">
                   {{organizador.nombre}}
                   <span class="eliminar-lista" (click)="quitarLista(i)">X</span>
                 </p>
