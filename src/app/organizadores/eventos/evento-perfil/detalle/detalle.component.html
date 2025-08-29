@@ -12,7 +12,7 @@
         class="form-select"
         [(ngModel)]="localidadIdSeleccionada"
         (change)="actualizarFiltros(localidadIdSeleccionada)">
-        <option [value]="undefined">Todas las localidades</option>
+        <option [value]="-1">Todas las localidades</option>
         <option *ngFor="let localidad of opcionesLocalidades" [value]="localidad.value">
           {{ localidad.label }}
         </option>

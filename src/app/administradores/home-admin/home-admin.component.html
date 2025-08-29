@@ -23,7 +23,7 @@
         <div class="filtro-item">
           <label>Evento:</label>
           <select [(ngModel)]="eventoSeleccionado" (change)="actualizarFiltros()">
-            <option [value]="undefined">Todos los eventos</option>
+            <option [value]="-1">Todos los eventos</option>
             <option [value]="evento.id" *ngFor="let evento of eventos">{{ evento.nombre }}</option>
           </select>
         </div>
@@ -31,7 +31,7 @@
         <div class="filtro-item">
           <label>Año:</label>
           <select [(ngModel)]="anioSeleccionado" (change)="actualizarFiltros()">
-            <option [value]="undefined">Todos</option>
+            <option [value]="-1">Todos</option>
             <option [value]="anio" *ngFor="let anio of getAnios()">{{ anio }}</option>
           </select>
         </div>
@@ -39,7 +39,7 @@
         <div class="filtro-item">
           <label>Mes:</label>
           <select [(ngModel)]="mesSeleccionado" (change)="actualizarFiltros()">
-            <option [value]="undefined">Todos</option>
+            <option [value]="-1">Todos</option>
             <option [value]="mes.valor" *ngFor="let mes of getMeses()">{{ mes.nombre }}</option>
           </select>
         </div>
@@ -47,7 +47,7 @@
         <div class="filtro-item">
           <label>Día:</label>
           <select [(ngModel)]="diaSeleccionado" (change)="actualizarFiltros()" [disabled]="!mesSeleccionado">
-            <option [value]="undefined">Todos</option>
+            <option [value]="-1">Todos</option>
             <option [value]="dia" *ngFor="let dia of getDiasDelMes()">{{ dia }}</option>
           </select>
         </div>
@@ -66,7 +66,7 @@
       <div class="grid-compacto">
         <div class="item">
           <span class="label">Asistentes</span>
-          <span class="value">{{ resumen.totalAsistentes }}</span>
+          <span class="value">{{ resumen.totalAsistentes +resumen.totalCortesias }}</span>
         </div>
         <div class="item">
           <span class="label">Transacciones</span>

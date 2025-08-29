@@ -51,8 +51,8 @@ export class ResumenComponent extends BaseComponent implements OnInit {
   evento: any = null;
 
   // Filtros opcionales
-  anioSeleccionado?: number;
-  mesSeleccionado?: number;
+  anioSeleccionado?: number = -1;
+  mesSeleccionado?: number = -1;
 
   // Chart.js - Gráficas
   doughnutChartData: ChartData<'doughnut'> = {
@@ -102,6 +102,8 @@ export class ResumenComponent extends BaseComponent implements OnInit {
           this.graficaCircular = response.graficaCircular;
           this.graficaLineas = response.graficaLineas;
           this.evento = response.evento;
+
+          console.log(response)
           
           // Actualizar gráficas
           this.actualizarGraficaCircular();
@@ -155,7 +157,7 @@ export class ResumenComponent extends BaseComponent implements OnInit {
     }).format(value as number);
 
     this.lineChartData = {
-      labels: this.graficaLineas.map(item => item.nombrePeriodo),
+      labels: this.graficaLineas.map(item => item.periodo),
       datasets: [
         {
           data: this.graficaLineas.map(item => item.recaudado),

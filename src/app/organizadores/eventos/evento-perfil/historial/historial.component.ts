@@ -27,7 +27,7 @@ export class HistorialComponent extends BaseComponent implements OnInit {
   
   // Filtros
   statusSeleccionado: number = 34; // 34 = aprobado por defecto
-  tipoSeleccionado?: number | null;
+  tipoSeleccionado: number = 0; // 0 = todos los tipos
   fechaInicio?: string;
   fechaFin?: string;
   
@@ -44,7 +44,7 @@ export class HistorialComponent extends BaseComponent implements OnInit {
   
   // Opciones para tipos según especificación
   opcionesTipo = [
-    { value: null, label: 'Todos los tipos' },
+    { value: 0, label: 'Todos los tipos' },
     { value: 1, label: 'Compra Estándar' },
     { value: 3, label: 'Creación de Alcancía' },
     { value: 4, label: 'Aporte a alcancía' },
@@ -102,6 +102,7 @@ export class HistorialComponent extends BaseComponent implements OnInit {
 
   cargarHistorial() {
     this.iniciarCarga();
+    
     
     this.reporteService.getHistorialTransaccionesEvento(
       parseInt(this.idEvento),

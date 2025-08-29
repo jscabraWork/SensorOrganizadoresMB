@@ -10,6 +10,7 @@ export class Evento {
     artistas: string
     nombre: string
     recomendaciones: string
+    descripcion: string
     video: string
     fechaApertura: Date
     estado: number

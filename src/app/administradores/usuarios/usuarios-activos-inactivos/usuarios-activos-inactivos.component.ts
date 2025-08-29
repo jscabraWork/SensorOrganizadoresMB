@@ -92,13 +92,13 @@ export class UsuariosActivosInactivosComponent {
 
   private readonly roleMap = {
     'clientes': 2,
-    'organizadores': 3,
-    'coordinadores': 4,
+    'organizadores': 5,
+    'coordinadores': 3,
     'analistas': 15,
     'promotores': 6,
-    'auditores': 16,
+    'auditores': 9,
     'administradores': 1,
-    'puntosfisicos': 8,
+    'puntosfisicos': 7,
 
   };
 

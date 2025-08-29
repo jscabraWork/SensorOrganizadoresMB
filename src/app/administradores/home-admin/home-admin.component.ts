@@ -65,7 +65,7 @@ export class HomeAdminComponent extends BaseComponent implements OnInit {
     line: { responsive: true, maintainAspectRatio: false } as ChartConfiguration<'line'>['options']
   };
   
-  eventoSeleccionado?: string;
+  eventoSeleccionado?: number;
   anioSeleccionado?:number = new Date().getFullYear();
   mesSeleccionado?: number;
   diaSeleccionado?: number;
@@ -91,6 +91,8 @@ export class HomeAdminComponent extends BaseComponent implements OnInit {
   
   private cargarResumen(): void {
     this.iniciarCarga();
+
+    
     
     this.reporteService.getResumenAdmin(this.eventoSeleccionado, this.anioSeleccionado, this.mesSeleccionado, this.diaSeleccionado)
       .subscribe({
@@ -180,7 +182,7 @@ export class HomeAdminComponent extends BaseComponent implements OnInit {
     }).format(value as number);
 
     this.lineChartData = {
-      labels: this.graficaLineas.map(item => item.nombrePeriodo),
+      labels: this.graficaLineas.map(item => item.periodo),
       datasets: [
         {
           data: this.graficaLineas.map(item => item.recaudado),

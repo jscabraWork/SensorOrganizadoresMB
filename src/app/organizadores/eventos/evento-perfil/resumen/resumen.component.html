@@ -184,7 +184,7 @@
             <div class="filtro-item">
               <label>Año:</label>
               <select [(ngModel)]="anioSeleccionado" (change)="actualizarFiltros(anioSeleccionado, mesSeleccionado)">
-                <option [value]="undefined">Todos</option>
+                <option [value]="-1">Todos</option>
                 <option [value]="2024">2024</option>
                 <option [value]="2025">2025</option>
               </select>
@@ -193,7 +193,7 @@
             <div class="filtro-item">
               <label>Mes:</label>
               <select [(ngModel)]="mesSeleccionado" (change)="actualizarFiltros(anioSeleccionado, mesSeleccionado)">
-                <option [value]="undefined">Todos</option>
+                <option [value]="-1">Todos</option>
                 <option [value]="1">Enero</option>
                 <option [value]="2">Febrero</option>
                 <option [value]="3">Marzo</option>
