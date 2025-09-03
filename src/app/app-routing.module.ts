@@ -272,6 +272,25 @@ export const routes: Routes = [
             component: TransaccionesComponent
           },
 
+          {
+          path: 'ordenes',
+          component: OrdenesComponent,
+          children: [
+          {
+            path: '',
+            redirectTo: 'orden',
+            pathMatch: 'full'
+          },
+          {
+            path: 'orden',
+            component: NumeroOrdenClienteComponent
+          },
+          {
+            path: 'cliente',
+            component: OrdenesClienteComponent
+          }
+        ]
+        },
 
 
 

@@ -22,7 +22,7 @@
               <th class="">Fecha</th>
               <th class="">Tipo</th>
               <th class="">Valor Orden</th>
-              <th class="">Cliente</th>
+              <th class="">Evento</th>
             </tr>
           </thead>
           <tbody>
@@ -57,7 +57,7 @@
                 <td>{{orden?.creationDate | date:'medium' }}</td>
                 <td class="d-none-687">{{checktipo(orden?.tipo)}}</td>
                 <td class="d-none-687">{{orden?.valorOrden | currency: 'COP '  }}</td>
-                <td class="d-none-687">{{orden?.cliente?.nombre}}</td>
+                <td class="d-none-687">{{orden?.eventoNombre}}</td>
               </tr>
               <tr *ngIf="selectedTicketItem === i">
                 <td colspan="100%" class="expandir-table">
@@ -87,8 +87,8 @@
                           <span class="valor">{{orden?.valorOrden | currency: 'COP '  }}</span>
                         </div>
                         <div class="detalle-item">
-                          <p class="etiqueta">Nombre:</p>
-                          <span class="valor">{{orden?.cliente?.nombre}}</span>
+                          <p class="etiqueta">Evento:</p>
+                          <span class="valor">{{orden?.eventoNombre}}</span>
                         </div>
                     </div>
                   </div>

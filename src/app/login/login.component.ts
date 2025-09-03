@@ -20,19 +20,22 @@ import { Observable } from 'rxjs';
 })
 export class LoginComponent implements OnInit {
 
-  usuario: Usuario
-  errorMessage = "Invalid credentials"
-  invalidLogin = false;
-  constructor(
-    private router: Router,
-    private autentication: HardcodedAutheticationService,
-    private dialog: MatDialog,
-    private auth: AuthService
-  ) { }
+  usuario:Usuario
+  errorMessage="Invalid credentials";
+  invalidLogin =false;
+  showPassword = false; // Nueva propiedad para controlar la visibilidad de la contraseña
+  constructor( private router: Router,
+    public autenticacion: HardcodedAutheticationService,
+    public dialog: MatDialog,
+    private auth:AuthService) {
+
+  }
 
   ngOnInit(): void {
-    this.usuario = new Usuario()
+   this.usuario = new Usuario();
   }
+
+
 
   handleLogin(){
 
@@ -44,48 +47,51 @@ export class LoginComponent implements OnInit {
     }
 
     this.auth.logout();
+
     this.usuario.usuario=this.usuario.usuario.trim();
+
     this.auth.login(this.usuario).subscribe({next:response => {
 
-          this.auth.guardarUsuario(response.access_token);
-          this.auth.guardarToken(response.access_token);
-          let usuario = this.auth.usuario;
-    },
-      error:error => {
-          if(error.status == 400){
-            //alert('Usuario o clave incorrectos');
-            this.openMensaje('Usuario o clave incorrectos');
-          }
-      this.usuario = new Usuario();
-      this.invalidLogin =true;
+      this.auth.guardarUsuario(response.access_token);
+      this.auth.guardarToken(response.access_token);
+
+      let usuario = this.auth.usuario;
+  },
+  error:error => {
+    if(error.status == 400){
+      //alert('Usuario o clave incorrectos');
+      this.openMensaje('Usuario o clave incorrectos');
+    }
+    this.usuario = new Usuario();
+    this.invalidLogin =true;
   }}
   );
 
 
   }
 
-  openMensaje(mensajeT:string, confirmacion: boolean = false): Observable<Boolean> {
-          let screenWidth = screen.width;
-          let anchoDialog:string = '500px';
-          let anchomax:string = '80vw';
-          let altoDialog:string = '250';
-          if(screenWidth<=600){
-            anchoDialog = '100%';
-            anchomax = '100%';
-            altoDialog = 'auto';
-          }
-          const dialogRef = this.dialog.open(MensajeComponent, {
-            width: anchoDialog,
-            maxWidth: anchomax,
-            height: altoDialog,
-            data:{
-              mensaje:mensajeT,
-              mostrarBotones: confirmacion
-            }
-          });
-          return dialogRef.afterClosed();
-        }
+  openMensaje(mensajeT:string,openD?:string):void{
+    let screenWidth = screen.width;
+    let anchoDialog:string = '500px';
+    let anchomax:string = '80vw';
+    let altoDialog:string = '250';
+    if(screenWidth<=600){
+      anchoDialog = '100%';
+      anchomax = '100%';
+      altoDialog = 'auto';
+    }
+    const dialogRef = this.dialog.open(MensajeComponent, {
+      width: anchoDialog,
+      maxWidth: anchomax,
+      height: altoDialog,
+      data:{
+        mensaje:mensajeT
+      }
+    });
+  }
 
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
 }
-
 

@@ -90,7 +90,7 @@ toggleTicketItem(index: number) {
       checkEstado(estado){
     switch(estado){
       case 1:
-        return "Aceptada"
+        return "Aprobada"
         break;
       case 2:
         return "Rechazada"
@@ -114,13 +114,22 @@ toggleTicketItem(index: number) {
   checktipo(tipo){
     switch(tipo){
       case 1:
-        return "Ticket"
+        return "Compra estandar"
         break;
       case 2:
-        return "Ticket Completo(Palco)"
+        return "Adiciones"
         break;
       case 3:
-        return "Aporte"
+        return "Creación de alcancía"
+        break;
+      case 4:
+        return "Aporte a alcancía"
+        break;
+      case 5:
+        return "Traspaso"
+        break;
+      case 6:
+        return "Asignación"
         break;
     }
     return tipo
