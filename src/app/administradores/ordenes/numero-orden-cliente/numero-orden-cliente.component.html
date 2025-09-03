@@ -2,10 +2,10 @@
   <div class="spinner"></div>
 </div>
 <div class="container-margin">
-  <div class="container2">
-    <div class="titulo">Buscar Orden por No.</div>
-    <form class="container1" (ngSubmit)="buscarOrden()">
-      <input class="inputs" placeholder="Número de orden" name="idOrden" (keyup.enter)="buscarOrden()" [(ngModel)]="idOrden">
+  <div>
+    <div class="titulo">Buscar todas las ordenes por Número de Documento</div>
+    <form class="form-container" (ngSubmit)="buscarOrden()">
+      <input class="inputs" placeholder="Número de Orden" name="idOrden" (keyup.enter)="buscarOrden()" [(ngModel)]="idOrden">
       <button class="button-lupa" type="submit"></button>
     </form>
   </div>
@@ -34,8 +34,13 @@
                 <td>{{checktipo(orden?.tipo)}}</td>
               </tr>
               <tr class="body-td">
+                <td class="nombreColumna"><strong>Valor</strong></td>
+                <td>{{orden?.valorOrden | currency:'COP '}}</td>
+              </tr>
+
+              <tr class="body-td">
                 <td class="nombreColumna"><strong>Cliente</strong></td>
-                <td>Numero De Documento: {{orden?.cliente?.numeroDocumento}} - Nombre: {{orden?.cliente?.nombre}}</td>
+                <td>Numero De Documento: {{orden?.cliente?.numeroDocumento}} - Nombre: {{orden?.cliente?.nombre}} - Correo: {{orden?.cliente?.correo}} - Teléfono: {{orden?.cliente?.celular}}</td>
               </tr>
             </tbody>
           </table>
@@ -49,13 +54,13 @@
           <table class="tabla" id="temporada-table">
             <thead>
               <tr class="header-tr">
+                <th></th>
                 <th class="">ID</th>
                 <th class="">Número</th>
                 <th class="">Estado</th>
                 <th class="">Localidad</th>
                 <th class="">Precio</th>
                 <th class="">Cliente</th>
-                <th class="">Adicionales</th>
                 <th class="">Eliminar</th>
               </tr>
             </thead>
@@ -81,19 +86,17 @@
 
               <ng-container  *ngFor="let ticket of orden?.tickets let i=index">
                 <tr class="body-td">
-                  <td class="d-none-384">
+                  <td class="">
                     <button class="btn btn-sm" (click)="toggleTicketItem(i)">
-                      {{ selectedTicketItem === i ? '−' : '+' }}
-                    </button>
-                    {{tickets?.length-i}}
+                      {{ selectedTicketItem === i ? '−' : '+' }}</button>
                   </td>
-                  <td class="d-none-687">{{ticket?.id}}</td>
-                  <td class="d-none-384">{{checkEstadoTicket(ticket?.estado)}}</td>
-                  <td class="d-none-687">{{ticket?.localidad?.nombre}}</td>
-                  <td class="d-none-687">{{ticket?.tarifa?.precio | currency:'COP '}}</td>
-                  <td class="d-none-687">{{ticket?.cliente?.nombre}}</td>
-                  <td class="d-none-687"><button class="btn-sm">+</button></td>
-                  <td class="d-none-687">
+                  <td class="">{{ticket?.id}}</td>
+                  <td class="">{{ticket?.numero ? ticket?.numero : 'No numerado'}}</td>
+                  <td class="">{{checkEstadoTicket(ticket?.estado)}}</td>
+                  <td class="">{{localidad?.nombre}}</td>
+                  <td class="">{{ticket?.tarifa!=null ? ticket?.tarifa?.precio +ticket?.tarifa?.servicio+ticket?.tarifa?.iva : 'No asignado'}}</td>
+                  <td class="">{{ticket?.cliente?.nombre}} - {{ticket?.cliente?.numeroDocumento}}</td>
+                  <td class="">
                     <div class="btn-ver">
                       <button class="btn-eliminar" (click)="eliminarTicketDeOrden(ticket?.id)">Eliminar</button>
                     </div>
@@ -120,7 +123,7 @@
                         </div>
                         <div class="detalle-item">
                           <p class="etiqueta">Precio:</p>
-                          <span class="valor">{{ticket?.tarifa?.precio | currency:'COP '}}</span>
+                          <span class="valor">{{ticket?.tarifa?.precio +ticket?.tarifa?.servicio+ticket?.tarifa?.iva | currency:'COP '}}</span>
                         </div>
                         <div class="detalle-item">
                           <p class="etiqueta">Cliente:</p>
@@ -144,9 +147,9 @@
       </div>
     </div>
     <div>
-      <div class="titulo">Agregar numero de ticket a la orden</div>
-      <div class="container1">
-        <input placeholder="ID del ticket"
+      <div class="titulo">Agregar ticket a la orden</div>
+      <div class="form-container">
+        <input placeholder="ID del ticket a agregar"
         [(ngModel)]="idTicket"
         name="nuevoTicketId">
         <button class="button-ordenes" (click)="agregarTicket()">Agregar</button>
@@ -197,13 +200,13 @@
                     </button>
                     {{transaccion?.id}}
                   </td>
-                  <td class="d-none-687">{{transaccion?.creationDate | date}}</td>
-                  <td class="d-none-384">{{checkEstadoTransaccion(transaccion?.status)}}</td>
-                  <td class="d-none-687">{{checkMetodo(transaccion?.metodo)}}</td>
-                  <td class="d-none-687">{{transaccion?.idPersona}}</td>
-                  <td class="d-none-687">{{transaccion?.phone}}</td>
-                  <td class="d-none-687">{{transaccion?.email}}</td>
-                  <td class="d-none-687">{{transaccion?.amount}}</td>
+                  <td class="">{{transaccion?.creationDate | date}}</td>
+                  <td class="">{{checkEstadoTransaccion(transaccion?.status)}}</td>
+                  <td class="">{{transaccion?.metodoNombre}}</td>
+                  <td class="">{{transaccion?.idPersona}}</td>
+                  <td class="">{{transaccion?.phone}}</td>
+                  <td class="">{{transaccion?.email}}</td>
+                  <td class="">{{transaccion?.amount | currency:'COP '}}</td>
                 </tr>
                 <tr *ngIf="selectedTransaccionItem === i" >
                   <td colspan="100%" class="expandir-table">
@@ -250,7 +253,7 @@
         </div>
       </div>
       <div class="titulo">Cambiar estado de la orden</div>
-      <div class="container3">
+      <div class="form-container">
         <select placeholder="Estado actual de la orden" class="input-select-field-triangulo" [(ngModel)]="orden.estado">
           <option [ngValue]="orden.estado">Estado Actual de la orden: {{checkEstado(orden?.estado)}}</option>
           <option [ngValue]="6">Upgrade</option>
