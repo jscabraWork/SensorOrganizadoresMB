@@ -8,7 +8,7 @@
       <hr class="linea">
     </div>
     <div class="btn-agregar">
-      <button>Gestión de Ordenes de compra</button>
+      <button (click)="navegarAOrdenes()">Gestión de Ordenes de compra</button>
     </div>
   </div>
 
@@ -45,8 +45,8 @@
     <div class="table-container">
       <app-table
         [pageData]="transaccionesPage"
-        [headers]="['ID', 'Documento', 'Correo', 'Nombre', 'Teléfono', 'Monto', 'Estado', 'Método']"
-        [columnas]="['id', 'idPersona', 'email', 'fullName', 'phone', 'amount', 'statusNombre', 'metodoNombre']"
+        [headers]="['ID', 'Fecha', 'Documento', 'Correo', 'Nombre', 'Teléfono', 'Monto', 'Estado', 'Método']"
+        [columnas]="['id', 'creationDate', 'idPersona', 'email', 'fullName', 'phone', 'amount', 'statusNombre', 'metodoNombre']"
         [idField]="'id'"
         [expandableConfig]="expandableConfig"
         [cargando]="cargando"

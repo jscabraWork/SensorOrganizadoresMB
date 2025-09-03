@@ -120,11 +120,7 @@ onEnter: (valor: string) => this.buscarPorDocumento(valor)
     infoFields: [
       { label: 'ID Transacción', property: 'id' },
       { label: 'Número de Documento', property: 'idPersona' },
-      { label: 'Correo', property: 'correo' },
-      { label: 'Fecha Inicio', property: 'fechaInicio' },
-      { label: 'Fecha Fin', property: 'fechaFin' },
-      { label: 'Estado', property: 'estado' },
-      { label: 'Método', property: 'metodo' },
+      { label: 'Correo', property: 'email' },
       { label: 'Método Nombre', property: 'metodoNombre' }
     ],
     actionButtons: [],
@@ -166,6 +162,23 @@ onEnter: (valor: string) => this.buscarPorDocumento(valor)
     return fecha.toISOString().split('T')[0]; // Formato yyyy-MM-dd
   }
 
+  private formatearFechaCompleta(fecha: string | Date): string {
+    const fechaObj = typeof fecha === 'string' ? new Date(fecha) : fecha;
+    
+    if (isNaN(fechaObj.getTime())) {
+      return 'Sin definir';
+    }
+    
+    // Formato dd/MM/yyyy HH:mm
+    const dia = fechaObj.getDate().toString().padStart(2, '0');
+    const mes = (fechaObj.getMonth() + 1).toString().padStart(2, '0');
+    const año = fechaObj.getFullYear();
+    const horas = fechaObj.getHours().toString().padStart(2, '0');
+    const minutos = fechaObj.getMinutes().toString().padStart(2, '0');
+    
+    return `${dia}/${mes}/${año} ${horas}:${minutos}`;
+  }
+
   cargarTransacciones(): void {
     this.cargando = true;
     
@@ -194,7 +207,8 @@ onEnter: (valor: string) => this.buscarPorDocumento(valor)
             fullName: transaccion.fullName || 'Sin definir',
             phone: transaccion.phone || 'Sin definir',
             amount: transaccion.amount !== null && transaccion.amount !== undefined ? transaccion.amount : 'Sin definir',
-            metodoNombre: transaccion.metodoNombre || 'Sin definir'
+            metodoNombre: transaccion.metodoNombre || 'Sin definir',
+            creationDate: transaccion.creationDate ? this.formatearFechaCompleta(transaccion.creationDate) : 'Sin definir'
           })) || [],
           totalElements: response.total || 0,
           totalPages: response.totalPages || 0,
@@ -351,5 +365,9 @@ onEnter: (valor: string) => this.buscarPorDocumento(valor)
     this.sizePagina = tamaño;
     this.paginaActual = 0;
     this.cargarTransacciones();
+  }
+
+  navegarAOrdenes(): void {
+    this.router.navigate(['ordenes'], { relativeTo: this.route });
   }
 }
