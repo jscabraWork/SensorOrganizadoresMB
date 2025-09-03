@@ -2,12 +2,35 @@
   <div class="spinner"></div>
 </div>
 <div class="container-margin">
-  <div class="container2">
+  <div>
     <div class="titulo">Buscar todas las ordenes por Número de Documento</div>
-    <form class="container1" (ngSubmit)="buscarOrdenesPorClienteId()">
-      <input class="inputs" placeholder="Número de orden" name="idOrden" (keyup.enter)="buscarOrdenesPorClienteId()" [(ngModel)]="clienteId">
+    <form class="form-container" (ngSubmit)="buscarOrdenesPorClienteId()">
+      <input class="inputs" placeholder="Documento del cliente" name="idOrden" (keyup.enter)="buscarOrdenesPorClienteId()" [(ngModel)]="clienteId">
       <button class="button-lupa" type="submit"></button>
     </form>
+    
+    <!-- Datos del cliente -->
+    <div *ngIf="cliente" class="cliente-info">
+      <div class="titulo">Datos del Cliente</div>
+      <div class="cliente-datos">
+        <div class="detalle-item">
+          <p class="etiqueta">Documento:</p>
+          <span class="valor">{{cliente.numeroDocumento}}</span>
+        </div>
+        <div class="detalle-item">
+          <p class="etiqueta">Nombre:</p>
+          <span class="valor">{{cliente.nombre}}</span>
+        </div>
+        <div class="detalle-item">
+          <p class="etiqueta">Correo:</p>
+          <span class="valor">{{cliente.correo}}</span>
+        </div>
+        <div class="detalle-item">
+          <p class="etiqueta">Tipo Documento:</p>
+          <span class="valor">{{cliente.tipoDocumento}}</span>
+        </div>
+      </div>
+    </div>
   </div>
 <div>
   <div *ngIf="ordenesEncontradas">
@@ -47,17 +70,17 @@
 
             <ng-container  *ngFor="let orden of ordenes, let i=index">
               <tr class="body-td">
-                <td class="d-none-384">
+                <td>
                   <button class="btn btn-sm" (click)="toggleTicketItem(i)">
                     {{ selectedTicketItem === i ? '−' : '+' }}
                   </button>
                   {{orden?.id}}
                 </td>
-                <td class="d-none-687">{{checkEstado(orden?.estado)}}</td>
+                <td>{{checkEstado(orden?.estado)}}</td>
                 <td>{{orden?.creationDate | date:'medium' }}</td>
-                <td class="d-none-687">{{checktipo(orden?.tipo)}}</td>
-                <td class="d-none-687">{{orden?.valorOrden | currency: 'COP '  }}</td>
-                <td class="d-none-687">{{orden?.eventoNombre}}</td>
+                <td>{{checktipo(orden?.tipo)}}</td>
+                <td>{{orden?.valorOrden | currency: 'COP '  }}</td>
+                <td>{{orden?.eventoNombre}}</td>
               </tr>
               <tr *ngIf="selectedTicketItem === i">
                 <td colspan="100%" class="expandir-table">

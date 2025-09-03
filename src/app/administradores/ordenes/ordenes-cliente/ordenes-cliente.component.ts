@@ -7,6 +7,7 @@ import { OrdenDataService } from '../../../service/data/orden-data.service';
 import { Orden } from '../../../models/orden.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Cliente } from '../../../models/cliente.model';
 
 @Component({
   selector: 'app-ordenes-cliente',
@@ -27,6 +28,7 @@ export class OrdenesClienteComponent implements OnInit {
     ordenesEncontradas = false;
     orden:Orden
     ordenes: Orden[] = [];
+    cliente: Cliente;
 
 
   constructor(
@@ -55,6 +57,7 @@ toggleTicketItem(index: number) {
       next: (response) => {
         this.ordenesEncontradas = true;
         this.ordenes = response.ordenes
+        this.cliente = response.cliente;
         console.log(this.ordenes)
         this.cargando = false
       },
