@@ -36,7 +36,7 @@ export class MenuAdminComponent implements OnInit {
       { route: `/administradores/admin/${this.nombre}/usuarios`, icon: 'assets/images/vector/usuarios.png', label: 'Usuarios' },
       { route: `/administradores/admin/${this.nombre}/ciudades`, icon: 'assets/images/vector/ciudades.png', label: 'Ciudades' },
       { route: `/administradores/admin/${this.nombre}/transacciones`, icon: 'assets/images/vector/transacciones.png', label: 'Transacciones' },
-      { route: `/administradores/admin/${this.nombre}/ordenes`, icon: 'assets/images/vector/ordenes.png', label: 'Órdenes' },
+      { route: `/administradores/admin/${this.nombre}/ordenes`, icon: 'assets/images/vector/ordenes.svg', label: 'Órdenes' },
       { route: '', icon: 'assets/images/vector/alcancias.png', label: 'Alcancias' },
       { route: `/administradores/admin/${this.nombre}/promotores`, icon: 'assets/images/vector/promotor.svg', label: 'Promotores' },
       { route: `/administradores/admin/${this.nombre}/puntosfisicos`, icon: 'assets/images/vector/puntofisico.svg', label: 'Puntos Físicos' },

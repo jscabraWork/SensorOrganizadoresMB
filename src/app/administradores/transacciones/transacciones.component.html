@@ -10,4 +10,50 @@
     <div class="btn-agregar">
       <button>Gestión de Ordenes de compra</button>
     </div>
+  </div>
+
+  <!-- Filtros integrados -->
+  <div class="filtros-section">
+    <app-search-filter
+      [filters]="searchFilters"
+      (onBuscar)="buscarConFiltros()">
+    </app-search-filter>
+  </div>
+
+  <!-- Controles adicionales -->
+  <div class="controles-row">
+    <div class="size-control">
+      <label for="sizePagina">Transacciones por página:</label>
+      <select id="sizePagina" 
+              class="select-input" 
+              [value]="sizePagina"
+              (change)="cambiarsizePagina($event)">
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </div>
+    <div class="limpiar-control">
+      <button class="btn-limpiar" (click)="limpiarFiltros()">
+        Limpiar Filtros
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabla de transacciones -->
+  <div class="tabla-section">
+    <div class="table-container">
+      <app-table
+        [pageData]="transaccionesPage"
+        [headers]="['ID', 'Documento', 'Correo', 'Nombre', 'Teléfono', 'Monto', 'Estado', 'Método']"
+        [columnas]="['id', 'idPersona', 'email', 'fullName', 'phone', 'amount', 'statusNombre', 'metodoNombre']"
+        [idField]="'id'"
+        [expandableConfig]="expandableConfig"
+        [cargando]="cargando"
+        [mensajeVacio]="'No hay transacciones disponibles'"
+        (paginaCambiada)="cambiarPagina($event)"
+        (selectedIndexChange)="onExpandRow($event >= 0 ? transaccionesPage?.content[$event] : null)">
+      </app-table>
+    </div>
+  </div>
 </div>

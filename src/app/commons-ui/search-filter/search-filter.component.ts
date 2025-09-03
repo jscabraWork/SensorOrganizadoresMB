@@ -2,12 +2,20 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+export interface FilterOption {
+  value: any;
+  label: string;
+}
+
 export interface Filter {
   key: string;
-  value: string;
+  value: any;
+  type?: 'text' | 'date' | 'select' | 'number';
   placeholder?: string;
   label?: string;
-  onEnter?: (value: string) => void
+  options?: FilterOption[];
+  onEnter?: (value: string) => void;
+  onChange?: (value: any) => void;
 }
 
 @Component({
@@ -25,12 +33,21 @@ export class SearchFilterComponent {
   @Output() onBuscar = new EventEmitter<{[key: string]: string}>();
 
   buscar() {
-    const filtersObject: {[key: string]: string} = {};
+    const filtersObject: {[key: string]: any} = {};
     this.filters.forEach(filter => {
-      if (filter.value.trim()) {
-        filtersObject[filter.key] = filter.value.trim();
+      if (filter.value !== undefined && filter.value !== null && filter.value !== '') {
+        const value = typeof filter.value === 'string' ? filter.value.trim() : filter.value;
+        if (value !== '') {
+          filtersObject[filter.key] = value;
+        }
       }
     });
     this.onBuscar.emit(filtersObject);
+  }
+
+  onFilterChange(filter: Filter) {
+    if (filter.onChange) {
+      filter.onChange(filter.value);
+    }
   }
 }
