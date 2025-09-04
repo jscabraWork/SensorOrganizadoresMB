@@ -232,10 +232,13 @@ export class UsuariosActivosInactivosComponent {
     this.cargando = true;
 
     this.usuarioService.buscarUsuarioPorDocumento(this.roleId, documento.trim()).subscribe({
-      next: (usuario: Usuario) => {
-        if (usuario && usuario.numeroDocumento) {
+      next: (usuario) => {
+
+        const usuarioData = usuario.usuario;
+
+        if (usuarioData && usuarioData.numeroDocumento) {
           this.usuariosPage = {
-            content: [usuario],
+            content: [usuarioData],
             totalElements: 1,
             totalPages: 1,
             size: 1,
