@@ -1,0 +1,148 @@
+@use '../../../../../../styles/variables' as v;
+
+// Estilos heredados del componente original
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid v.$color-primario;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.textoSinInfo {
+   color: v.$color-negro;
+  font-family: v.$font-primary;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.textoInfo {
+  color: v.$color-blanco;
+  font-family: v.$font-primary;
+  font-size: 15px;
+  margin: 8px 0;
+}
+
+.textoTitulo {
+  color: v.$color-primario;
+  font-family: v.$font-primary;
+  font-size: 18px;
+  margin: 10px 0;
+  font-weight: 600;
+}
+
+.eventoFondo {
+  border: 1px solid v.$color-primario;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.margin-top-3 {
+  margin-top: 20px;
+}
+
+// Container styles
+.alcancias-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.alcancias-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -15px;
+}
+
+.alcancia-col {
+  flex: 0 0 100%;
+  max-width: 100%;
+  padding: 0 15px;
+}
+
+.rounded {
+  border-radius: 8px;
+}
+
+.alcancia-layout {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.alcancia-image {
+  flex-shrink: 0;
+  
+  img {
+    width: 120px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    
+    @media (max-width: 768px) {
+      width: 100px;
+      height: 80px;
+    }
+  }
+}
+
+.alcancia-info {
+  flex: 1;
+}
+
+// Barra de progreso
+.progress-container {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 20px;
+  background-color: v.$color-gris-dark;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid v.$color-primario;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, v.$color-primario 0%, v.$color-primario-light 100%);
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  color: v.$color-primario;
+  font-weight: bold;
+  font-size: 14px;
+  min-width: 40px;
+}

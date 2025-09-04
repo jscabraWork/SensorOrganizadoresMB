@@ -1,0 +1,34 @@
+<div class="spinner-overlay" *ngIf="cargando">
+  <div class="spinner"></div>
+</div>
+<section class="tickets-container shadow">
+  <div class="tickets-row">
+    <div class="empty-col eventoFondo" *ngIf="(!misTickets || misTickets.length==0) && !cargando">
+      <h4 class="textoSinInfo"> <strong> Este cliente no tiene ningún ticket registrado en el sistema.</strong></h4>
+    </div>
+    <div class="ticket-col margin-bottom-2 info-ticket" *ngFor="let ticket of misTickets">
+      <div class="ticket-layout">
+        <div *ngIf="ticket.imagen" class="ticket-image">
+          <img [src]="ticket.imagen" [alt]="ticket.eventoNombre">
+        </div>
+        <div class="ticket-info">
+          <h5 class="textoTitulo"><strong>Evento: {{ticket.eventoNombre}}</strong></h5>
+          <h5 class="textoInfo"><strong>Localidad: {{ticket.localidad}}</strong></h5>
+          <h5 class="textoInfo"><strong>Ticket ID:</strong> {{ticket.ticket.id}}</h5>
+          <h5 class="textoInfo" *ngIf="ticket.ticket.numero"><strong>Ticket No:</strong> {{ticket.ticket.numero}}</h5>
+          <h5 class="textoInfo" *ngIf="ticket.ticket.tarifa"><strong>Valor: </strong>{{getPrecioTotal(ticket.ticket.tarifa) | currency:'COP ':'symbol':'1.0-0'}}</h5>
+          <h5 class="textoInfo"><strong>Utilizado: </strong><span [style.color]="getUtilizadoColor(ticket.utilizado)">{{getUtilizadoTexto(ticket.utilizado)}}</span></h5>
+        </div>
+      </div>
+      
+      <div class="botones-tickets">
+        <button 
+          class="action_button rounded" 
+          (click)="enviarQR(ticket.ticket.id)"
+          [disabled]="ticket.ticket.estado !== 1">
+          Reenviar QR
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

@@ -35,14 +35,14 @@ export class UsuarioDataService extends CommonDataServiceUsuario<Usuario> {
     return this.http.get<Usuario>(url);
   }
 
-  public buscarPorCorreo(correo: string): Observable<Usuario> {
+  public buscarPorCorreo(correo: string): Observable<any> {
     const url = `${this.baseEndpoint}/correo/${correo}`;
-    return this.http.get<Usuario>(url);
+    return this.http.get<any>(url);
   }
 
-  public buscarPorNumeroDocumento(numeroDocumento: string): Observable<Usuario> {
+  public buscarPorNumeroDocumento(numeroDocumento: string): Observable<any> {
     const url = `${this.baseEndpointPagos}/buscar/${numeroDocumento}`;
-    return this.http.get<Usuario>(url);
+    return this.http.get<any>(url);
   }
 
   private mapRoleIdToTipoUsuario(roleId: number): string {

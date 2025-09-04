@@ -4,6 +4,7 @@ import { CommonDataService } from '../commons/common-data.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { API_URL_PAGOS } from '../../app.constants';
 import { Observable } from 'rxjs';
+import { MisAlcanciasDto } from '../../models/misalcancias.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,9 @@ import { Observable } from 'rxjs';
 export class AlcanciasDataService extends CommonDataService<Alcancia> {
 
   protected override baseEndpoint: string = API_URL_PAGOS + '/alcancias'
+
+  protected baseEndpointClientes: string = API_URL_PAGOS + '/clientes'
+
 
   constructor(protected override http: HttpClient) {
       super(http);
@@ -46,6 +50,10 @@ export class AlcanciasDataService extends CommonDataService<Alcancia> {
 
   devolver(id: number): Observable<any> {
     return this.http.get(`${this.baseEndpoint}/devolver/${id}`);
+  }
+
+  getAlcanciasByCliente(numeroDocumento: string): Observable<MisAlcanciasDto[]> {
+    return this.http.get<MisAlcanciasDto[]>(`${this.baseEndpointClientes}/mis-alcancias/${numeroDocumento}`);
   }
 
 }

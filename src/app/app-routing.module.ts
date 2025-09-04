@@ -38,6 +38,7 @@ import { PuntosFisicosComponent } from './administradores/puntos-fisicos/puntos-
 import { GestionarCuponesComponent } from './administradores/eventos/tarifas/gestionar-cupones/gestionar-cupones.component';
 import { AlcanciasComponent } from './administradores/alcancias/alcancias.component';
 import { AlcanciaComponent } from './administradores/alcancias/alcancia/alcancia.component';
+import { UsuarioPerfilComponent } from './administradores/usuarios/usuarios-activos-inactivos/usuario-perfil/usuario-perfil.component';
 
 const localidadesChildren: Routes = [
   { path: '', redirectTo: 'activas', pathMatch: 'full' },
@@ -365,7 +366,11 @@ export const routes: Routes = [
       {
         path: 'usuarios/agregar/tipo',
         component: AgregarModificarTipoDocumentoComponent
-      }
+      },
+      {
+        path: 'usuarios/clientes/:usuario',
+        component: UsuarioPerfilComponent
+      },
     ],
   },
   {

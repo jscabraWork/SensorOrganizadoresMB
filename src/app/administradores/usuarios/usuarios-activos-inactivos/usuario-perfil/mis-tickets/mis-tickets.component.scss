@@ -1,0 +1,161 @@
+@use '../../../../../../styles/variables' as v;
+
+// Estilos heredados del componente original
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid v.$color-primario;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.textoSinInfo {
+  color: v.$color-negro;
+  font-family: v.$font-primary;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.textoInfo {
+  color: v.$color-blanco;
+  font-family: v.$font-primary;
+  font-size: 15px;
+  margin: 8px 0;
+}
+
+.textoTitulo {
+  color: v.$color-primario;
+  font-family: v.$font-primary;
+  font-size: 18px;
+  margin: 10px 0;
+  font-weight: 600;
+}
+
+.shadow {
+  padding-top: 10px;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.info-ticket {
+  border: 1px solid v.$color-primario;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.action_button {
+  text-decoration: none;
+  color: v.$color-primario;
+  background-color: transparent;
+  font-weight: 700;
+  border-radius: 5px;
+  border: 1px solid v.$color-primario;
+  font-size: 11px;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  
+  &:hover:not(:disabled) {
+    background-color: v.$color-primario;
+    color: v.$color-negro;
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.botones-tickets {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+// Container styles
+.tickets-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.tickets-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -15px;
+}
+
+.ticket-col {
+  flex: 0 0 100%;
+  max-width: 100%;
+  padding: 0 15px;
+}
+
+.empty-col {
+  flex: 0 0 100%;
+  max-width: 100%;
+  padding: 0 15px;
+}
+
+.ticket-layout {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.ticket-image {
+  flex-shrink: 0;
+  
+  img {
+    width: 120px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    
+    @media (max-width: 768px) {
+      width: 100px;
+      height: 80px;
+    }
+  }
+}
+
+.ticket-info {
+  flex: 1;
+}
+
+.margin-bottom-2 {
+  margin-bottom: 15px;
+}
+
+.rounded {
+  border-radius: 8px;
+}

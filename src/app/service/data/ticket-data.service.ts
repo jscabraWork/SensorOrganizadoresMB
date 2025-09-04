@@ -5,6 +5,7 @@ import { CommonDataService } from '../commons/common-data.service';
 import { Ticket } from '../../models/ticket.model';
 import { Observable } from 'rxjs';
 import { Page } from '../../models/page.mode';
+import { MisTicketsDto } from '../../models/mistickets.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ import { Page } from '../../models/page.mode';
 export class TicketDataService extends CommonDataService<Ticket> {
 
   protected override baseEndpoint: string = API_URL_PAGOS + '/tickets';
+  baseEndpointClientes: string = API_URL_PAGOS + '/clientes';
 
   constructor(http: HttpClient) {
     super(http);
@@ -99,6 +101,12 @@ export class TicketDataService extends CommonDataService<Ticket> {
     return this.http.put<any>(`${this.baseEndpoint}/agregar-cliente/${ticket.id}`, cliente)
   }
 
+  enviarQR(ticketId: number): Observable<any> {
+    return this.http.put(`${API_URL_PAGOS}/qr/enviar/${ticketId}`, {});
+  }
 
+  getMisTicketsByCliente(numeroDocumento: string): Observable<MisTicketsDto[]> {
+    return this.http.get<MisTicketsDto[]>(`${this.baseEndpointClientes}/mis-tickets/${numeroDocumento}`);
+  }
 
 }

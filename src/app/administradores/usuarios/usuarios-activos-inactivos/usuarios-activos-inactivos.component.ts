@@ -56,37 +56,9 @@ export class UsuariosActivosInactivosComponent {
   ]
 
   expandableConfig: ExpandedRowConfig = {
-    infoFields: [
-      { label: 'Numero de Documento', property: 'numeroDocumento' },
-      { label: 'Nombre Completo', property: 'nombre' },
-      { label: 'Correo Electrónico', property: 'correo' },
-      { label: 'Número de Celular', property: 'celular' },
-      { label: 'Estado', property: 'estado' },
-    ],
-    actionButtons: [
-      {
-        text: 'Editar',
-        class: 'btn-editar',
-        action: (usuario: any) => this.editarUsuario(usuario)
-      },
-      {
-        text: 'Perfil',
-        class: 'btn-perfil',
-        action: (usuario: any) => this.verDetallesUsuario()
-      }
-    ],
-    selects: [
-      {
-        property: 'enabled',
-        options: [
-          { value: true, label: 'Activo' },
-          { value: false, label: 'Inactivo' }
-        ],
-        action: (usuario: Usuario) => this.cambiarEstadoUsuario(usuario),
-        class: 'select-estado',
-        label: 'Estado '
-      }
-    ]
+    infoFields: [],
+    actionButtons: [],
+    selects: []
   };
 
 
@@ -123,6 +95,53 @@ export class UsuariosActivosInactivosComponent {
   private determineRoleId(): void {
     const currentPath = this.router.url.split('/').pop();
     this.roleId = this.roleMap[currentPath] || 0;
+    this.configurarExpandableConfig(currentPath);
+  }
+
+  private configurarExpandableConfig(currentPath: string): void {
+    // Botones base siempre disponibles
+    const baseButtons = [
+      {
+        text: 'Editar',
+        class: 'btn-editar',
+        action: (usuario: any) => this.editarUsuario(usuario)
+      }
+    ];
+
+    // Agregar botón de perfil solo para clientes y organizadores
+    const actionButtons = currentPath === 'clientes' || currentPath === 'organizadores' 
+      ? [
+          ...baseButtons,
+          {
+            text: 'Perfil',
+            class: 'btn-perfil',
+            action: (usuario: any) => this.verDetallesUsuario(usuario, currentPath)
+          }
+        ]
+      : baseButtons;
+
+    this.expandableConfig = {
+      infoFields: [
+        { label: 'Numero de Documento', property: 'numeroDocumento' },
+        { label: 'Nombre Completo', property: 'nombre' },
+        { label: 'Correo Electrónico', property: 'correo' },
+        { label: 'Número de Celular', property: 'celular' },
+        { label: 'Estado', property: 'estado' },
+      ],
+      actionButtons: actionButtons,
+      selects: [
+        {
+          property: 'enabled',
+          options: [
+            { value: true, label: 'Activo' },
+            { value: false, label: 'Inactivo' }
+          ],
+          action: (usuario: Usuario) => this.cambiarEstadoUsuario(usuario),
+          class: 'select-estado',
+          label: 'Estado '
+        }
+      ]
+    };
   }
 
   cargarUsuarios(): void {
@@ -278,8 +297,14 @@ export class UsuariosActivosInactivosComponent {
 
 
 
-  verDetallesUsuario() {
-
+  verDetallesUsuario(usuario: Usuario, tipoUsuario: string) {
+    if (tipoUsuario === 'organizadores') {
+      // Navegación absoluta para organizadores
+      this.router.navigate(['/organizadores/organizador', usuario.numeroDocumento]);
+    } else if (tipoUsuario === 'clientes') {
+      // Navegación relativa para clientes
+      this.router.navigate([usuario.correo], { relativeTo: this.route });
+    }
   }
 
   editarUsuario(usuario: Usuario) {

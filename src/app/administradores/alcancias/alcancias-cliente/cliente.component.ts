@@ -49,23 +49,7 @@ export class AlcanciasClienteComponent implements OnInit {
       { label: 'Localidad', property: 'localidadNombre' },
       { label: 'Total Alcancía', property: 'total' }
     ],
-    actionButtons: [
-      {
-        text: 'Ver Detalles',
-        class: 'btn-ver',
-        action: (alcancia: Alcancia) => this.verDetalles(alcancia)
-      },
-      {
-        text: 'Aportar',
-        class: 'btn-aportar',
-        action: (alcancia: Alcancia) => this.aportarAlcancia(alcancia)
-      },
-      {
-        text: 'Agregar Ticket',
-        class: 'btn-ticket',
-        action: (alcancia: Alcancia) => this.agregarTicket(alcancia)
-      }
-    ],
+    actionButtons: [],
     selects: []
   };
 
@@ -130,8 +114,8 @@ export class AlcanciasClienteComponent implements OnInit {
       id: alcancia.id || 'Sin definir',
       clienteNombre: cliente?.nombre || 'Sin definir',
       clienteDocumento: cliente?.numeroDocumento || 'Sin definir',
-      eventoNombre: alcancia.eventoTransient?.nombre || 'Sin definir',
-      localidadNombre: alcancia.localidadTransient?.nombre || 'Sin definir',
+      eventoNombre: alcancia.evento|| 'Sin definir',
+      localidadNombre: alcancia.localidad|| 'Sin definir',
       cantidadTickets: alcancia.tickets?.length || 0,
       total: alcancia.total || 0
     };
