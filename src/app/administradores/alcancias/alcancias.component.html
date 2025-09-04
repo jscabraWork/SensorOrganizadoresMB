@@ -1,0 +1,18 @@
+<div class="container-fluid">
+  <div class="tittle-container">
+    <div class="tittle">
+      <p>Buscar Alcancías</p>
+      <hr class="linea">
+    </div>
+  </div>
+  <div class="container-fluid-menu">
+    <div class="menu-pequeño-container">
+      <ul class="menu-pequeño" [ngClass]="{'d-none-menu': extender}">
+        <li routerLink="alcancia" routerLinkActive="menu-mediano-lista-activo" (click)="extenderMenu()">ID Alcancía</li>
+        <li routerLink="cliente" routerLinkActive="menu-mediano-lista-activo" (click)="extenderMenu()">Cliente</li>
+      </ul>
+    </div>
+  </div>
+  <hr class="linea-menu">
+</div>
+<router-outlet></router-outlet>

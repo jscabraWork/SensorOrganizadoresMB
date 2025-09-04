@@ -1,3 +1,4 @@
+import { AlcanciasClienteComponent } from './administradores/alcancias/alcancias-cliente/cliente.component';
 import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
@@ -35,6 +36,8 @@ import { AgregarModificarTipoDocumentoComponent } from './administradores/usuari
 import { PromotoresComponent } from './administradores/promotores/promotores.component';
 import { PuntosFisicosComponent } from './administradores/puntos-fisicos/puntos-fisicos.component';
 import { GestionarCuponesComponent } from './administradores/eventos/tarifas/gestionar-cupones/gestionar-cupones.component';
+import { AlcanciasComponent } from './administradores/alcancias/alcancias.component';
+import { AlcanciaComponent } from './administradores/alcancias/alcancia/alcancia.component';
 
 const localidadesChildren: Routes = [
   { path: '', redirectTo: 'activas', pathMatch: 'full' },
@@ -293,6 +296,26 @@ export const routes: Routes = [
         },
 
 
+        {
+          path: 'alcancias',
+          component: AlcanciasComponent,
+
+          children: [
+          {
+            path: '',
+            redirectTo: 'alcancia',
+            pathMatch: 'full'
+          },
+          {
+            path: 'alcancia',
+            component: AlcanciaComponent
+          },
+          {
+            path: 'cliente',
+            component: AlcanciasClienteComponent
+          }
+        ]
+        },
 
       //--------------------------------------------
 

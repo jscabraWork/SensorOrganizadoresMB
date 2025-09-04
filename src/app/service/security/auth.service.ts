@@ -7,6 +7,7 @@ import { Md5 } from 'ts-md5';
 import { Usuario } from '../usuario.model';
 import { MatDialog } from '@angular/material/dialog';
 import { API_URL_AUTH } from '../../app.constants'; 
+import { MensajeComponent } from '../../mensaje/mensaje.component';
 
 @Injectable({
   providedIn: 'root'
@@ -65,7 +66,7 @@ export class AuthService {
   }
 
   guardarUsuario(accessToken: string): void {
-    let objeto = this.obtenerDatosDelTocken(accessToken);
+    let objeto = this.obtenerDatosDelToken(accessToken);
     this._usuario = new Usuario();
     this._usuario.nombre = objeto.nombre
 
@@ -82,6 +83,9 @@ export class AuthService {
       }
       else if(r=="ROLE_ORGANIZADOR"){
         this._usuario.tipo='organizador'
+      }
+      else{
+        this.openMensaje("Usuario no autorizado")
       }
     })
 
@@ -111,7 +115,7 @@ export class AuthService {
     sessionStorage.setItem('token', accessToken);
   }
 
-  obtenerDatosDelTocken(accessToken: string): any {
+  obtenerDatosDelToken(accessToken: string): any {
     if (accessToken != null) {
       return JSON.parse(atob(accessToken.split('.')[1]));
     } else {
@@ -120,7 +124,7 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    let payload = this.obtenerDatosDelTocken(this.token);
+    let payload = this.obtenerDatosDelToken(this.token);
     if (payload != null && payload.user_name && payload.user_name.length > 0) {
       return true;
     }
@@ -151,5 +155,27 @@ export class AuthService {
     
     
   }
+
+  
+    openMensaje(mensajeT:string,openD?:string):void{
+      let screenWidth = screen.width;
+      let anchoDialog:string = '500px';
+      let anchomax:string = '80vw';
+      let altoDialog:string = '250';
+      if(screenWidth<=600){
+        anchoDialog = '100%';
+        anchomax = '100%';
+        altoDialog = 'auto';
+      }
+      const dialogRef = this.dialog.open(MensajeComponent, {
+        width: anchoDialog,
+        maxWidth: anchomax,
+        height: altoDialog,
+        data:{
+          mensaje:mensajeT
+        }
+      });
+    }
+
 
 }

@@ -1,0 +1,189 @@
+<div *ngIf="cargando" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+<div class="container-margin">
+  <div>
+    <div class="titulo">Buscar Alcancía por ID</div>
+    <form class="form-container" (ngSubmit)="buscarAlcancia()">
+      <input class="inputs" placeholder="ID de Alcancía" name="idAlcancia" (keyup.enter)="buscarAlcancia()" [(ngModel)]="idAlcancia" type="number">
+      <button class="button-lupa" type="submit"></button>
+    </form>
+  </div>
+
+  <div *ngIf="alcanciaEncontrada">
+    <!-- Información de la alcancía -->
+    <div>
+      <div class="titulo">Alcancía del Evento {{evento?.nombre}} - ID: {{evento?.id}}</div>
+      <div class="row flex-centrar">
+        <div class="esconder table-container">
+          <table class="tabla">
+            <tbody>
+              <tr class="body-td">
+                <td class="nombreColumna"><strong>ID Alcancía</strong></td>
+                <td>{{alcancia?.id}}</td>
+              </tr>
+              <tr class="body-td">
+                <td class="nombreColumna"><strong>Total</strong></td>
+                <td>{{alcancia?.precioTotal | currency:'COP '}}</td>
+              </tr>
+               <tr class="body-td">
+                <td class="nombreColumna"><strong>Valor pagado</strong></td>
+                <td>{{alcancia?.precioParcialPagado | currency:'COP '}}</td>
+              </tr>
+              <tr class="body-td">
+                <td class="nombreColumna"><strong>Valor restante</strong></td>
+                <td>{{alcancia?.precioTotal - alcancia?.precioParcialPagado | currency:'COP '}}</td>
+              </tr>
+              <tr class="body-td">
+                <td class="nombreColumna"><strong>Estado</strong></td>
+                <td>{{checkEstadoAlcancia(alcancia?.estado)}}</td>
+              </tr>
+              <tr class="body-td">
+                <td class="nombreColumna"><strong>Evento</strong></td>
+                <td>{{evento?.nombre}}</td>
+              </tr>
+              <tr class="body-td">
+                <td class="nombreColumna"><strong>Localidad</strong></td>
+                <td>{{localidad?.nombre}}</td>
+              </tr>
+              <tr class="body-td">
+                <td class="nombreColumna"><strong>Cliente</strong></td>
+                <td>Documento: {{cliente?.numeroDocumento}} - Nombre: {{cliente?.nombre}} - Correo: {{cliente?.correo}} - Teléfono: {{cliente?.celular}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tickets en la alcancía -->
+    <div>
+      <div class="titulo">Tickets en la Alcancía</div>
+      <div class="row flex-centrar">
+        <div class="esconder table-container">
+          <table class="tabla" id="tickets-table">
+            <thead>
+              <tr class="header-tr">
+                <th></th>
+                <th>ID</th>
+                <th>Número</th>
+                <th>Estado</th>
+                <th>Localidad</th>
+                <th>Precio</th>
+                <th>Cliente</th>
+                <th>Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Spinner de carga -->
+              <tr *ngIf="cargando" class="centrarTexto">
+                <td colspan="100%">
+                  <div class="lds-ellipsis">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </td>
+              </tr>
+
+              <tr class="centrarTexto">
+                <td colspan="100%" *ngIf="tickets?.length == 0" class="mensaje-vacio">
+                  No hay tickets en esta alcancía
+                </td>
+              </tr>
+
+              <ng-container *ngFor="let ticket of tickets; let i=index">
+                <tr class="body-td">
+                  <td>
+                    <button class="btn btn-sm" (click)="toggleTicketItem(i)">
+                      {{ selectedTicketItem === i ? '−' : '+' }}
+                    </button>
+                  </td>
+                  <td>{{ticket?.id}}</td>
+                  <td>{{ticket?.numero || 'No numerado'}}</td>
+                  <td>{{checkEstadoTicket(ticket?.estado)}}</td>
+                  <td>{{localidad?.nombre}}</td>
+                  <td>{{ticket?.tarifa?.precio + ticket?.tarifa?.servicio + ticket?.tarifa?.iva | currency:'COP '}}</td>
+                  <td>{{ticket?.cliente?.nombre}} - {{ticket?.cliente?.numeroDocumento}}</td>
+                  <td>
+                    <div class="btn-ver">
+                      <button class="btn-eliminar" (click)="eliminarTicket(ticket?.id)">Eliminar</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr *ngIf="selectedTicketItem === i">
+                  <td colspan="100%" class="expandir-table">
+                    <div class="detalle-expandido">
+                      <div>
+                        <p class="p">Información del Ticket</p>
+                      </div>
+                      <div class="informacion-container">
+                        <div class="detalle-item">
+                          <p class="etiqueta">ID:</p>
+                          <span class="valor">{{ticket?.id}}</span>
+                        </div>
+                        <div class="detalle-item">
+                          <p class="etiqueta">Estado:</p>
+                          <span class="valor">{{checkEstadoTicket(ticket?.estado)}}</span>
+                        </div>
+                        <div class="detalle-item">
+                          <p class="etiqueta">Localidad:</p>
+                          <span class="valor">{{ticket?.localidad?.nombre}}</span>
+                        </div>
+                        <div class="detalle-item">
+                          <p class="etiqueta">Precio:</p>
+                          <span class="valor">{{ticket?.tarifa?.precio + ticket?.tarifa?.servicio + ticket?.tarifa?.iva | currency:'COP '}}</span>
+                        </div>
+                        <div class="detalle-item">
+                          <p class="etiqueta">Cliente:</p>
+                          <span class="valor">{{ticket?.cliente?.nombre}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Aportar dinero -->
+    <div>
+      <div class="titulo">Aportar dinero a la alcancía</div>
+      <div class="form-container">
+        <input placeholder="Valor a aportar"
+               [(ngModel)]="valorAporte"
+               name="valorAporte"
+               [disabled]="alcancia?.estado != 1"
+               type="number"
+               class="inputs">
+        <button [disabled]="alcancia?.estado != 1" class="button-ordenes" (click)="aportarDinero()">Aportar</button>
+      </div>
+    </div>
+
+    <!-- Agregar ticket -->
+    <div>
+      <div class="titulo">Agregar ticket a la alcancía</div>
+      <div class="form-container">
+        <input placeholder="ID del ticket a agregar"
+               [(ngModel)]="idTicket"
+               [disabled]="alcancia?.estado != 1"
+               name="idTicket"
+               type="number"
+               class="inputs">
+        <button [disabled]="alcancia?.estado != 1" class="button-ordenes" (click)="agregarTicket()">Agregar</button>
+      </div>
+    </div>
+
+    <!-- Devolver alcancía -->
+    <div>
+      <div class="titulo">Devolver alcancía</div>
+      <div class="form-container">
+        <button [disabled]="alcancia?.estado == 2" class="button-ordenes" (click)="devolverAlcancia()">Devolver</button>
+      </div>
+    </div>
+  </div>
+</div>

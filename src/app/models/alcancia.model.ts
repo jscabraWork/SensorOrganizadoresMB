@@ -9,6 +9,9 @@ export class Alcancia {
   activa: boolean;
   cliente?: Cliente;
   tickets?: Ticket[];
-  localidad?: string;
   estado:number;
+
+  //ATRIBUTOS AUXILIARES
+  evento?: string;
+  localidad?: string;
 }
