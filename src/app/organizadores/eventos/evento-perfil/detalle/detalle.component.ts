@@ -24,8 +24,8 @@ export class DetalleComponent extends BaseComponent implements OnInit {
   detalle: DetalleEvento[] = [];
   resumen: ResumenEvento = null;
 
-  localidadIdSeleccionada?: number;
-  
+  localidadIdSeleccionada: number = -1;
+
   opcionesLocalidades: { value: number, label: string }[] = [];
   
   // Control de expansión de filas
@@ -91,16 +91,12 @@ export class DetalleComponent extends BaseComponent implements OnInit {
 
   cargarDetalle() {
     this.iniciarCarga();
-    
-    // Solo pasar localidadId si tiene un valor válido
-    const localidadId = this.localidadIdSeleccionada && this.localidadIdSeleccionada > 0 
-      ? this.localidadIdSeleccionada 
-      : undefined;
+
     
     this.reporteService.getDetalleEvento(
       this.idEvento,
       undefined, // tarifaId
-      localidadId, // localidadId
+      this.localidadIdSeleccionada, // localidadId
       undefined  // diaId
     ).subscribe({
       next: (response) => {

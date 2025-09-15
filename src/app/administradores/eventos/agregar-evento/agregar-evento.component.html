@@ -67,6 +67,14 @@
                       Los artistas del evento es obligatorio
                   </div>
           </div>
+
+          <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">
+            <span class="field-label" *ngIf="modoEdicion">Descripción</span>
+              <input id="descripcion" name="descripcion" 
+                        [(ngModel)]="evento.descripcion" 
+                        class="input-field" 
+                        placeholder="Descripción">
+          </div>
   
           <!-- Recomendaciones -->
           <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">

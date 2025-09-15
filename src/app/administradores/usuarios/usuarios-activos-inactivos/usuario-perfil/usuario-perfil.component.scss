@@ -1,0 +1,325 @@
+@use '../../../../../styles/variables' as v;
+
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid v.$color-primario;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
+.profile-header {
+  background-color: v.$color-blanco;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid v.$color-gris-light;
+  
+  .back-button-container {
+    margin-bottom: 15px;
+    
+    .back-button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background-color: transparent;
+      border: 1px solid v.$color-gris-light;
+      color: v.$color-gris-dark;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: v.$font-secondary;
+      
+      &:hover {
+        background-color: v.$color-gris-muy-light;
+        border-color: v.$color-gris;
+        color: v.$color-negro;
+      }
+      
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+  
+  .user-info {
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid v.$color-primario;
+    padding-bottom: 15px;
+    
+    .user-name {
+      color: v.$color-negro;
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0;
+      font-family: v.$font-secondary;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+  
+  .profile-menu {
+    .menu-container {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      border: 1px solid v.$color-gris-light;
+      border-radius: 6px;
+      overflow: hidden;
+      background-color: v.$color-gris-muy-light;
+      
+      @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 0;
+      }
+    }
+    
+    .menu-item {
+      background: transparent;
+      border: none;
+      border-right: 1px solid v.$color-gris-light;
+      color: v.$color-gris-dark;
+      font-weight: 600;
+      font-size: 13px;
+      padding: 12px 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: v.$font-secondary;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      
+      &:last-child {
+        border-right: none;
+      }
+      
+      &:hover {
+        background-color: v.$color-primario;
+        color: v.$color-negro;
+      }
+      
+      &.active {
+        background-color: v.$color-primario;
+        color: v.$color-negro;
+        font-weight: 700;
+      }
+      
+      @media (max-width: 768px) {
+        border-right: none;
+        border-bottom: 1px solid v.$color-gris-light;
+        padding: 10px 15px;
+        font-size: 12px;
+        
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+}
+
+.divider {
+  display: none;
+}
+
+.profile-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+  
+  .content-section {
+    margin-top: 0;
+  }
+  
+  .info-card {
+    background: v.$color-blanco;
+    border: 1px solid v.$color-gris-light;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    
+    .card-header {
+      background-color: v.$color-primario;
+      margin: -20px -20px 15px -20px;
+      padding: 12px 20px;
+      border-radius: 5px 5px 0 0;
+      
+      h3 {
+        color: v.$color-negro;
+        font-size: 16px;
+        margin: 0;
+        font-family: v.$font-secondary;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+      }
+    }
+    
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 15px;
+      
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+    
+    .info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 15px;
+      background-color: v.$color-gris-muy-light;
+      border-radius: 4px;
+      border-left: 3px solid v.$color-primario;
+      
+      .info-label {
+        font-size: 10px;
+        color: v.$color-gris-dark;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        font-family: v.$font-secondary;
+      }
+      
+      .info-value {
+        color: v.$color-negro;
+        font-size: 15px;
+        font-weight: 500;
+        word-break: break-word;
+        font-family: v.$font-primary;
+      }
+    }
+  }
+}
+
+// Estilos compactos para los componentes hijos
+::ng-deep {
+  app-mis-alcancias,
+  app-mis-tickets {
+    .textoTitulo {
+      color: v.$color-primario !important;
+      font-weight: 700 !important;
+      font-size: 16px !important;
+      margin: 8px 0 !important;
+    }
+    
+    .textoInfo {
+      color: v.$color-gris-dark !important;
+      font-weight: 500 !important;
+      font-size: 14px !important;
+      margin: 6px 0 !important;
+    }
+    
+    .eventoFondo,
+    .info-ticket {
+      background-color: v.$color-blanco !important;
+      border: 1px solid v.$color-gris-light !important;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06) !important;
+      padding: 15px !important;
+      margin-bottom: 15px !important;
+    }
+    
+    .action_button {
+      background-color: v.$color-primario !important;
+      color: v.$color-negro !important;
+      border: 1px solid v.$color-primario !important;
+      font-weight: 600 !important;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      padding: 6px 12px !important;
+      font-size: 10px !important;
+      
+      &:hover:not(:disabled) {
+        background-color: v.$color-primario-dark !important;
+        border-color: v.$color-primario-dark !important;
+      }
+    }
+    
+    .progress-bar {
+      background-color: v.$color-gris-light !important;
+      border: 1px solid v.$color-gris !important;
+      height: 16px !important;
+    }
+    
+    .progress-fill {
+      background: linear-gradient(90deg, v.$color-primario 0%, v.$color-primario-light 100%) !important;
+    }
+    
+    .progress-text {
+      color: v.$color-primario !important;
+      font-weight: 600 !important;
+      font-size: 12px !important;
+    }
+    
+    .alcancias-container,
+    .tickets-container {
+      padding: 0 10px !important;
+    }
+    
+    .alcancia-layout,
+    .ticket-layout {
+      gap: 12px !important;
+    }
+    
+    .botones-tickets {
+      margin-top: 10px !important;
+      gap: 8px !important;
+    }
+    
+    .textoSinInfo {
+      padding: 30px 15px !important;
+      font-size: 16px !important;
+    }
+    
+    .progress-container {
+      margin-top: 10px !important;
+      gap: 8px !important;
+    }
+  }
+}
+
+// Animaciones
+.profile-content {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

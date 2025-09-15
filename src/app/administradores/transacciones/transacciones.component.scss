@@ -9,48 +9,6 @@
 
 }
 
-.row {
-    @extend .row
-}
-
-.flex-centrar{
-    @extend .flex-centrar
-}
-
-.esconder {
-    @extend .esconder
-}
-
-.table-container {
-    width: 100% !important;
-}
-
-.tabla {
-    @extend .tabla-default
-}
-
-.p {
-    @extend .p
-}
-
-
-
-.btn-ver {
-    button {
-        @extend .button-primary;
-        width: fit-content;
-        border-radius: 9px !important;
-        padding: 0.1rem 1.5rem;
-      }
-}
-
-.btn-editar,
-.btn-eliminar,
-.btn-eventos {
-    @extend .button-third;
-    margin-right: 10px;
-}
-
 .estado-select-detalle {
     margin-left: 10px;
 }
@@ -87,4 +45,61 @@
     border-radius: 9px !important;
     padding: 0.6rem 2.5rem;
   }
+}
+
+// Estilos nativos sin Bootstrap
+.filtros-section {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.controles-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.size-control {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  
+  label {
+    font-weight: 600;
+    color: v.$color-negro;
+    font-family: v.$font-primary;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+}
+
+.select-input {
+  @extend %input-field;
+  padding: 0.5rem;
+  min-width: 80px;
+  font-family: v.$font-primary;
+  
+  &:focus {
+    border-color: v.$color-primario;
+    box-shadow: 0 0 0 0.2rem rgba(255, 217, 0, 0.25);
+    outline: none;
+  }
+}
+
+.limpiar-control {
+  .btn-limpiar {
+    @extend .button-secondary;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    
+    &:hover {
+      background-color: v.$color-gris-light;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.tabla-section {
+  width: 100%;
 }

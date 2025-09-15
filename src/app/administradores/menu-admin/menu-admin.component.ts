@@ -31,12 +31,13 @@ export class MenuAdminComponent implements OnInit {
 
   private updateNavItems() {
     this.navItems = [
-            { route: `/administradores/admin/${this.nombre}`, icon: 'assets/images/vector/recaudado.svg', label: 'Resumen' },
+      { route: `/administradores/admin/${this.nombre}`, icon: 'assets/images/vector/recaudado.svg', label: 'Resumen' },
       { route: `/administradores/admin/${this.nombre}/eventos`, icon: 'assets/images/vector/temporadas.png', label: 'Eventos' },
       { route: `/administradores/admin/${this.nombre}/usuarios`, icon: 'assets/images/vector/usuarios.png', label: 'Usuarios' },
       { route: `/administradores/admin/${this.nombre}/ciudades`, icon: 'assets/images/vector/ciudades.png', label: 'Ciudades' },
       { route: `/administradores/admin/${this.nombre}/transacciones`, icon: 'assets/images/vector/transacciones.png', label: 'Transacciones' },
-      { route: '', icon: 'assets/images/vector/alcancias.png', label: 'Alcancias' },
+      { route: `/administradores/admin/${this.nombre}/ordenes`, icon: 'assets/images/vector/ordenes.svg', label: 'Órdenes' },
+      { route: `/administradores/admin/${this.nombre}/alcancias`, icon: 'assets/images/vector/alcancias.png', label: 'Alcancias' },
       { route: `/administradores/admin/${this.nombre}/promotores`, icon: 'assets/images/vector/promotor.svg', label: 'Promotores' },
       { route: `/administradores/admin/${this.nombre}/puntosfisicos`, icon: 'assets/images/vector/puntofisico.svg', label: 'Puntos Físicos' },
       { route: '/logout', icon: 'assets/images/vector/logout.svg', label: 'Cerrar Sesión', isLogout: true }

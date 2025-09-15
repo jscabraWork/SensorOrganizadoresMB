@@ -10,7 +10,8 @@ export class RouteGuardOrganizadorService {
   constructor(private autenticador:HardcodedAutheticationService, private route: Router, private router:ActivatedRoute) { }
   
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
-    if(this.autenticador.organizadorLoggin()){
+    // Permitir acceso a organizadores logueados O administradores logueados
+    if(this.autenticador.organizadorLoggin() || this.autenticador.adminLoggin()){
       return true;
     }
     else{

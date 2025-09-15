@@ -4,22 +4,65 @@
       <label *ngIf="filter.label" class="filter-label">
         {{ filter.label }}
       </label>
+
+      <!-- Text Input -->
       <input
+        *ngIf="!filter.type || filter.type === 'text'"
         [(ngModel)]="filter.value"
         type="text"
         [placeholder]="filter.placeholder || 'Buscar...'"
         class="input"
-        (keyup.enter)="filter.onEnter ? filter.onEnter(filter.value.trim()) : buscar()"
+        (keyup.enter)="filter.onEnter ? filter.onEnter(filter.value?.trim()) : buscar()"
+        (input)="onFilterChange(filter)"
         aria-label="Campo de búsqueda"
       />
-    </div>
-  </div>
 
-  <button
+      <!-- Date Input -->
+      <input
+        *ngIf="filter.type === 'date'"
+        [(ngModel)]="filter.value"
+        type="date"
+        class="input"
+        (change)="onFilterChange(filter)"
+        aria-label="Campo de fecha"
+      />
+
+      <!-- Number Input -->
+      <input
+        *ngIf="filter.type === 'number'"
+        [(ngModel)]="filter.value"
+        type="number"
+        [placeholder]="filter.placeholder || '0'"
+        class="input"
+        (keyup.enter)="filter.onEnter ? filter.onEnter(filter.value) : buscar()"
+        (input)="onFilterChange(filter)"
+        aria-label="Campo numérico"
+      />
+
+      <!-- Select Input -->
+      <select
+        *ngIf="filter.type === 'select'"
+        [(ngModel)]="filter.value"
+        class="input select"
+        (change)="onFilterChange(filter)"
+        aria-label="Campo de selección"
+      >
+        <option *ngFor="let option of filter.options" [value]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+
+      
+    </div>
+
+    <button
     class="button-lupa"
     (click)="buscar()"
     title="Buscar"
     aria-label="Buscar"
     type="button"
   ></button>
+  </div>
+
+  
 </div>

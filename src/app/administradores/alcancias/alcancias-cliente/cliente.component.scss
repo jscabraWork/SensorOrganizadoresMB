@@ -1,0 +1,90 @@
+@use "sass:color";
+@use "sass:map";
+@use '../../../../styles/variables' as v;
+@use '../../../../styles/components' as c;
+
+.container-fluid {
+    @extend .container-margin;
+    margin-top: 1rem !important;
+}
+
+.tittle{
+  line-height: normal;
+  color: v.$color-base;
+  font-weight: 800;
+
+  & p {
+      font-size: 24px;
+  }
+}
+
+.linea {
+  background-color: v.$color-base;
+  height: 3px;
+  border: 1px;
+  width: 450px;
+}
+
+.tittle-container{
+  width: 100%;
+  display: flex;
+}
+
+.table-container {
+    width: 100% !important;
+}
+
+.tabla {
+    @extend .tabla-default
+}
+
+.p {
+    @extend .p
+}
+
+.btn-ver {
+  button {
+    @extend .button-primary;
+    width: fit-content;
+    border-radius: 9px !important;
+    padding: 0.1rem 1.5rem;
+  }
+}
+
+.btn-aportar,
+.btn-ticket,
+.btn-editar,
+.btn-eliminar {
+    @extend .button-third;
+    margin-right: 10px;
+}
+
+// Estilos nativos sin Bootstrap
+.filtros-section {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.controles-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.limpiar-control {
+  .btn-limpiar {
+    @extend .button-secondary;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    
+    &:hover {
+      background-color: v.$color-gris-light;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.tabla-section {
+  width: 100%;
+}

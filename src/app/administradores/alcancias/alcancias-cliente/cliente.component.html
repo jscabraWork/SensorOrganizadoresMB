@@ -1,0 +1,44 @@
+<div *ngIf="cargando" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+<div class="container-fluid">
+  <div class="tittle-container">
+    <div class="tittle">
+      <p>Buscar por Cliente</p>
+      <hr class="linea">
+    </div>
+  </div>
+
+  <!-- Filtros integrados -->
+  <div class="filtros-section">
+    <app-search-filter
+      [filters]="searchFilters"
+      (onBuscar)="buscarAlcancias()">
+    </app-search-filter>
+  </div>
+
+  <!-- Botón para limpiar filtros -->
+  <div class="controles-row">
+    <div class="limpiar-control">
+      <button class="btn-limpiar" (click)="limpiarFiltros()">
+        Limpiar Filtros
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabla de alcancías -->
+  <div class="tabla-section">
+    <div class="table-container">
+      <app-table
+        [pageData]="alcanciasPage"
+        [headers]="['ID', 'Cliente', 'Documento', 'Evento', 'Localidad', 'Tickets', 'Total']"
+        [columnas]="['id', 'clienteNombre', 'clienteDocumento', 'eventoNombre', 'localidadNombre', 'cantidadTickets', 'total']"
+        [idField]="'id'"
+        [expandableConfig]="expandableConfig"
+        [cargando]="cargando"
+        [mensajeVacio]="'No se encontraron alcancías para este cliente'"
+        (selectedIndexChange)="onExpandRow($event >= 0 ? alcanciasPage?.content[$event] : null)">
+      </app-table>
+    </div>
+  </div>
+</div>

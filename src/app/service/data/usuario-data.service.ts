@@ -28,32 +28,32 @@ export class UsuarioDataService extends CommonDataServiceUsuario<Usuario> {
     return this.http.get<any>(`${this.baseEndpoint}/${pId}`);
   }
 
-  public buscarUsuarioPorDocumento(roleId: number, documento: string): Observable<Usuario> {
+  public buscarUsuarioPorDocumento(roleId: number, documento: string): Observable<any> {
     // Mapeamos el roleId numérico al tipo de usuario para el endpoint
     const tipoUsuario = this.mapRoleIdToTipoUsuario(roleId);
-    const url = `${this.baseEndpoint}/${tipoUsuario}/documento/${documento}`;
-    return this.http.get<Usuario>(url);
+    const url = `${this.baseEndpoint}/${tipoUsuario}/${documento}`;
+    return this.http.get<any>(url);
   }
 
-  public buscarPorCorreo(correo: string): Observable<Usuario> {
+  public buscarPorCorreo(correo: string): Observable<any> {
     const url = `${this.baseEndpoint}/correo/${correo}`;
-    return this.http.get<Usuario>(url);
+    return this.http.get<any>(url);
   }
 
-  public buscarPorNumeroDocumento(numeroDocumento: string): Observable<Usuario> {
+  public buscarPorNumeroDocumento(numeroDocumento: string): Observable<any> {
     const url = `${this.baseEndpointPagos}/buscar/${numeroDocumento}`;
-    return this.http.get<Usuario>(url);
+    return this.http.get<any>(url);
   }
 
   private mapRoleIdToTipoUsuario(roleId: number): string {
     const roleMap = {
       2: 'cliente',
-      3: 'organizador',
-      4: 'coordinador',
-      5: 'analista',
+      5: 'organizador',
+      3: 'coordinador',
+      15: 'analista',
       6: 'promotor',
-      7: 'auditor',
-      1: 'admin'
+      1: 'admin',
+      7: 'puntosfisicos',
     };
 
     return roleMap[roleId] || 'cliente';

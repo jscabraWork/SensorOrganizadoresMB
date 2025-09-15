@@ -120,11 +120,11 @@ export class TicketsActivosInactivosComponent {
         class: 'btn-cliente',
         action: (ticket: Ticket) => this.asignarCliente(ticket)
       },
-      {
-        text: 'Asignar Promotor',
-        class: 'btn-promotor',
-        action: (ticket: Ticket) => this.eliminarTicket(ticket.id)
-      },
+      // {
+      //   text: 'Asignar Promotor',
+      //   class: 'btn-promotor',
+      //   action: (ticket: Ticket) => this.eliminarTicket(ticket.id)
+      // },
       {
         text: 'Agregar Tickets',
         class: 'btn-tickets',
@@ -401,6 +401,9 @@ export class TicketsActivosInactivosComponent {
   }
 
   cambiarTipo(ticket: Ticket) {
+
+    
+
   }
 
   cambiarEstado(ticket: Ticket, estado: number, forzar: boolean = false): void {

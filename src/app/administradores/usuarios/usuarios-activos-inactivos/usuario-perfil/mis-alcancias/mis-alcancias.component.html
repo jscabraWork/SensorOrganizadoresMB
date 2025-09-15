@@ -1,0 +1,34 @@
+<div class="spinner-overlay" *ngIf="cargando">
+  <div class="spinner"></div>
+</div>
+<section class="alcancias-container">
+  <div class="alcancias-row rounded">
+    <div class="alcancia-col eventoFondo" *ngIf="(!misAlcancias || misAlcancias.length==0) && !cargando">
+      <h4 class="textoSinInfo"><strong>Este cliente no tiene ninguna alcancía registrada en el sistema.</strong></h4>
+    </div>
+    
+    <div class="alcancia-col eventoFondo margin-top-3" *ngFor="let misAlcancia of misAlcancias; let i = index">
+      <div class="alcancia-layout">
+        <div *ngIf="misAlcancia.imagen" class="alcancia-image">
+          <img [src]="misAlcancia.imagen" [alt]="misAlcancia.eventoNombre">
+        </div>
+        <div class="alcancia-info">
+          <h5 class="textoTitulo"><strong>Evento: </strong>{{misAlcancia.eventoNombre}}</h5>
+          <h5 class="textoInfo"><strong>Localidad: </strong>{{misAlcancia.localidad || 'N/A'}}</h5>
+          <h5 class="textoInfo"><strong>Etapa: </strong>{{misAlcancia.tickets?.[0]?.tarifa?.nombre || 'General'}}</h5>
+          <h5 class="textoInfo"><strong>Número de Tickets:</strong> {{misAlcancia.tickets?.length || 0}}</h5>
+          <h5 class="textoInfo"><strong>Valor Total: </strong>{{misAlcancia.alcancia.precioTotal | currency:'COP ':'symbol':'1.0-0'}}</h5>
+          <h5 class="textoInfo"><strong>Valor Pagado: </strong>{{misAlcancia.alcancia.precioParcialPagado | currency:'COP ':'symbol':'1.0-0'}}</h5>
+          <h5 class="textoInfo"><strong>Valor Faltante: </strong>{{getValorFaltante(misAlcancia) | currency:'COP ':'symbol':'1.0-0'}}</h5>
+          
+          <div class="progress-container">
+            <div class="progress-bar">
+              <div class="progress-fill" [style.width]="(misAlcancia.alcancia.precioParcialPagado / misAlcancia.alcancia.precioTotal * 100) + '%'"></div>
+            </div>
+            <span class="progress-text">{{(misAlcancia.alcancia.precioParcialPagado / misAlcancia.alcancia.precioTotal * 100) | number:'1.0-0'}}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

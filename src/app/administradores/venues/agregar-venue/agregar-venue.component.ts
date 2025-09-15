@@ -55,7 +55,9 @@ export class AgregarVenueComponent {
   validateGoogleMapsUrl(url: string): boolean {
     // Expresión regular para validar URLs de Google Maps estándar y maps.app.goo.gl
     const googleMapsRegex = /^(https?:\/\/)?(www\.)?(google\.[a-z]+\/maps\/.+|maps\.app\.goo\.gl\/.+)/i;
-    return googleMapsRegex.test(url);
+    //return googleMapsRegex.test(url);
+        return true;
+
   }
 
   cargarVenue(id: number) {

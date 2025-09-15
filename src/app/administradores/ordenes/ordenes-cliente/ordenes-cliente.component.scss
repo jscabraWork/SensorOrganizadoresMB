@@ -1,7 +1,6 @@
 @use "sass:color";
 @use "sass:map";
 @use '../../../../styles/components' as v;
-@use '../../../../styles/components' as c;
 
 
 .titulo{
@@ -10,13 +9,10 @@
   font-size: 14px;
   line-height: 100%;
   color: #505050;
-  margin: 20px 0px 10px 0px;
-}
-.container1{
-  display: flex;
+  margin-bottom: 1rem;
 }
 
-.container3{
+.form-container{
   display: flex;
 }
 
@@ -29,16 +25,15 @@ td{
 }
 input{
  @extend %input-field;
- width: 100%;
- margin-right:1%
+ width: 100%!important;
+  margin:0 !important;
 }
 
 select{
     margin-right:1%;
   @extend %input-select-field-triangulo !optional;
-
-
 }
+
 
 
 .buscador{
@@ -104,4 +99,43 @@ option{
 
 .estado-select-detalle {
   margin-left: 10px;
+}
+
+.cliente-info {
+  margin: 20px 0;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.cliente-datos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.detalle-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.etiqueta {
+  font-weight: 600;
+  font-size: 12px;
+  color: #6c757d;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.valor {
+  font-size: 14px;
+  color: #495057;
+  font-weight: 500;
+}
+.button-lupa{
+  margin-left: 1rem;
 }

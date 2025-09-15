@@ -1,0 +1,158 @@
+@use "sass:color";
+@use "sass:map";
+@use '../../../../styles/variables' as v;
+@use '../../../../styles/components' as c;
+
+.container-margin {
+    @extend .container-margin;
+}
+
+.row {
+    @extend .row;
+}
+
+.flex-centrar {
+    @extend .flex-centrar;
+}
+
+.esconder {
+    @extend .esconder;
+}
+
+.table-container {
+    width: 100% !important;
+}
+
+.tabla {
+    @extend .tabla-default;
+    border: v.$color-negro 1px solid;
+}
+
+.p {
+    @extend .p;
+}
+
+.btn-ver {
+    button {
+        @extend .button-primary;
+        width: fit-content;
+        border-radius: 9px !important;
+        padding: 0.1rem 1.5rem;
+    }
+}
+
+.btn-eliminar,
+.btn-editar {
+    @extend .button-third;
+    margin-right: 10px;
+}
+
+.titulo {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+    color: v.$color-base;
+}
+
+.form-container {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+    align-items: center;
+}
+
+.inputs {
+    @extend %input-field;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%!important;
+      margin:0 !important;
+
+}
+
+.button-lupa {
+    @extend .button-primary;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.button-ordenes {
+    @extend .button-primary;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.nombreColumna {
+    font-weight: bold;
+    width: 150px;
+    padding: 8px;
+    background-color: v.$color-gris-muy-light;
+}
+
+.body-td {
+    td {
+        padding: 8px;
+        border-bottom: 1px solid v.$color-gris-light;
+    }
+}
+
+.header-tr {
+    th {
+        background-color: v.$color-gris-light;
+        font-weight: 700;
+        padding: 12px;
+        text-align: center;
+    }
+}
+
+.centrarTexto {
+    text-align: center;
+}
+
+.mensaje-vacio {
+    padding: 20px;
+    color: v.$color-gris-dark;
+    font-style: italic;
+}
+
+.btn {
+    @extend .btn-sm;
+}
+
+.expandir-table {
+    background-color: v.$color-gris-muy-light;
+    padding: 15px;
+}
+
+.detalle-expandido {
+    .p {
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: v.$color-base;
+    }
+}
+
+.informacion-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.detalle-item {
+    display: flex;
+    flex-direction: column;
+    
+    .etiqueta {
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: v.$color-negro;
+    }
+    
+    .valor {
+        color: v.$color-gris-dark;
+    }
+}
+
+.lds-ellipsis {
+    @extend .lds-ellipsis;
+}

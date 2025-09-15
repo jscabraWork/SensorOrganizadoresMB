@@ -136,9 +136,9 @@ export class AgregarTarifaComponent {
 
   isFormValid(): boolean {
     return !!this.tarifa.nombre &&
-      !!this.tarifa.precio &&
-      !!this.tarifa.servicio &&
-      !!this.tarifa.iva;
+      this.tarifa.precio !== null && this.tarifa.precio !== undefined &&
+      this.tarifa.servicio !== null && this.tarifa.servicio !== undefined &&
+      this.tarifa.iva !== null && this.tarifa.iva !== undefined;
   }
 
   crearNuevaTarifa() {

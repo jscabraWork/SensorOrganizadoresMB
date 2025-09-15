@@ -11,6 +11,7 @@ import { EventoDataService } from '../../../service/data/evento-data.service';
 import { Evento } from '../../../models/evento.model';
 import { TicketDataService } from '../../../service/data/ticket-data.service';
 import { Ticket } from '../../../models/ticket.model';
+import { Localidad } from '../../../models/localidad.model';
 
 @Component({
   selector: 'app-numero-orden-cliente',
@@ -36,9 +37,8 @@ export class NumeroOrdenClienteComponent implements OnInit {
   agregandoTicket: boolean = false;
   tickets:Ticket[]
   idTarifa:number
+  localidad: Localidad;
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private dialog: MatDialog,
     private ordenService: OrdenDataService
   ){}
@@ -63,11 +63,15 @@ export class NumeroOrdenClienteComponent implements OnInit {
       return;
     }
     this.cargando = true
-    this.ordenService.getPorId(this.idOrden).subscribe({
+    this.ordenService.getOrdenByIdAdmin(this.idOrden).subscribe({
       next: (response) => {
         this.ordenEncontrada = true;
-        this.orden = response
-        console.log(this.orden)
+        this.orden = response.orden;
+        this.orden.cliente = response.cliente;
+        this.orden.transacciones = response.transacciones;
+        this.orden.evento = response.evento;
+        this.orden.tickets = response.tickets;
+        this.localidad = response.localidad;
         this.cargando = false
       },
       error: (err) => {
@@ -129,7 +133,7 @@ export class NumeroOrdenClienteComponent implements OnInit {
       this.openMensaje("No se proporcionó un ID de ticket válido");
       return;
     }
-    this.openMensaje("¿Estás seguro de que quieres eliminar este ticket?", true).subscribe(confirmado => {
+    this.openMensaje("¿Estás seguro de que quieres eliminar este ticket de la orden?", true).subscribe(confirmado => {
       if (confirmado) {
         this.cargando = true;
         this.ordenService.eliminarTicketDeOrden(this.idOrden, idTicket).subscribe({
@@ -189,13 +193,22 @@ validacionContraPtp(idOrden: number) {
   checktipo(tipo){
     switch(tipo){
       case 1:
-        return "Ticket"
+        return "Compra estandar"
         break;
       case 2:
-        return "Ticket Completo(Palco)"
+        return "Adiciones"
         break;
       case 3:
-        return "Aporte"
+        return "Creación de alcancía"
+        break;
+      case 4:
+        return "Aporte a alcancía"
+        break;
+      case 5:
+        return "Traspaso"
+        break;
+      case 6:
+        return "Asignación"
         break;
     }
     return tipo
@@ -204,7 +217,7 @@ validacionContraPtp(idOrden: number) {
   checkEstado(estado){
     switch(estado){
       case 1:
-        return "Aceptada"
+        return "Aprobada"
         break;
       case 2:
         return "Rechazada"

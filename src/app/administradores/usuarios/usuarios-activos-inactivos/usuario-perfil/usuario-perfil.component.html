@@ -1,0 +1,89 @@
+<div class="spinner-overlay" *ngIf="cargando">
+  <div class="spinner"></div>
+</div>
+
+<section class="profile-container">
+  <div class="profile-header">
+    <div class="back-button-container">
+      <button class="back-button" (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        Regresar
+      </button>
+    </div>
+    <div class="user-info">
+      <h1 class="user-name">{{ usuario.nombre }}</h1>
+    </div>
+    
+    <div class="profile-menu">
+      <div class="menu-container">
+        <button 
+          class="menu-item" 
+          [class.active]="datos"
+          (click)="showDatos()">
+          Información General
+        </button>
+        <button 
+          class="menu-item" 
+          [class.active]="tickets"
+          (click)="showTickets()">
+          Tickets
+        </button>
+        <button 
+          class="menu-item" 
+          [class.active]="alcancias"
+          (click)="showAlcancias()">
+          Alcancías
+        </button>
+      </div>
+    </div>
+    <hr class="divider">
+  </div>
+</section>
+
+<section class="profile-content">
+  <!-- Información General -->
+  <div class="content-section" *ngIf="datos">
+    <div class="info-card">
+      <div class="card-header">
+        <h3>Información Personal</h3>
+      </div>
+      
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Documento:</span>
+          <span class="info-value">{{ usuario?.numeroDocumento }}</span>
+        </div>
+        
+        <div class="info-item">
+          <span class="info-label">Nombre:</span>
+          <span class="info-value">{{ usuario.nombre }}</span>
+        </div>
+        
+        <div class="info-item">
+          <span class="info-label">Correo:</span>
+          <span class="info-value">{{ usuario.correo }}</span>
+        </div>
+        
+        <div class="info-item">
+          <span class="info-label">Contraseña:</span>
+          <span class="info-value">*************</span>
+        </div>
+        
+        <div class="info-item">
+          <span class="info-label">Celular:</span>
+          <span class="info-value">{{ usuario.celular }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mis Tickets -->
+  <div class="content-section" *ngIf="tickets">
+    <app-mis-tickets [numeroDocumento]="usuario.numeroDocumento"></app-mis-tickets>
+  </div>
+
+  <!-- Mis Alcancías -->
+  <div class="content-section" *ngIf="alcancias">
+    <app-mis-alcancias [cliente]="usuario"></app-mis-alcancias>
+  </div>
+</section>

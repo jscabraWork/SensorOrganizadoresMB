@@ -65,11 +65,11 @@ export class ReporteDataService {
     let params = '';
     const queryParams: string[] = [];
     
-    if (anio !== undefined) {
+    if (anio != -1) {
       queryParams.push(`anio=${anio}`);
     }
-    
-    if (mes !== undefined && mes !== -1) {
+
+    if (mes != -1) {
       queryParams.push(`mes=${mes}`);
     }
     
@@ -87,7 +87,7 @@ export class ReporteDataService {
       queryParams.push(`tarifaId=${tarifaId}`);
     }
     
-    if (localidadId !== undefined && localidadId !== null) {
+    if (localidadId != -1) {
       queryParams.push(`localidadId=${localidadId}`);
     }
     
@@ -125,7 +125,7 @@ export class ReporteDataService {
     if (fechaFin) {
       queryParams.push(`fechaFin=${encodeURIComponent(fechaFin)}`);
     }
-    if (tipo !== undefined && tipo !== null) {
+    if (tipo != 0) {
       queryParams.push(`tipo=${tipo}`);
     }
 
@@ -173,30 +173,30 @@ export class ReporteDataService {
   }
 
 
-  getResumenAdmin(eventoId?: string, anio?: number, mes?: number, dia?: number): Observable<any> {
-    let params = '';
-    const queryParams: string[] = [];
-
-    if (eventoId !== undefined) {
-      queryParams.push(`pEventoId=${eventoId}`);
-    }
-    
-    if (anio !== undefined) {
-      queryParams.push(`pAnio=${anio}`);
-    }
-    
-    if (mes !== undefined && mes !== -1) {
-      queryParams.push(`pMes=${mes}`);
-    }
-
-    if (dia !== undefined && dia !== -1) {
-      queryParams.push(`pDia=${dia}`);
-    }
-
-    if (queryParams.length > 0) {
-      params = '?' + queryParams.join('&');
-    }
-    return this.http.get<any>(`${this.endpointAdmin}/resumen${params}`);
+  getResumenAdmin(eventoId?: number, anio?: number, mes?: number, dia?: number): Observable<any> {
+  let params = '';
+  const queryParams: string[] = [];
+ 
+  if (eventoId != null && eventoId != -1) {
+    queryParams.push(`pEventoId=${eventoId}`);
   }
-
+ 
+  if (anio != null && anio != -1) { // ← Aquí estaba faltando la condición !== -1
+    queryParams.push(`pAnio=${anio}`);
+  }
+ 
+  if (mes != null && mes != -1) {
+    queryParams.push(`pMes=${mes}`);
+  }
+ 
+  if (dia != null && dia != -1) {
+    queryParams.push(`pDia=${dia}`);
+  }
+ 
+  if (queryParams.length > 0) {
+    params = '?' + queryParams.join('&');
+  }
+ 
+  return this.http.get<any>(`${this.endpointAdmin}/resumen${params}`);
+}
 }

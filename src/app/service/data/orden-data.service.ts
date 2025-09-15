@@ -28,12 +28,15 @@ export class OrdenDataService extends CommonDataService<Orden> {
   }
 
   validarContraPtpTrx(pIdOrden){
-
     return this.http.get<any>(`${this.baseEndpoint}/manejo-orden/${pIdOrden}`)
   }
 
   ordenesPorClienteId(clienteId: string){
     return this.http.get<any>(`${this.baseEndpoint}/ordenes/cliente/${clienteId}`)
+  }
+
+  getOrdenByIdAdmin(ordenId){
+    return this.http.get<any>(`${this.baseEndpoint}/admin/${ordenId}`)
   }
 
 }

@@ -1,5 +1,8 @@
+import { Tarifa } from './tarifa.model';
 import { TransaccionesComponent } from "../administradores/transacciones/transacciones.component";
+import { Cliente } from "./cliente.model";
 import { Evento } from "./evento.model";
+import { Ticket } from "./ticket.model";
 
 export class Orden {
   id: number
@@ -16,10 +19,17 @@ export class Orden {
 
   transacciones;
 
-  tickets;
+  tickets: Ticket[];
 
-  cliente;
+  cliente: Cliente;
 
   creationDate:string;
+
+  descripcion?: string;
+
+  tarifa: Tarifa;
+
+  //Atributo transient
+  eventoNombre?: string;
 
 }
