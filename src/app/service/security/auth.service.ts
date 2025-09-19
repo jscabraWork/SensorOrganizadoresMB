@@ -44,7 +44,7 @@ export class AuthService {
   login(usuario: Usuario): Observable<any> {
     const urlEndPoint = API_URL_AUTH + '/oauth/token';
 
-    const credenciales = btoa('alltickets.front' + ':' + 'l!Uq!Ujhfzyjd%Mk*a6H');
+    const credenciales = btoa('alltickets.front' + ':' + 'z!Uq!Ujhfzyjd%Mk*a7M');
 
     const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
