@@ -76,10 +76,7 @@
         <div [ngClass]="{ 'inputs-edicion': modoEdicion, 'inputs': !modoEdicion }">
             <span class="field-label" *ngIf="modoEdicion">Celular</span>
             <input type="text" id="celular" name="celular" [(ngModel)]="usuario.celular" class="input-field"
-                [class.input-error]="formEnviado && !usuario.celular" placeholder="Celular" required>
-            <div *ngIf="formEnviado && !usuario.celular" class="error-message">
-                El celular es obligatorio
-            </div>
+                placeholder="Celular">
         </div>
 
         <!-- Roles Activos (Select y botón Agregar) -->
