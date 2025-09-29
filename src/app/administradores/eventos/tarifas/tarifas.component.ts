@@ -32,7 +32,8 @@ export class TarifasComponent implements OnInit {
     { path: 'activas', label: 'Tarifas Activas' },
     { path: 'inactivas', label: 'Tarifas Inactivas' },
     { path: 'cupones-activos', label: 'Tarifas de Cupones' },
-    { path: 'soldout', label: 'Sold Out' }
+    { path: 'soldout', label: 'Sold Out' },
+    { path: 'punto-fisico', label: 'Tarifas de Punto Físico' }
   ];
 
   constructor(
