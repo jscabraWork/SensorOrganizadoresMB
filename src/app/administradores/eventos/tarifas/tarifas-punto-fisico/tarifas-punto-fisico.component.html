@@ -31,10 +31,10 @@
 
               <tr class="centrarTexto">
                 <td colspan="100%" *ngIf="tarifas?.length == 0 && cargando == false" class="mensaje-vacio">
-                  No tiene tarifas {{ tipoTarifa }}
+                  No tiene tarifas de punto físico
                 </td>
               </tr>
-     
+
               <ng-container *ngFor="let tarifa of tarifas; let i = index">
                 <tr class="body-td">
                   <td class="d-none-384">
@@ -47,46 +47,45 @@
                   <td class="d-none-384">{{ tarifa.precio  | currency:'COP ':'symbol':'1.0-0' }}</td>
                   <td class="d-none-687">{{ calcularTotalConIva(tarifa) | currency:'COP ':'symbol':'1.0-0' }}</td>
                   <td class="d-none-384">
-                    <select [(ngModel)]="tarifa.estado" 
+                    <select [(ngModel)]="tarifa.estado"
                       (change)="cambiarEstado(tarifa)"
                       class="form-select estado-select">
                       <option [ngValue]="1">Activado</option>
                       <option [ngValue]="0">Desactivado</option>
                       <option [ngValue]="2">Sold Out</option>
-                      <option [ngValue]="3">Tarifa para Cupón</option>
                       <option [ngValue]="4">Visible puntos físicos</option>
                     </select>
                   </td>
                 </tr>
-     
+
                 <!-- Sección Expandida -->
                 <tr *ngIf="selectedItem === i">
                   <td colspan="100%" class="expandir-table">
                       <div class="detalle-expandido">
-                        <div> 
+                        <div>
                           <p class="p">Información</p>
-                        </div>  
-                        <div class="informacion-container">               
+                        </div>
+                        <div class="informacion-container">
                           <div class="detalle-item">
-                            <p class="etiqueta">Nombre:</p> 
+                            <p class="etiqueta">Nombre:</p>
                             <span class="valor">{{ tarifa.nombre }}</span>
                           </div>
                           <div class="detalle-item">
-                            <p class="etiqueta">Precio:</p> 
+                            <p class="etiqueta">Precio:</p>
                             <span class="valor">{{ tarifa.precio | currency:'COP ':'symbol':'1.0-0' }}</span>
                           </div>
                           <div class="detalle-item">
-                            <p class="etiqueta">Servicio:</p> 
+                            <p class="etiqueta">Servicio:</p>
                             <span class="valor">{{ tarifa.servicio | currency:'COP ':'symbol':'1.0-0' }}</span>
                           </div>
                           <div class="detalle-item">
-                            <p class="etiqueta">IVA:</p> 
+                            <p class="etiqueta">IVA:</p>
                             <span class="valor">{{ tarifa.iva | currency:'COP ':'symbol':'1.0-0' }}</span>
                           </div>
                           <div class="detalle-item">
-                            <p class="etiqueta"> Servicio+Iva:</p> 
+                            <p class="etiqueta"> Servicio+Iva:</p>
                             <span class="valor">{{ calcularTotalConIva(tarifa) | currency:'COP ':'symbol':'1.0-0' }}</span>
-                          </div>                                           
+                          </div>
                         </div>
                         <hr class="linea-detalle-expandido">
                         <div>
@@ -95,18 +94,16 @@
                         <div>
                             <button class="btn-editar" (click)="editarTarifa(tarifa)">Editar</button>
                             <button class="btn-eliminar" (click)="eliminarTarifa(tarifa.id)">Eliminar</button>
-                            <button class="btn-editar" *ngIf="tarifa.estado === 3" (click)="gestionarCupones(tarifa)">Gestionar Cupones</button>
-                            <select [(ngModel)]="tarifa.estado" 
+                            <select [(ngModel)]="tarifa.estado"
                               (change)="cambiarEstado(tarifa)"
                               class="form-select estado-select-detalle">
                               <option [ngValue]="1">Activado</option>
                               <option [ngValue]="0">Desactivado</option>
                               <option [ngValue]="2">Sold Out</option>
-                              <option [ngValue]="3">Tarifa para Cupón</option>
                               <option [ngValue]="4">Visible puntos físicos</option>
                             </select>
                         </div>
-                      </div>                        
+                      </div>
                   </td>
                 </tr>
               </ng-container>
@@ -114,8 +111,5 @@
           </table>
         </div>
     </div>
-
-
-    
 
 </div>
