@@ -81,6 +81,10 @@ export class TarifasActivasInactivasComponent {
         this.estadoTarifa = 3;
         this.tipoTarifa = 'cupones activos';
         break;
+      case 'punto-fisico':
+        this.estadoTarifa = 4;
+        this.tipoTarifa = 'de punto físico';
+        break;
       default:
         this.estadoTarifa = 1;
         this.tipoTarifa = 'activas';

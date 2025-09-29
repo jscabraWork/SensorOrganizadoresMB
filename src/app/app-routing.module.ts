@@ -36,7 +36,6 @@ import { AgregarModificarTipoDocumentoComponent } from './administradores/usuari
 import { PromotoresComponent } from './administradores/promotores/promotores.component';
 import { PuntosFisicosComponent } from './administradores/puntos-fisicos/puntos-fisicos.component';
 import { GestionarCuponesComponent } from './administradores/eventos/tarifas/gestionar-cupones/gestionar-cupones.component';
-import { TarifasPuntoFisicoComponent } from './administradores/eventos/tarifas/tarifas-punto-fisico/tarifas-punto-fisico.component';
 import { AlcanciasComponent } from './administradores/alcancias/alcancias.component';
 import { AlcanciaComponent } from './administradores/alcancias/alcancia/alcancia.component';
 import { UsuarioPerfilComponent } from './administradores/usuarios/usuarios-activos-inactivos/usuario-perfil/usuario-perfil.component';
@@ -53,7 +52,7 @@ const tarifasChildren: Routes = [
   { path: 'inactivas', component: TarifasActivasInactivasComponent },
   { path: 'cupones-activos', component: TarifasActivasInactivasComponent },
   { path: 'soldout', component: TarifasActivasInactivasComponent },
-  { path: 'punto-fisico', component: TarifasPuntoFisicoComponent }
+  { path: 'punto-fisico', component: TarifasActivasInactivasComponent }
 
 ]
 
