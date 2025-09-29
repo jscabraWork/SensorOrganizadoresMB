@@ -146,13 +146,18 @@ export class AgregarModificarUsuarioComponent {
 
     // Valida los campos obligatorios antes de continuar
     if (!this.usuario.nombre || !this.usuario.numeroDocumento || !this.usuario.tipoDocumento ||
-      !this.usuario.correo || !this.usuario.contrasena || !this.usuario.celular || this.rolesUsuario.length === 0) {
+      !this.usuario.correo || !this.usuario.contrasena || this.rolesUsuario.length === 0) {
       this.openMensaje('Por favor completa todos los campos obligatorios y asigna al menos un rol.');
       return;
     }
 
     if (!this.validarRolesIncompatibles()) {
       return;
+    }
+
+    // Asegurar que el celular sea un string vacío si no está lleno
+    if (!this.usuario.celular) {
+      this.usuario.celular = '';
     }
 
     this.usuario.roles = this.rolesUsuario.map(rol => ({
