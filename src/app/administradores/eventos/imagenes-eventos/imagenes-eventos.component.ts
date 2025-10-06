@@ -21,6 +21,7 @@ export class ImagenesEventosComponent extends CommonListarComponent<Imagen, Imag
   
   evento: Evento;
   selectedFiles: File[] = [];
+  private previewUrlCache = new Map<File, string>();
   imageTypes: { [key: number]: string } = {
     1: 'Principal',
     2: 'Banner',
@@ -81,13 +82,13 @@ export class ImagenesEventosComponent extends CommonListarComponent<Imagen, Imag
     if (imageFiles.length !== files.length) {
       this.mensaje('Solo se permiten archivos de imagen');
     }
-    
-    // Validar tamaño de archivos (3MB máximo)
-    const maxSize = 3 * 1024 * 1024; // 3MB en bytes
+
+    // Validar tamaño de archivos (20MB máximo)
+    const maxSize = 20 * 1024 * 1024; // 20MB en bytes
     const oversizedFiles = imageFiles.filter(file => file.size > maxSize);
     
     if (oversizedFiles.length > 0) {
-      this.mensaje(`Algunos archivos superan el límite de 3MB: ${oversizedFiles.map(f => f.name).join(', ')}`);
+      this.mensaje(`Algunos archivos superan el límite de 20MB: ${oversizedFiles.map(f => f.name).join(', ')}`);
       return;
     }
     
@@ -102,10 +103,11 @@ export class ImagenesEventosComponent extends CommonListarComponent<Imagen, Imag
   removeFile(index: number): void {
     // Clean up object URL to prevent memory leaks
     const file = this.selectedFiles[index];
-    if (file) {
-      URL.revokeObjectURL(this.getFilePreviewUrl(file));
+    if (file && this.previewUrlCache.has(file)) {
+      URL.revokeObjectURL(this.previewUrlCache.get(file)!);
+      this.previewUrlCache.delete(file);
     }
-    
+
     this.selectedFiles.splice(index, 1);
     this.selectedTypes.splice(index, 1);
   }
@@ -158,15 +160,17 @@ export class ImagenesEventosComponent extends CommonListarComponent<Imagen, Imag
   }
 
   getFilePreviewUrl(file: File): string {
-    return URL.createObjectURL(file);
+    if (!this.previewUrlCache.has(file)) {
+      this.previewUrlCache.set(file, URL.createObjectURL(file));
+    }
+    return this.previewUrlCache.get(file)!;
   }
 
   clearSelectedFiles(): void {
     // Clean up object URLs to prevent memory leaks
-    this.selectedFiles.forEach(file => {
-      URL.revokeObjectURL(this.getFilePreviewUrl(file));
-    });
-    
+    this.previewUrlCache.forEach(url => URL.revokeObjectURL(url));
+    this.previewUrlCache.clear();
+
     this.selectedFiles = [];
     this.selectedTypes = [];
   }
